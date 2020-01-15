@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 50 100" preserveAspectRatio="xMidYMid">
   <defs>
-    <radialGradient id="paint0_radial" cx="0" cy="0" r="100%" fx="0" fy="0" gradientUnits="objectBoundingBox" transform="translate(100%)" spreadMethod="pad">
+    <radialGradient id="paint0_radial">
       <stop stop-color="#ff9059" stop-opacity="1" offset="0"/>
       <stop stop-color="#ff9059" stop-opacity="0.2" offset="1"/>
     </radialGradient>
