@@ -40,7 +40,6 @@
       },
       data: function() {
           return {
-              results: null,
               active_resource: null,
               query: null
           }
