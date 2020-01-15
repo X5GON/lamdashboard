@@ -1,0 +1,10 @@
+body {
+    background-color: #000D32;
+    color:  #505973;
+    font-family: Open Sans;
+}
+#main-navbar {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/quasar@^1.0.0/dist/quasar.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/x5gon.css" />
+  </head>
+
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@latest/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router@3.1.4/dist/vue-router.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@^1.0.0/dist/quasar.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/http-vue-loader@1.4.1/src/httpVueLoader.min.js"></script>
+
+    <div id="q-app">
+      <router-view class="view"></router-view>
+      <nav id="main-navbar">
+        <router-link to="/">/home</router-link>
+        <router-link to="/overview">/overview</router-link>
+        <router-link to="/basket">/basket</router-link>
+        <router-link to="/sequence">/sequence</router-link>
+        <router-link to="/debug">/debug</router-link>
+      </nav>
+    </div>
+</div>
+
+<script>
+
+  // TODO: refactor this code into App component
+  // TODO: remove Quasar if not needed?
+
+  Vue.use(VueRouter);
+  Vue.use(Vuex);
+
+  const router = new VueRouter({
+      mode: 'hash',
+      routes: [
+          { path: '/', component: httpVueLoader('js/Home.vue') },
+          { path: '/overview', component: httpVueLoader('js/Overview.vue') },
+          { path: '/basket', component: httpVueLoader('js/Basket.vue') },
+          { path: '/sequence', component: httpVueLoader('js/Sequence.vue') },
+          { path: '/debug', component: httpVueLoader('js/Debug.vue') },
+      ]
+  });
+
+  const store = new Vuex.Store({
+      state: {
+          count: 0
+      },
+      mutations: {
+          increment (state) {
+              state.count++
+          }
+      }
+  });
+
+
+  var app = new Vue({
+      router: router,
+      store: store,
+      el: '#q-app',
+      data: function () {
+          return {
+          }
+      },
+      methods: {
+      },
+  })
+</script>
+</body>
+</html>
