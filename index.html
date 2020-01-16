@@ -23,13 +23,14 @@
     </div>
 </div>
 
-<script>
+<script type="module">
 
   // TODO: refactor this code into App component
-  // TODO: remove Quasar if not needed?
 
   Vue.use(VueRouter);
   Vue.use(Vuex);
+
+  import store from './js/Store.js';
 
   const router = new VueRouter({
       mode: 'hash',
@@ -42,18 +43,6 @@
       ]
   });
 
-  const store = new Vuex.Store({
-      state: {
-          count: 0
-      },
-      mutations: {
-          increment (state) {
-              state.count++
-          }
-      }
-  });
-
-
   var app = new Vue({
       router: router,
       store: store,
@@ -64,7 +53,8 @@
       },
       methods: {
       },
-  })
+  });
+  window.app = app;
 </script>
 </body>
 </html>
