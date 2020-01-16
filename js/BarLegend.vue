@@ -1,5 +1,5 @@
 <template>
-  <div class="view-barlegend">
+  <div v-if="items" class="view-barlegend">
     <h1 class="view-barlegend-title">{{ title }}</h1>
     <ul class="view-barlegend-list">
       <li v-for="item in items">

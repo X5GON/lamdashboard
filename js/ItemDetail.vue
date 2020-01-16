@@ -1,7 +1,7 @@
 <template>
-  <div class="view-itemdetail">
+  <div v-if="item" class="view-itemdetail">
     <div class="itemdetail-name">{{ item ? item.name : "" }}</div>
-    <div v-if="item" class="itemdetail-representation">
+    <div class="itemdetail-representation">
       <svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 110 120" preserveAspectRatio="xMidYMid">
         <defs>
           <radialGradient id="paint0_radial">
@@ -50,7 +50,16 @@
             }
         },
         props: {
-            item: Object
+            item: Object,
+            max_length: {
+                type: Number,
+                default: 1000
+            },
+            max_difficulty: {
+                type: Number,
+                default: 100
+            },
+
         },
         methods: {
         }

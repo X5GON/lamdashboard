@@ -95,8 +95,8 @@
             },
             active_resource_legend: function () {
                 // Get the 5 top concepts of the resource
-                //if (this.active_resource === null)
-                //return null;
+                if (this.active_resource === null)
+                    return null;
                 return [
                     [
                         "Voxel",
