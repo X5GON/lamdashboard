@@ -23,7 +23,7 @@
       },
       methods: {
           search: function () {
-              console.log("do search", this.query);
+              this.$store.dispatch('submit_query', this.query);
           }
       }
     }

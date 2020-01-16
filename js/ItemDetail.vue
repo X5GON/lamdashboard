@@ -1,6 +1,6 @@
 <template>
   <div v-if="item" class="view-itemdetail">
-    <div class="itemdetail-name">{{ item ? item.name : "" }}</div>
+    <div class="itemdetail-title">{{ item ? item.title : "" }}</div>
     <div class="itemdetail-representation">
       <svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 110 120" preserveAspectRatio="xMidYMid">
         <defs>
@@ -72,7 +72,7 @@
     padding-left: 35px;
     padding-right: 35px;
   }
-  .itemdetail-name {
+  .itemdetail-title {
       color: #fff;
       font-family: IBM Plex Serif;
       font-style: normal;

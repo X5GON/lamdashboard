@@ -1,6 +1,6 @@
 <template>
   <div class="view-overview">
-    <result-drawer class="left-drawer" :results="results" @active="set_active"></result-drawer>
+    <result-drawer class="left-drawer" :results="search_results" @active="set_active"></result-drawer>
     <div class="right-drawer">
       <item-detail :style="{ width: '70%' }" :item="active_resource"></item-detail>
       <bar-legend :style="{ width: '25%' }" title="Concepts" :items="active_resource_legend"></bar-legend>
@@ -16,67 +16,6 @@
             'bar-legend': httpVueLoader('js/BarLegend.vue')
         },
         props: {
-            results: {
-                type: Array,
-                default: function () {
-                    return [
-                        {
-                            'name': 'name1',
-                            'provider': 'provider1',
-                            'author': 'author1',
-                            'url': 'url1'
-                        },
-                        {
-                            'name': 'name2',
-                            'provider': 'provider2',
-                            'author': 'author2',
-                            'url': 'url2'
-                        },
-                        {
-                            'name': 'name3',
-                            'provider': 'provider3',
-                            'author': 'author3',
-                            'url': 'url3'
-                        },
-                        {
-                            'name': 'name1',
-                            'provider': 'provider1',
-                            'author': 'author1',
-                            'url': 'url1'
-                        },
-                        {
-                            'name': 'name2',
-                            'provider': 'provider2',
-                            'author': 'author2',
-                            'url': 'url2'
-                        },
-                        {
-                            'name': 'name3',
-                            'provider': 'provider3',
-                            'author': 'author3',
-                            'url': 'url3'
-                        },
-                        {
-                            'name': 'name4',
-                            'provider': 'provider4',
-                            'author': 'author4',
-                            'url': 'url4'
-                        },
-                        {
-                            'name': 'name5',
-                            'provider': 'provider5',
-                            'author': 'author5',
-                            'url': 'url5'
-                        },
-                        {
-                            'name': 'name6',
-                          'provider': 'provider6',
-                            'author': 'author6',
-                            'url': 'url6'
-                        }
-                  ]
-                }
-            }
         },
         data: function() {
             return {
@@ -90,6 +29,7 @@
           }
         },
         computed: {
+            ...Vuex.mapState([ "search_results" ]),
             active_resource_id: function () {
                 return this.active_resource !== null ? this.active_resource.url : "null";
             },
@@ -171,6 +111,10 @@
       width: 50%;
   }
   .right-drawer {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: 0;
       display: flex;
       flex-direction: row;
       height: 100vh;

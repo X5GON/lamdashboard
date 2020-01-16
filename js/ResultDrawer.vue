@@ -3,7 +3,7 @@
     <x5gon-header></x5gon-header>
     <div class="resultdrawer-content">
       <div class="result-search">
-        <input v-model="query" placeholder="Recherche" type="search" />
+        <input v-model="query" placeholder="Recherche" type="search" @keydown.enter="search" />
       </div>
       <ul class="results" v-bind:class="{ has_active: has_active }">
         <li class="resultdrawer-item" v-for="res in results">
@@ -12,16 +12,16 @@
                @mouseover="set_active(res)"
                :class="{ active: active_resource == res }" >
             <div class="resultdrawer-item-line">
-              <div class="resultdrawer-item-type">Name</div>
-              <span class="resultdrawer-item-name">{{ res.name }}</span>
+              <div class="resultdrawer-item-type">Title</div>
+              <div class="resultdrawer-item-title">{{ res.title }}</div>
             </div>
             <div class="resultdrawer-item-line">
               <div class="resultdrawer-item-type">Provider</div>
-              <span class="resultdrawer-item-provider">{{ res.provider }}</span>
+              <div class="resultdrawer-item-provider">{{ res.provider }}</div>
             </div>
             <div class="resultdrawer-item-line">
               <div class="resultdrawer-item-type">Author</div>
-              <span class="resultdrawer-item-author">{{ res.author }}</span>
+              <div class="resultdrawer-item-author">{{ res.author }}</div>
             </div>
           </div>
         </li>
@@ -46,9 +46,12 @@
       },
       methods: {
           set_active: function (resource) {
-              console.log("setActive", resource ? resource.name : null);
+              console.log("setActive", resource ? resource.title : null);
               this.active_resource = resource;
               this.$emit('active', resource);
+          },
+          search: function () {
+              this.$store.dispatch('submit_query', this.query);
           }
       },
       computed: {
@@ -91,6 +94,10 @@
       padding-bottom: 1em;
       padding-top: .5em;
   }
+  .resultdrawer-item-line {
+      display: flex;
+      flex-direction: row;
+  }
   .resultdrawer-item-type {
       display: inline-block;
       width: 61px;
@@ -98,7 +105,7 @@
       font-family: Open Sans;
       font-size: 9px;
   }
-  .resultdrawer-item-name {
+  .resultdrawer-item-title {
       font-family: IBM Plex Serif;
       font-size: 22px;
       line-height: 26px;
