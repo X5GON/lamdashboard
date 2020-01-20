@@ -16,6 +16,7 @@
       <router-view class="view"></router-view>
       <nav id="main-navbar">
         <router-link to="/">/home</router-link>
+        <router-link to="/search">/search</router-link>
         <router-link to="/overview">/overview</router-link>
         <router-link to="/basket">/basket</router-link>
         <router-link to="/sequence">/sequence</router-link>
@@ -37,6 +38,7 @@
   const router = new VueRouter({
       routes: [
           { path: '/', component: httpVueLoader('js/Home.vue') },
+          { path: '/search', component: httpVueLoader('js/Search.vue') },
           { path: '/overview', component: httpVueLoader('js/Overview.vue') },
           { path: '/basket', component: httpVueLoader('js/Basket.vue') },
           { path: '/sequence', component: httpVueLoader('js/Sequence.vue') },

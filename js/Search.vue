@@ -1,5 +1,5 @@
 <template>
-  <div class="view-overview">
+  <div class="view-search">
     <result-drawer class="left-drawer" :results="search_results" @active="set_active"></result-drawer>
     <div class="right-drawer">
       <item-detail :style="{ width: '70%' }" :item="active_resource"></item-detail>
@@ -24,7 +24,6 @@
         },
         methods: {
           set_active: function (resource) {
-              console.log("Overview - set_active", resource);
               this.active_resource = resource;
           }
         },
@@ -54,7 +53,7 @@
 </script>
 
   <style type="text/css">
-  .view-overview {
+  .view-search {
     width: 100%;
     margin: 0;
     padding: 0;
