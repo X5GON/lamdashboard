@@ -3,14 +3,12 @@
     <strong>Debug</strong>
     <pre id="query-t">Query: {{ $route.query.t }}</pre>
     <pre id="hash">Hash: {{ $route.hash }}</pre>
-    <div v-touch-pan="handler">v1: {{ v1 }}</div>
-    <div v-touch-swipe="handler">v2: {{ v2 }}</div>
+    <div>v1: {{ v1 }}</div>
+    <div>v2: {{ v2 }}</div>
     <span>userdata: {{ userdata }}</span>
-    </div>
     <input v-model="userdata">
-    <div>
-      <button @click="doSomething" label="Do something" />
-    </div>
+    <button @click="doSomething" label="Do something" />
+  </div>
 </template>
 
 <script>
