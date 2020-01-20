@@ -99,7 +99,8 @@
       flex-direction: row;
   }
   .resultdrawer-item-type {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       width: 61px;
       text-transform: uppercase;
       font-family: Open Sans;
@@ -109,6 +110,7 @@
       font-family: IBM Plex Serif;
       font-size: 22px;
       line-height: 26px;
+      width: calc(100% - 61px);
   }
   .resultdrawer-item-provider, .resultdrawer-item-author {
       font-family: IBM Plex Serif;
