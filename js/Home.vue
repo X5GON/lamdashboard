@@ -27,7 +27,6 @@
           }
       },
       mounted: function () {
-          console.log("Home mounted", this.$route.query, this.$route);
           if (this.$route.query.q) {
               this.$store.dispatch('submit_query', this.$route.query.q);
           }
