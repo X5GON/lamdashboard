@@ -92,7 +92,6 @@
             },
             y: function () {
                 // Return an array with stacked lengths
-                console.log("y", this);
                 let count = 5;
                 let concepts = this.item.wikifier.slice(0, count).map(c => c[3]);
                 let total = concepts.reduce((a, b) => a+b);
@@ -122,6 +121,7 @@
       font-size: 26px;
       line-height: 31px;
       height: 3em;
+      margin-top: 1em;
   }
   .itemdetail-provider, .itemdetail-author {
       height: 2em;
