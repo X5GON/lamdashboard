@@ -77,10 +77,13 @@
       font-family: IBM Plex Serif;
       font-style: normal;
       font-weight: 500;
-      font-size: 26;
+      font-size: 26px;
       line-height: 31px;
+      height: 3em;
   }
-
+  .itemdetail-provider, .itemdetail-author {
+      height: 2em;
+  }
   .itemdetail-representation {
     margin-left: 30%;
     width: 30%;
