@@ -41,7 +41,7 @@
       data: function() {
           return {
               active_resource: null,
-              query: null
+              query: this.$route.query.q
           }
       },
       methods: {
@@ -59,7 +59,7 @@
               return this.active_resource !== null
           }
       }
-    }
+  }
 </script>
 
 <style scoped>
