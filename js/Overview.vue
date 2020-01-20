@@ -42,7 +42,7 @@
                 // Get the 5 top concepts of the resource
                 if (this.active_resource === null)
                     return null;
-                return this.active_resource.wikifier.slice(0, 5).map((t, i) => ({ label: t[0],
+                return (this.active_resource.wikifier || []).slice(0, 5).map((t, i) => ({ label: t[0],
                                                                                   url: t[1],
                                                                                   value: t[3],
                                                                                   width: t[3] * 200,
