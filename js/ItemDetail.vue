@@ -2,7 +2,7 @@
   <div v-if="item" class="view-itemdetail">
     <div class="itemdetail-title">{{ item ? item.title : "" }}</div>
     <div class="itemdetail-representation">
-      <svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 110 120" preserveAspectRatio="xMidYMid">
+      <svg xmlns="http://www.w3.org/2000/svg" :width="svg_width()" viewBox="0 0 110 130" preserveAspectRatio="xMidYMid">
         <defs>
           <radialGradient id="paint0_radial">
             <stop stop-color="#ff9059" stop-opacity="1" offset="0"/>
@@ -15,7 +15,8 @@
             <path d="M 0 0 l 10 10 l -10 10" stroke="#505973" fill="none" />
           </marker>
         </defs>
-        <g :transform="`translate(70, 75) scale(1,-1)`">
+        <rect x="0" y="0" width="100%" height="100%" stroke="none" stroke-opacity="1" stroke-width=".1" fill="none" />
+        <g :transform="`translate(70, ${130-50}) scale(1,-1)`">
           <circle id="circle" fill="url(#paint0_radial)" fill-opacity="1" fill-rule="nonzero" stroke="none" cx="0" cy="0" :r="radius"/>
           <path id="concept5" fill="none" stroke="#505973" stroke-linecap="round" stroke-opacity="1" stroke-width="4" :d="`M 0 0 l 0 ${y[4]}`"/>
           <path id="concept4" fill="none" stroke="#e95c44" stroke-linecap="round" stroke-opacity="1" stroke-width="4" :d="`M 0 0 l 0 ${y[3]}`"/>
@@ -23,9 +24,9 @@
           <path id="concept2" fill="none" stroke="#933b50" stroke-linecap="round" stroke-opacity="1" stroke-width="4" :d="`M 0 0 l 0 ${y[1]}`"/>
           <path id="concept1" fill="none" stroke="#3e1966" stroke-linecap="round" stroke-opacity="1" stroke-width="4" :d="`M 0 0 l 0 ${y[0]}`"/>
           <g id="difficulty_hint">
-            <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1" :d="`M 0 ${bar_height} l -60 0`" />
+            <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1" :d="`M 0 ${bar_height+2} l -60 0`" />
             <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1" d="M 0 -2 l -60 0" />
-            <path fill="none" stroke="#505973" stroke-width=".15" :d="`M -60 -2 l 0 ${bar_height}`" marker-start="url(#triangle)" marker-end="url(#triangle)" />
+            <path fill="none" stroke="#505973" stroke-width=".15" :d="`M -60 -2 l 0 ${bar_height+4}`" marker-start="url(#triangle)" marker-end="url(#triangle)" />
             <text :transform="`translate(-61, ${bar_height/2-10}) rotate(90) scale(1,-1)`" fill="#505973" font-family="Open Sans" font-size="3">DIFFICULTY</text>
           </g>
           <g id="length_hint">
@@ -62,8 +63,14 @@
             concept_count: {
                 type: Number,
                 default: 5
-            }
+            },
+            width: 400
 
+        },
+        methods: {
+            svg_width: function () {
+                return this.$el.clientWidth * .8;
+            },
         },
         computed: {
             duration_scale: function () {
@@ -84,10 +91,8 @@
                 return this.difficulty_scale(this.item.technicities);
             },
             y: function () {
-                // Return an array with stacked heights.
-                // 0 is concept 1 -> full height
-                // 1 is concept 2 -> height - concept1 percentage
-                //return [ .2, .4, .6, .7, 1].map(v => this.bar_height * v);
+                // Return an array with stacked lengths
+                console.log("y", this);
                 let count = 5;
                 let concepts = this.item.wikifier.slice(0, count).map(c => c[3]);
                 let total = concepts.reduce((a, b) => a+b);
@@ -104,7 +109,8 @@
 
 <style scoped>
   .view-itemdetail {
-    width: calc(100% - 70px);
+    width: 100%;
+    height: 100%;
     padding-left: 35px;
     padding-right: 35px;
   }
@@ -121,7 +127,7 @@
       height: 2em;
   }
   .itemdetail-representation {
-    margin-left: 30%;
-    width: 30%;
+      margin: auto;
+      margin-top: 20%;
   }
 </style>
