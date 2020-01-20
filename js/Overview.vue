@@ -28,6 +28,11 @@
               this.active_resource = resource;
           }
         },
+        mounted: function () {
+            if (this.$route.query.q != this.$store.state.query) {
+                this.$store.dispatch('submit_query', this.$route.query.q);
+            }
+        },
         computed: {
             ...Vuex.mapState([ "search_results" ]),
             active_resource_id: function () {
