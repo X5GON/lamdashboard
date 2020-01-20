@@ -20,8 +20,9 @@
         <router-link to="/sequence">/sequence</router-link>
         <router-link to="/debug">/debug</router-link>
       </nav>
+      <x5gon-notification></x5gon-notification>
     </div>
-</div>
+</body>
 
 <script type="module">
 
@@ -46,6 +47,9 @@
       router: router,
       store: store,
       el: '#q-app',
+      components: {
+          'x5gon-notification': httpVueLoader('js/Notification.vue'),
+      },
       data: function () {
           return {
           }
@@ -53,6 +57,7 @@
       methods: {
       },
   });
+
   window.app = app;
 </script>
 </body>

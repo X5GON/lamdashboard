@@ -9,7 +9,8 @@ const store = new Vuex.Store({
         basket: [],
         // Assume we only deal with 1 sequence in the app
         sequence: [],
-        error_message: ""
+        // List of notification messages
+        notification_messages: []
     },
     mutations: {
         update_search_results(state, results) {
@@ -18,6 +19,20 @@ const store = new Vuex.Store({
         set_query(state, query) {
             state.query = query;
         },
+        add_notification(state, message, type="info") {
+            state.notification_messages.push( {
+                message: message,
+                type: type,
+                date: new Date()
+            } );
+        },
+        remove_notification(state, message) {
+            var i = state.notification_messages.map(n => n.message).indexOf(message);
+            if (i == -1) {
+                return;
+            }
+            state.notification_messages.splice(i, 1);
+        }
     },
     actions: {
         async submit_query({ commit }, query) {
@@ -76,6 +91,13 @@ const store = new Vuex.Store({
                         }
                     }));
                 });
+        },
+        async show_notification({ commit }, message, type, duration=2000) {
+            commit("add_notification", message, type);
+            var timeOut = setTimeout(function () {
+                //On timeout mutate state to dismiss notification
+                commit("remove_notification", message);
+            }, duration);
         }
     }
 });
