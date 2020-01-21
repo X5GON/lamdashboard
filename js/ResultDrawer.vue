@@ -46,9 +46,11 @@
       },
       methods: {
           set_active: function (resource) {
-              console.log("setActive", resource ? resource.title : null);
-              this.active_resource = resource;
-              this.$emit('active', resource);
+              if (this.active_resource !== resource) {
+                  console.log("setActive", resource ? resource.title : null);
+                  this.active_resource = resource;
+                  this.$emit('active', resource);
+              }
           },
           search: function () {
               this.$store.dispatch('submit_query', this.query);
