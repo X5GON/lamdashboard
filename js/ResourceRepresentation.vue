@@ -87,7 +87,7 @@
             },
             concepts: function () {
                 let count = this.concept_count;
-                return this.item.wikifier.slice(0, count);
+                return this.item ? this.item.wikifier.slice(0, count) : [];
             },
             reversed_concepts: function () {
                 return this.concepts.slice().reverse();
