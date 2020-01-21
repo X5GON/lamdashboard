@@ -7,6 +7,7 @@
           stroke-linecap="round" stroke-opacity="1" stroke-width="4"
           :stroke="color_palette(index)"
           :d="`M 0 0 l 0 ${y_concept[concept_count-index-1]}`"></path>
+    <text v-if="title" :transform="`translate(-4, 0) rotate(90) scale(1,-1)`" fill="#fff" font-family="Open Sans" font-size="4">{{ title }}</text>
     <g v-if="legend" id="legend">
       <g id="difficulty_hint">
         <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1" :d="`M 0 ${bar_height+2} l -60 0`"></path>
@@ -32,6 +33,10 @@
     module.exports = {
         props: {
             item: Object,
+            title: {
+                type: String,
+                default: null
+            },
             legend: {
                 type: Boolean,
                 default: false

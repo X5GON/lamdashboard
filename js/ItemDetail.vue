@@ -3,7 +3,7 @@
     <div class="itemdetail-title">{{ item ? item.title : "" }}</div>
     <div class="itemdetail-representation">
       <svg-container>
-        <resource-representation :x="70" :y="70" legend :item="item"></resource-representation>
+        <resource-representation :x="70" :y="70" legend :item="item" :title="item.title"></resource-representation>
       </svg-container>
     </div>
     <div class="itemdetail-provider">{{ item ? item.provider : "" }}</div>
