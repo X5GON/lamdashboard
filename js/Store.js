@@ -2,6 +2,7 @@ import constant from './Constants.js';
 
 // Store for application global state
 const store = new Vuex.Store({
+
     state: {
         // Cache for objects, indexed by object id, with resource data as values
         resources: {},
@@ -17,6 +18,8 @@ const store = new Vuex.Store({
         // List of notification messages
         notification_messages: []
     },
+
+    // Mutation are synchronous. They should normally not be directly called, but instead through actions (see below)
     mutations: {
         update_search_results(state, results) {
             state.search_results = results;
@@ -45,7 +48,10 @@ const store = new Vuex.Store({
             state.overview_neighbors = neighbors;
         }
     },
+
+    // Actions are asynchronous. They are called with the dispatch method (or through mapActions in components)
     actions: {
+
         async submit_query({ commit }, query) {
             let response = null;
 
@@ -101,6 +107,7 @@ const store = new Vuex.Store({
                     commit('update_search_results', output)
                 });
         },
+
         async activate_overview_reference({ commit }, resource) {
             if (typeof resource !== 'object') {
                 // We are not given a plain resource. Try to get it from cache.
@@ -134,6 +141,7 @@ const store = new Vuex.Store({
                     commit('set_overview_neighbors', data.neighbors);
                 });
         },
+
         async show_notification({ commit }, message, type, duration=2000) {
             commit("add_notification", message, type);
             var timeOut = setTimeout(function () {
