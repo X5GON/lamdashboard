@@ -80,7 +80,7 @@
             },
             radius: function () {
                 // FIXME: replace with item.duration when OK
-                return this.duration_scale(this.item.length);
+                return this.duration_scale(this.item ? this.item.length : 0);
             },
             bar_height: function () {
                 return this.difficulty_scale(this.item.technicities);
