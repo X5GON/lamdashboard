@@ -1,5 +1,6 @@
 <template>
-  <g :transform="`translate(${x}, ${y}) scale(1,-1)`">
+  <g @mouseover="on_mouseover" @click="on_click"
+     :transform="`translate(${x}, ${y}) scale(1,-1)`">
     <circle id="circle" fill="url(#paint0_radial)" fill-opacity="1" fill-rule="nonzero" stroke="none" cx="0" cy="0" :r="radius"></circle>
     <path v-for="(item, index) in reversed_concepts"
           :id="`concept${concept_count-index}`"
@@ -65,6 +66,12 @@
         methods: {
             color_palette: function (i) {
                 return this.$constant.palette.concepts[i];
+            },
+            on_mouseover: function () {
+                this.$emit("resource_mouseover", this.item);
+            },
+            on_click: function () {
+                this.$emit("resource_click", this.item);
             },
         },
         computed: {
