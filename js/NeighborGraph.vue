@@ -1,6 +1,6 @@
 <template>
   <div class="view-neighbor-graph">
-    <svg-container viewbox="-50 -500 1000 1000">
+    <svg-container zoomable id="graph" viewbox="-50 -500 1000 1000">
       <rect x="0" y="0" width="1" height="100" stroke="#ff0" stroke-opacity="1" stroke-width=".1" fill="none"></rect>
       <rect x="0" y="0" width="100" height="1" stroke="#fff" stroke-opacity="1" stroke-width=".1" fill="none"></rect>
       <g id="reference">
