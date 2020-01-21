@@ -55,7 +55,7 @@ const store = new Vuex.Store({
         async submit_query({ commit }, query) {
             let response = null;
 
-            if (query.startsWith('d:')) {
+            if (query && query.startsWith('d:')) {
                 // Debug mode - use local resources
                 response = await fetch(`data/${query.substr(2)}.json`, {
                     method: 'GET',
