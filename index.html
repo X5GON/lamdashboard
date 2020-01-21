@@ -24,44 +24,37 @@
       </nav>
       <x5gon-notification></x5gon-notification>
     </div>
-</body>
+  </body>
 
-<script type="module">
+  <script type="module">
+    // TODO: refactor this code into App component
 
-  // TODO: refactor this code into App component
+    Vue.use(VueRouter);
+    Vue.use(Vuex);
 
-  Vue.use(VueRouter);
-  Vue.use(Vuex);
+    import store from './js/Store.js';
 
-  import store from './js/Store.js';
+    const router = new VueRouter({
+        routes: [
+            { path: '/', component: httpVueLoader('js/Home.vue') },
+            { path: '/search', component: httpVueLoader('js/Search.vue') },
+            { path: '/overview', component: httpVueLoader('js/Overview.vue') },
+            { path: '/basket', component: httpVueLoader('js/Basket.vue') },
+            { path: '/sequence', component: httpVueLoader('js/Sequence.vue') },
+            { path: '/debug', component: httpVueLoader('js/Debug.vue') },
+        ]
+    });
 
-  const router = new VueRouter({
-      routes: [
-          { path: '/', component: httpVueLoader('js/Home.vue') },
-          { path: '/search', component: httpVueLoader('js/Search.vue') },
-          { path: '/overview', component: httpVueLoader('js/Overview.vue') },
-          { path: '/basket', component: httpVueLoader('js/Basket.vue') },
-          { path: '/sequence', component: httpVueLoader('js/Sequence.vue') },
-          { path: '/debug', component: httpVueLoader('js/Debug.vue') },
-      ]
-  });
+    var app = new Vue({
+        router: router,
+        store: store,
+        el: '#q-app',
+        components: {
+            'x5gon-notification': httpVueLoader('js/Notification.vue'),
+        },
+    });
 
-  var app = new Vue({
-      router: router,
-      store: store,
-      el: '#q-app',
-      components: {
-          'x5gon-notification': httpVueLoader('js/Notification.vue'),
-      },
-      data: function () {
-          return {
-          }
-      },
-      methods: {
-      },
-  });
-
-  window.app = app;
-</script>
+    window.app = app;
+  </script>
 </body>
 </html>
