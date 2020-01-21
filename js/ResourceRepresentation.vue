@@ -64,7 +64,7 @@
         },
         methods: {
             color_palette: function (i) {
-                return [ "#505973", "#e95c44", "#be4b4d", "#933b50", "#3e1966" ][i];
+                return this.$constant.palette.concepts[i];
             },
         },
         computed: {
