@@ -8,6 +8,8 @@ const store = new Vuex.Store({
         // Current search results
         search_results: [],
         query: "",
+        overview_reference: null,
+        overview_neighbors: [],
         // We only have 1 basket
         basket: [],
         // Assume we only deal with 1 sequence in the app
@@ -35,6 +37,12 @@ const store = new Vuex.Store({
                 return;
             }
             state.notification_messages.splice(i, 1);
+        },
+        set_overview_reference(state, resource) {
+            state.overview_reference = resource;
+        },
+        set_overview_neighbors(state, neighbors) {
+            state.overview_neighbors = neighbors;
         }
     },
     actions: {
@@ -86,11 +94,44 @@ const store = new Vuex.Store({
                         // FIXME: Debug mode, we use dumps from old knnladmdsh API
                         output = data.neighbors;
 
+                        commit('set_overview_reference', data.res_in_focus);
+                        commit('set_overview_neighbors', data.neighbors);
+
                     }
                     commit('update_search_results', output)
                 });
         },
+        async activate_overview_reference({ commit }, resource) {
+            if (typeof resource !== 'object') {
+                // We are not given a plain resource. Try to get it from cache.
+                resource = this.state.resources[resource];
+            }
+            // Query neighbors
+            response = await fetch(constant.api.neighbors, {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                body: JSON.stringify({ resource_id: resource.id,
+                                       n_neighbors: constant.MAX_NEIGHBORS })
+            });
+            response.json()
+                .catch( (error) => {
+                    console.log("Error when fetching KNN ", error);
+                    this.dispatch("show_notification", `Error when fetching neighbors for ${resource.id}`, "error");
+                })
+                .then( (data) => {
+                    if (!data) {
+                        this.dispatch("show_notification", `No neighbors for ${resource.id}`, "error");
+                        return;
                     }
+                    commit("set_overview_reference", data.res_in_focus);
+                    commit('set_overview_neighbors', data.neighbors);
                 });
         },
         async show_notification({ commit }, message, type, duration=2000) {
