@@ -21,7 +21,7 @@
             </div>
             <div class="resultdrawer-item-line">
               <div class="resultdrawer-item-type">Author</div>
-              <div class="resultdrawer-item-author">{{ res.author }}</div>
+              <div class="resultdrawer-item-author">{{ res.author ? res.author.join(", ") : "" }}</div>
             </div>
           </div>
         </li>

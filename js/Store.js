@@ -1,3 +1,6 @@
+import constant from './Constants.js';
+
+// Store for application global state
 const store = new Vuex.Store({
     state: {
         // Cache for objects, indexed by object id, with resource data as values
@@ -46,7 +49,7 @@ const store = new Vuex.Store({
                 });
             } else {
                 // Do the asynchronous call to the search API
-                response = await fetch("http://wp3.x5gon.org/others/lamdsh/search", {
+                response = await fetch(constant.api.search, {
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',
@@ -80,22 +83,20 @@ const store = new Vuex.Store({
                     let output = data.output;
                     commit('set_query', query);
                     if (data.neighbors) {
-                        // Debug mode, we use a dump from http://wp3.x5gon.org/others/lamdsh/knnlamdsh
+                        // FIXME: Debug mode, we use dumps from old knnladmdsh API
                         output = data.neighbors;
+
                     }
-                    commit('update_search_results', output.map(item => {
-                        if (item && item.author) {
-                            return { ...item, author: item.author.join(", ") }
-                        } else {
-                            return item;
-                        }
-                    }));
+                    commit('update_search_results', output)
+                });
+        },
+                    }
                 });
         },
         async show_notification({ commit }, message, type, duration=2000) {
             commit("add_notification", message, type);
             var timeOut = setTimeout(function () {
-                //On timeout mutate state to dismiss notification
+                // On timeout mutate state to dismiss notification
                 commit("remove_notification", message);
             }, duration);
         }

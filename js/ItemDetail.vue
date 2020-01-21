@@ -7,7 +7,7 @@
       </svg-container>
     </div>
     <div class="itemdetail-provider">{{ item ? item.provider : "" }}</div>
-    <div class="itemdetail-author">{{ item ? item.author : "" }}</div>
+    <div class="itemdetail-author">{{ item.author ? item.author.join(", ") : "" }}</div>
   </div>
 </template>
 
@@ -19,7 +19,7 @@
         components: {
             'svg-container': httpVueLoader('js/SvgContainer.vue'),
             'resource-representation': httpVueLoader('js/ResourceRepresentation.vue'),
-        },
+        }
     };
 </script>
 
