@@ -45,7 +45,7 @@
                                                                                   url: t[1],
                                                                                   value: t[3],
                                                                                   width: t[3] * 200,
-                                                                                  color: [ "#3e1966", "#933b50", "#be4b4d", "#e95c44", "#505973" ][i]
+                                                                                  color: this.$constant.palette.concepts[i]
                                                                                 }));
             }
         }
