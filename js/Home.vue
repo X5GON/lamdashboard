@@ -4,7 +4,7 @@
     <div class="content">
       <div class="filteredinput">
         <input v-model="query" id="q" placeholder="Recherche" @keydown.enter="search" type="search" />
-        <filterbar></filterbar>
+        <x5gon-filterbar></x5gon-filterbar>
       </div>
     </div>
   </div>
@@ -13,7 +13,7 @@
 <script>
   module.exports = {
       components: {
-          'filterbar': httpVueLoader('js/Filterbar.vue'),
+          'x5gon-filterbar': httpVueLoader('js/Filterbar.vue'),
           'x5gon-header': httpVueLoader('js/Header.vue')
       },
       data: function() {
