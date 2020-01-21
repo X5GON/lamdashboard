@@ -2,7 +2,7 @@
   <div class="view-search">
     <result-drawer class="left-drawer" :results="search_results" @active="set_active"></result-drawer>
     <div class="right-drawer">
-      <item-detail :style="{ width: '70%' }" :item="active_resource"></item-detail>
+      <item-detail :style="{ width: '70%' }" :item="active_resource" :key="active_resource_id"></item-detail>
       <bar-legend :style="{ width: '25%' }" title="Concepts" :items="active_resource_legend"></bar-legend>
     </div>
   </div>
