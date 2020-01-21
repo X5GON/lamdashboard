@@ -1,5 +1,5 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" :width="svg_width()" viewBox="0 0 110 130" preserveAspectRatio="xMidYMid">
+  <svg xmlns="http://www.w3.org/2000/svg" :view-box.camel="viewbox" preserveAspectRatio="xMidYMid">
     <defs>
       <radialGradient id="paint0_radial">
         <stop stop-color="#ff9059" stop-opacity="1" offset="0"/>
@@ -12,20 +12,26 @@
         <path d="M 0 0 l 10 10 l -10 10" stroke="#505973" fill="none" />
       </marker>
     </defs>
-    <rect x="0" y="0" width="100%" height="100%" stroke="none" stroke-opacity="1" stroke-width=".1" fill="none" />
+    <rect v-if="debug" x="0" y="0" width="100%" height="100%" stroke="#fff" stroke-opacity="1" stroke-width=".1" fill="none" />
+    <rect v-if="debug" x="0" y="0" width="100" height="100" stroke="#ff0" stroke-opacity="1" stroke-width=".1" fill="none" />
     <slot></slot>
   </svg>
 </template>
 
 <script>
     module.exports = {
-        methods: {
-            svg_width: function () {
-                return this.$el.clientWidth;
+        props: {
+            viewbox: {
+                type: String,
+                default: "0 0 110 130"
             },
-        },
+            debug: {
+                type: Boolean,
+                default: true
+            },
+        }
     };
 </script>
 
-<style scoped>
+  <style scoped>
 </style>
