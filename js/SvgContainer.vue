@@ -1,6 +1,6 @@
 <template>
     <component v-bind:is="wrapper" selector=".zoomable">
-      <svg xmlns="http://www.w3.org/2000/svg" :view-box.camel="viewbox" preserveAspectRatio="xMidYMid">
+      <svg xmlns="http://www.w3.org/2000/svg" :view-box.camel="viewbox" :preserve-aspect-ratio.camel="preserve_aspect_ratio">
         <defs>
           <radialGradient id="paint0_radial">
             <stop stop-color="#ff9059" stop-opacity="1" offset="0"/>
@@ -28,6 +28,10 @@
             viewbox: {
                 type: String,
                 default: "0 0 110 130"
+            },
+            preserve_aspect_ratio: {
+                type: String,
+                default: "xMidYMid"
             },
             debug: {
                 type: Boolean,
