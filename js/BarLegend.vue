@@ -48,8 +48,8 @@
       font-weight: 500;
       font-size: 18px;
       color: #505973;
-      padding-bottom: 18px;
-      margin-bottom: 18px;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
       border-bottom: 1px solid #505973;
   }
   .view-barlegend-label {
