@@ -1,12 +1,12 @@
 <template>
-  <g :transform="`translate(70, ${130-50}) scale(1,-1)`">
+  <g :transform="`translate(${x}, ${y}) scale(1,-1)`">
     <circle id="circle" fill="url(#paint0_radial)" fill-opacity="1" fill-rule="nonzero" stroke="none" cx="0" cy="0" :r="radius"></circle>
     <path v-for="(item, index) in reversed_concepts"
           :id="`concept${concept_count-index}`"
           fill="none"
           stroke-linecap="round" stroke-opacity="1" stroke-width="4"
           :stroke="color_palette(index)"
-          :d="`M 0 0 l 0 ${y[concept_count-index-1]}`"></path>
+          :d="`M 0 0 l 0 ${y_concept[concept_count-index-1]}`"></path>
     <g v-if="legend" id="legend">
       <g id="difficulty_hint">
         <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1" :d="`M 0 ${bar_height+2} l -60 0`"></path>
@@ -24,7 +24,11 @@
   </g>
 </template>
 
-<script>
+  <script>
+    /*
+      Representation of a resource. It expects to fit in a 0 0 110 120
+      viewbox.
+    */
     module.exports = {
         props: {
             item: Object,
@@ -44,8 +48,14 @@
                 type: Number,
                 default: 5
             },
-            width: 400
-
+            x: {
+                type: Number,
+                default: 0
+            },
+            y: {
+                type: Number,
+                default: 0
+            }
         },
         methods: {
             color_palette: function (i) {
@@ -77,7 +87,7 @@
             reversed_concepts: function () {
                 return this.concepts.slice().reverse();
             },
-            y: function () {
+            y_concept: function () {
                 // Return an array with stacked lengths
                 let values = this.concepts.map(c => c[3]);
                 let total = values.reduce((a, b) => a+b);
