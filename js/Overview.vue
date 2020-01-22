@@ -19,6 +19,12 @@
              src="img/basket.svg"></img>
       </div>
     </div>
+    <div class="toolbar-left">
+      <img class="toolbar-icon"
+           title="Search"
+           @click="show_search"
+           src="img/search.svg"></img>
+    </div>
     <div v-if="active_resource" class="resource-information">
       <div class="resource-metadata">
         <svg-container class="resource-representation">
@@ -101,6 +107,8 @@
             },
             show_help: function () {
             },
+            show_search: function () {
+            }
         },
         computed: {
             ...Vuex.mapState([ "overview_reference", "overview_neighbors" ]),
@@ -231,6 +239,13 @@
       position: absolute;
       top: 30px;
       right: 22px;
+      display: flex;
+      flex-direction: column;
+  }
+  .toolbar-left {
+      position: absolute;
+      left: 22px;
+      top: 120px;
       display: flex;
       flex-direction: column;
   }
