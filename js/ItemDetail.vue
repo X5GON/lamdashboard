@@ -25,7 +25,6 @@
 
 <style scoped>
   .view-itemdetail {
-    width: 100%;
     height: 100%;
     padding-left: 35px;
     padding-right: 35px;
