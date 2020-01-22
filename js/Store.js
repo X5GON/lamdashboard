@@ -114,37 +114,46 @@ const store = new Vuex.Store({
                 });
         },
 
-        async activate_overview_reference({ commit }, resource) {
-            if (typeof resource !== 'object') {
-                // We are not given a plain resource. Try to get it from cache.
-                resource = this.state.resources[resource];
-            }
+        async activate_overview_reference({ commit }, resource_id) {
             // Query neighbors
-            response = await fetch(constant.api.neighbors, {
-                method: 'POST',
-                mode: 'cors',
-                cache: 'no-cache',
+            let response = null;
+            try {
+                response = await fetch(constant.api.neighbors, {
+                    method: 'POST',
+                    mode: 'cors',
+                    cache: 'no-cache',
                     credentials: 'same-origin',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
                         'Access-Control-Allow-Origin': '*'
                     },
-                body: JSON.stringify({ resource_id: resource.id,
-                                       n_neighbors: constant.MAX_NEIGHBORS })
-            });
+                    body: JSON.stringify({ resource_id: Number(resource_id),
+                                           n_neighbors: constant.MAX_NEIGHBORS,
+                                           type: [],
+                                           available_langs: [],
+                                           provider: [],
+                                           orig_lang: [],
+                                           remove_duplicates: true,
+                                           model_type: "wikifier" })
+                });
+            } catch (error) {
+                console.log("Error while fetching neighbors");
+                this.dispatch("show_notification", `Error while fetching neighbors: ${error}`, "error");
+
+            }
             response.json()
                 .catch( (error) => {
                     console.log("Error when fetching KNN ", error);
-                    this.dispatch("show_notification", `Error when fetching neighbors for ${resource.id}`, "error");
+                    this.dispatch("show_notification", `Error when fetching neighbors for ${resource_id}`, "error");
                 })
                 .then( (data) => {
                     if (!data) {
-                        this.dispatch("show_notification", `No neighbors for ${resource.id}`, "error");
+                        this.dispatch("show_notification", `No neighbors for ${resource_id}`, "error");
                         return;
                     }
-                    commit("set_overview_reference", data.res_in_focus);
-                    commit('set_overview_neighbors', data.neighbors);
+                    commit("set_overview_reference", data.output.res_in_focus);
+                    commit('set_overview_neighbors', data.output.neighbors);
                 });
         },
 
