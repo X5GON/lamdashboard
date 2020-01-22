@@ -40,7 +40,7 @@
              class="add-to-basket-icon toolbar-icon"
              src="img/add_to_basket.svg"></img>
         <h2>Resource information</h2>
-        <ul>
+        <ul class="resource-metadata-list">
           <li v-for="info in active_resource_metadata" :key="info.id">
             <span class="resource-metadata-label">{{ info.label }}</span>
             <span class="resource-metadata-value">{{ info.value }}</span>
@@ -198,7 +198,10 @@
       overflow-y: hidden;
       color: #4f4f4f;
       padding: 12px;
- }
+  }
+  .resource-metadata-list {
+      list-style: none;
+  }
   .resource-representation {
       width: 40%;
       margin: auto;
