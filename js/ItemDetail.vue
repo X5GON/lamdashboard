@@ -40,10 +40,13 @@
       margin-top: 1em;
   }
   .itemdetail-provider, .itemdetail-author {
-      height: 2em;
+      height: 1.2em;
   }
   .itemdetail-representation {
       margin: auto;
       margin-top: 20%;
+  }
+  .miniature .itemdetail-title {
+      font-style: 12px;
   }
 </style>

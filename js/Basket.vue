@@ -4,6 +4,7 @@
     <h1>Basket</h1>
     <div class="basket-list">
       <item-detail v-for="item in items"
+                   class="miniature"
                    :item="item"></item-detail>
     </div>
     <div class="toolbar">
