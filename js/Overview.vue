@@ -194,6 +194,7 @@
   }
   .resource-content-keywords {
       margin-right: 20px;
+      width: 210px;
   }
   .resource-content-text {
       font-size: 16px;
