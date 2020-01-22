@@ -7,9 +7,17 @@
     <div v-if="active_resource" class="resource-information">
       <div class="resource-metadata">
         <svg-container class="resource-representation">
-          <resource-representation :x="70" :y="70" :item="active_resource" :title="active_resource.title"></resource-representation>
+          <resource-representation
+            :x="70"
+            :y="70"
+            :item="active_resource"
+            :title="active_resource.title"></resource-representation>
         </svg-container>
-        <img alt="Add" title="Add resource to basket" class="add-to-basket-icon" src="img/add_to_basket.svg"></img>
+        <img
+             alt="Add"
+             title="Add resource to basket"
+             class="add-to-basket-icon"
+             src="img/add_to_basket.svg"></img>
         <h2>Resource information</h2>
         <ul>
           <li v-for="info in active_resource_metadata" :key="info.id">
@@ -20,7 +28,9 @@
       </div>
       <div class="resource-content">
         <h1>{{ active_resource.title }}</h1>
-        <concept-bar class="resource-content-conceptbar" :concepts="active_resource_concepts"></concept-bar>
+        <concept-bar
+          class="resource-content-conceptbar"
+          :concepts="active_resource_concepts"></concept-bar>
         <p>Provider: {{ active_resource.provider }}</p>
         <p>Author: {{ active_resource.author ? active_resource.author.join(", ") : "" }}</p>
         <div class="resource-content-columns">
