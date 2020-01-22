@@ -1,6 +1,6 @@
 <template>
   <header class="x5gon-header">
-    <img src="../img/x5gon.svg" alt="X5GON" />
+    <img src="img/x5gon.svg" alt="X5GON" />
   </header>
 </template>
 
