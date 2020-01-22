@@ -108,10 +108,11 @@
             show_help: function () {
             },
             show_search: function () {
+                this.$router.push({ path: '/search', query: { q: this.query }});
             }
         },
         computed: {
-            ...Vuex.mapState([ "overview_reference", "overview_neighbors" ]),
+            ...Vuex.mapState([ "overview_reference", "overview_neighbors", "query" ]),
             active_resource_metadata: function () {
                 if (this.active_resource) {
                     return [ [ 'id', 'Identifier' ],
@@ -143,7 +144,6 @@
             active_resource_concepts: function () {
                 if (!this.active_resource)
                     return [];
-                console.log("active resource", this.active_resource)
                 return this.active_resource
                     .wikifier
                     .slice(0, 5)
@@ -158,7 +158,7 @@
         },
         mounted: function () {
             if (this.$route.query.q) {
-                this.$store.dispatch('submit_query', this.$route.query.q);
+                this.$router.push({ path: '/search', query: { q: this.$route.query.q }});
             }
             if (this.$route.params.id) {
                 this.$store.dispatch('activate_overview_reference', this.$route.params.id);
