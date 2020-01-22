@@ -10,6 +10,7 @@
           <div class="resultdrawer-item-block"
                @mouseout="set_active(null)"
                @mouseover="set_active(res)"
+               @click="activate(res)"
                :class="{ active: active_resource == res }" >
             <div class="resultdrawer-item-line">
               <div class="resultdrawer-item-type">Title</div>
@@ -52,7 +53,11 @@
                   this.$emit('active', resource);
               }
           },
+          activate: function (resource) {
+              this.$router.push({ path: `/overview/${resource.id}` });
+          },
           search: function () {
+              this.$router.push({ path: '/search', query: { q: this.query } });
               this.$store.dispatch('submit_query', this.query);
           }
       },
