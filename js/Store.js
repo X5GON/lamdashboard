@@ -46,6 +46,12 @@ const store = new Vuex.Store({
         },
         set_overview_neighbors(state, neighbors) {
             state.overview_neighbors = neighbors;
+        },
+
+        add_to_basket(state, item) {
+            if (state.basket.indexOf(item) == -1) {
+                state.basket.push(item);
+            }
         }
     },
 
@@ -148,6 +154,10 @@ const store = new Vuex.Store({
                 // On timeout mutate state to dismiss notification
                 commit("remove_notification", message);
             }, duration);
+        },
+
+        async add_to_basket({ commit }, item) {
+            commit("add_to_basket", item);
         }
     }
 });

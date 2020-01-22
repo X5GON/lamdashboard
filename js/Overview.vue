@@ -13,7 +13,7 @@
             :item="active_resource"
             :title="active_resource.title"></resource-representation>
         </svg-container>
-        <img
+        <img @click="add_to_basket"
              alt="Add"
              title="Add resource to basket"
              class="add-to-basket-icon"
@@ -66,6 +66,11 @@
         methods: {
             on_mouseover: function (item) {
                 this.active_resource = item;
+            },
+            add_to_basket: function () {
+                if (this.active_resource) {
+                    this.$store.dispatch('add_to_basket', this.active_resource);
+                }
             }
         },
         computed: {
