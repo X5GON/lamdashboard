@@ -43,7 +43,7 @@
         routes: [
             { path: '/', component: httpVueLoader('js/Home.vue') },
             { path: '/search', component: httpVueLoader('js/Search.vue') },
-            { path: '/overview', component: httpVueLoader('js/Overview.vue') },
+            { path: '/overview/:id?', component: httpVueLoader('js/Overview.vue') },
             { path: '/basket', component: httpVueLoader('js/Basket.vue') },
             { path: '/sequence', component: httpVueLoader('js/Sequence.vue') },
             { path: '/debug', component: httpVueLoader('js/Debug.vue') },

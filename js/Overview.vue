@@ -75,6 +75,10 @@
                 active_resource: null
             }
         },
+        beforeRouteUpdate: function (to, from, next) {
+            this.$store.dispatch('activate_overview_reference', to.params.id);
+            next();
+        },
         methods: {
             on_mouseover: function (item) {
                 this.active_resource = item;
@@ -123,6 +127,7 @@
             active_resource_concepts: function () {
                 if (!this.active_resource)
                     return [];
+                console.log("active resource", this.active_resource)
                 return this.active_resource
                     .wikifier
                     .slice(0, 5)
@@ -136,8 +141,8 @@
             if (this.$route.query.q) {
                 this.$store.dispatch('submit_query', this.$route.query.q);
             }
-            if (this.$route.query.reference) {
-                this.$store.dispatch('activate_reference', this.$route.query.reference);
+            if (this.$route.params.id) {
+                this.$store.dispatch('activate_overview_reference', this.$route.params.id);
             }
         }
     }
