@@ -23,12 +23,12 @@
       },
       methods: {
           search: function () {
-              this.$store.dispatch('submit_query', this.query);
+              this.$router.push({ path: '/search', query: { q: this.query }});
           }
       },
       mounted: function () {
           if (this.$route.query.q) {
-              this.$store.dispatch('submit_query', this.$route.query.q);
+              this.$router.push({ path: '/search', query: { q: this.$route.query.q }});
           }
       }
 
