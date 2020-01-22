@@ -41,7 +41,7 @@
 
   <style scoped>
   svg {
-    width: 95vw;
+    width: 99.9vw;
     height: 50vh;
   }
 

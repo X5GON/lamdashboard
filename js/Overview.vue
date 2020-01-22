@@ -4,6 +4,18 @@
                     @resource_mouseover="on_mouseover"
                     :reference="overview_reference"
                     :neighbors="overview_neighbors"></neighbor-graph>
+    <div class="toolbar">
+      <img class="toolbar-icon"
+           title="Help"
+           alt="?"
+           @click="show_help"
+           src="img/help.svg"></img>
+      <img class="toolbar-icon"
+           title="Show basket"
+           alt="Basket"
+           @click="show_basket"
+           src="img/basket.svg"></img>
+    </div>
     <div v-if="active_resource" class="resource-information">
       <div class="resource-metadata">
         <svg-container class="resource-representation">
@@ -16,7 +28,7 @@
         <img @click="add_to_basket"
              alt="Add"
              title="Add resource to basket"
-             class="add-to-basket-icon"
+             class="add-to-basket-icon toolbar-icon"
              src="img/add_to_basket.svg"></img>
         <h2>Resource information</h2>
         <ul>
@@ -71,7 +83,12 @@
                 if (this.active_resource) {
                     this.$store.dispatch('add_to_basket', this.active_resource);
                 }
-            }
+            },
+            show_basket: function () {
+                this.$router.push('/basket');
+            },
+            show_help: function () {
+            },
         },
         computed: {
             ...Vuex.mapState([ "overview_reference", "overview_neighbors" ]),
@@ -128,6 +145,7 @@
 
 <style type="text/css">
   .view-overview {
+    position: relative;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -183,5 +201,19 @@
   .resource-content-conceptbar svg {
       width: 80%;
       height: 30px;
+  }
+  .toolbar-icon {
+      width: 32px;
+      height: 32px;
+  }
+  .toolbar-icon + .toolbar-icon {
+      margin-top: 12px;
+  }
+  .toolbar {
+      position: absolute;
+      top: 30px;
+      right: 22px;
+      display: flex;
+      flex-direction: column;
   }
 </style>
