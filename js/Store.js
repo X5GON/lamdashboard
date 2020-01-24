@@ -16,7 +16,9 @@ const store = new Vuex.Store({
         // Assume we only deal with 1 sequence in the app
         sequence: [],
         // List of notification messages
-        notification_messages: []
+        notification_messages: [],
+        // Loading message. If not null, display loading spinner
+        loading_message: "",
     },
 
     // Mutation are synchronous. They should normally not be directly called, but instead through actions (see below)
@@ -50,6 +52,10 @@ const store = new Vuex.Store({
             state.overview_neighbors = neighbors;
         },
 
+        set_loading_message(state, message = "Loading...") {
+            state.loading_message = message;
+        },
+
         add_to_basket(state, item) {
             if (state.basket.indexOf(item) == -1) {
                 state.basket.push(item);
@@ -63,6 +69,7 @@ const store = new Vuex.Store({
         async submit_query({ commit }, query) {
             let response = null;
 
+            this.dispatch("start_loading", `Searching for ${query}...`);
             if (query && query.startsWith('d:')) {
                 // Debug mode - use local resources
                 response = await fetch(`data/${query.substr(2)}.json`, {
@@ -93,9 +100,11 @@ const store = new Vuex.Store({
             }
             response.json()
                 .catch( (error) => {
+                    this.dispatch("stop_loading", "");
                     this.dispatch("show_notification", `Error when fetching ${query}`, "error");
                 })
                 .then( (data) => {
+                    this.dispatch("stop_loading", "");
                     if (!data) {
                         this.dispatch("show_notification", `No data for ${query}`, "error");
                         return;
@@ -117,6 +126,7 @@ const store = new Vuex.Store({
 
         async activate_overview_reference({ commit }, resource_id) {
             // Query neighbors
+            this.dispatch("start_loading", `Fetching neighbors...`);
             let response = null;
             try {
                 response = await fetch(constant.api.neighbors, {
@@ -139,14 +149,17 @@ const store = new Vuex.Store({
                                            model_type: "wikifier" })
                 });
             } catch (error) {
+                this.dispatch("stop_loading", "");
                 this.dispatch("show_notification", `Error while fetching neighbors: ${error}`, "error");
 
             }
             response.json()
                 .catch( (error) => {
+                    this.dispatch("stop_loading", "");
                     this.dispatch("show_notification", `Error when fetching neighbors for ${resource_id}`, "error");
                 })
                 .then( (data) => {
+                    this.dispatch("stop_loading", "");
                     if (!data) {
                         this.dispatch("show_notification", `No neighbors for ${resource_id}`, "error");
                         return;
@@ -156,7 +169,7 @@ const store = new Vuex.Store({
                 });
         },
 
-        async show_notification({ commit }, message, type, duration=2000) {
+        async show_notification({ commit }, message, type, duration=5000) {
             commit("add_notification", message, type);
             var timeOut = setTimeout(function () {
                 // On timeout mutate state to dismiss notification
@@ -166,7 +179,15 @@ const store = new Vuex.Store({
 
         async add_to_basket({ commit }, item) {
             commit("add_to_basket", item);
-        }
+        },
+
+        async start_loading({ commit }, message = "Loading...") {
+            commit("set_loading_message", message);
+        },
+
+        async stop_loading({ commit }) {
+            commit("set_loading_message", "");
+        },
     }
 });
 
