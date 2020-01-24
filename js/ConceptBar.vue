@@ -1,8 +1,8 @@
 <template>
   <svg-container viewbox="-3 -3 210 6" preserve_aspect_ratio="none">
     <g v-for="(item, index) in reversed_concepts"
-       :id="`concept${concept_count-index}`"
-       >
+       :class="concept_class(item)"
+       :id="`concept${concept_count-index}`">
       <path fill="none"
             stroke-linecap="round" stroke-opacity="1" stroke-width="5"
             @mouseover="on_concept_mouseover(item)"
@@ -28,6 +28,9 @@
             },
             on_concept_mouseover: function (concept) {
                 this.$emit("concept_mouseover", concept);
+            },
+            concept_class: function (c) {
+                return [ "concept", `concept-${c.url.replace(/.*\//, '')}` ];
             }
         },
         computed: {
@@ -57,4 +60,10 @@
 </script>
 
 <style scoped>
+    g.concept {
+        pointer-events: bounding-box;
+    }
+    g.concept:hover text {
+        font-weight: 800;
+    }
 </style>
