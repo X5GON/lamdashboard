@@ -112,12 +112,10 @@ const store = new Vuex.Store({
                     console.log("query result", data, data.output);
                     let output = data.output;
                     commit('set_query', query);
-                    if (data.neighbors) {
+                    if (output.neighbors) {
                         // FIXME: Debug mode, we use dumps from old knnladmdsh API
-                        output = data.neighbors;
-
-                        commit('set_overview_reference', data.res_in_focus);
-                        commit('set_overview_neighbors', data.neighbors);
+                        commit('set_overview_reference', output.res_in_focus);
+                        commit('set_overview_neighbors', output.neighbors);
 
                     }
                     commit('update_search_results', output)
@@ -126,10 +124,13 @@ const store = new Vuex.Store({
 
         async activate_overview_reference({ commit }, resource_id) {
             // Query neighbors
+            resource_id = Number(resource_id);
             this.dispatch("start_loading", `Fetching neighbors...`);
             let response = null;
             try {
-                response = await fetch(constant.api.neighbors, {
+                response = await fetch(
+                    // FIXME: Debug mode, we use dumps from old knnladmdsh API
+                    resource_id == 1473 ? "data/1.json" : constant.api.neighbors, {
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',
@@ -139,7 +140,7 @@ const store = new Vuex.Store({
                         'Accept': 'application/json',
                         'Access-Control-Allow-Origin': '*'
                     },
-                    body: JSON.stringify({ resource_id: Number(resource_id),
+                    body: JSON.stringify({ resource_id: resource_id,
                                            n_neighbors: constant.MAX_NEIGHBORS,
                                            type: [],
                                            available_langs: [],
