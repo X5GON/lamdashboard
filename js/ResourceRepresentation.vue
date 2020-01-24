@@ -4,6 +4,7 @@
     <circle id="circle" fill="url(#paint0_radial)" fill-opacity="1" fill-rule="nonzero" stroke="none" cx="0" cy="0" :r="radius"></circle>
     <path v-for="(item, index) in reversed_concepts"
           :id="`concept${concept_count-index}`"
+          @mouseover="on_concept_mouseover(item)"
           fill="none"
           stroke-linecap="round" stroke-opacity="1" stroke-width="4"
           :stroke="color_palette(index)"
@@ -99,6 +100,9 @@
             },
             on_dblclick: function () {
                 this.$emit("resource_dblclick", this.item);
+            },
+            on_concept_mouseover: function (concept) {
+                this.$emit("concept_mouseover", concept);
             },
         },
         computed: {
