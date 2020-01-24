@@ -8,7 +8,6 @@
       <ul class="results" v-bind:class="{ has_active: has_active }">
         <li class="resultdrawer-item" v-for="res in results">
           <div class="resultdrawer-item-block"
-               @mouseout="set_active(null)"
                @mouseover="set_active(res)"
                @click="activate(res)"
                :class="{ active: active_resource == res }" >
