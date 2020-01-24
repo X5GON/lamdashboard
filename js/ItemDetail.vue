@@ -3,7 +3,11 @@
     <div class="itemdetail-title">{{ item ? item.title : "" }}</div>
     <div class="itemdetail-representation">
       <svg-container>
-        <resource-representation :x="70" :y="70" legend :item="item" :title="item.title"></resource-representation>
+        <resource-representation :item="item"
+                                 :max_width="30" :max_height="100"
+                                 :x="70" :y="70"
+                                 :legend="legend"
+                                 :title="item.title"></resource-representation>
       </svg-container>
     </div>
     <div class="itemdetail-provider">{{ item ? item.provider : "" }}</div>
@@ -15,6 +19,10 @@
     module.exports = {
         props: {
             item: Object,
+            legend: {
+                type: Boolean,
+                default: false
+            }
         },
         components: {
             'svg-container': httpVueLoader('js/SvgContainer.vue'),
