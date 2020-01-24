@@ -1,12 +1,15 @@
 <template>
   <svg-container viewbox="-3 -3 210 6" preserve_aspect_ratio="none">
     <g v-for="(item, index) in reversed_concepts"
-       :id="`concept${concept_count-index}`">
+       :id="`concept${concept_count-index}`"
+       >
       <path fill="none"
             stroke-linecap="round" stroke-opacity="1" stroke-width="5"
+            @mouseover="on_concept_mouseover(item)"
             :stroke="color_palette(index)"
             :d="`M 0 0 l ${x_concept[concept_count-index-1]} 0`"></path>
       <text :transform="`translate(${(x_concept[concept_count-index-2] || 0) + 5} 1)`"
+            @mouseover="on_concept_mouseover(item)"
             fill="#fff"
             font-family="Open Sans"
             font-size="3">{{ item.label }}</text>
@@ -25,6 +28,9 @@
         methods: {
             color_palette: function (i) {
                 return this.$constant.palette.concepts[i];
+            },
+            on_concept_mouseover: function (concept) {
+                this.$emit("concept_mouseover", concept);
             }
         },
         computed: {

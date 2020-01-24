@@ -7,7 +7,8 @@
         <resource-representation class="highlightable"
                                  @resource_mouseover="on_mouseover(reference)"
                                  @resource_click="on_click(reference)"
-                                 @resource_dblclick="on_dblclick(item)"
+                                 @resource_dblclick="on_dblclick(reference)"
+                                 @concept_mouseover="on_concept_mouseover"
                                  :item="reference"></resource-representation>
       </g>
       <resource-representation class="highlightable" v-for="item in neighbors"
@@ -17,6 +18,7 @@
                                @resource_mouseover="on_mouseover(item)"
                                @resource_click="on_click(item)"
                                @resource_dblclick="on_dblclick(item)"
+                               @concept_mouseover="on_concept_mouseover"
                                :item="item">
       </resource-representation>
     </svg-container>
@@ -40,6 +42,9 @@
             on_dblclick: function (item) {
                 this.$emit("resource_dblclick", item);
             },
+            on_concept_mouseover: function (concept) {
+                this.$emit("concept_mouseover", concept);
+            }
         },
     }
 </script>
