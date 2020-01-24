@@ -28,10 +28,12 @@ const store = new Vuex.Store({
             state.query = query;
         },
         add_notification(state, message, type="info") {
+            let timestamp = new Date();
+            console.log(timestamp, message);
             state.notification_messages.push( {
                 message: message,
                 type: type,
-                date: new Date()
+                date: timestamp
             } );
         },
         remove_notification(state, message) {
@@ -91,7 +93,6 @@ const store = new Vuex.Store({
             }
             response.json()
                 .catch( (error) => {
-                    console.log("Error when fetching ", error);
                     this.dispatch("show_notification", `Error when fetching ${query}`, "error");
                 })
                 .then( (data) => {
@@ -138,13 +139,11 @@ const store = new Vuex.Store({
                                            model_type: "wikifier" })
                 });
             } catch (error) {
-                console.log("Error while fetching neighbors");
                 this.dispatch("show_notification", `Error while fetching neighbors: ${error}`, "error");
 
             }
             response.json()
                 .catch( (error) => {
-                    console.log("Error when fetching KNN ", error);
                     this.dispatch("show_notification", `Error when fetching neighbors for ${resource_id}`, "error");
                 })
                 .then( (data) => {
