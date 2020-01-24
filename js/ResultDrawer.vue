@@ -32,9 +32,6 @@
 
 <script>
   module.exports = {
-      components: {
-          'x5gon-header': httpVueLoader('js/Header.vue')
-      },
       props: {
           results: Array
       },

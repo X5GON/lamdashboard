@@ -24,10 +24,6 @@
 
 <script>
   module.exports = {
-      components: {
-          'x5gon-header': httpVueLoader('js/Header.vue'),
-          'item-detail': httpVueLoader('js/ItemDetail.vue')
-      },
       data: function() {
           return {
           }

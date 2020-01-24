@@ -15,13 +15,6 @@
 
 <script>
     module.exports = {
-        components: {
-            'result-drawer': httpVueLoader('js/ResultDrawer.vue'),
-            'item-detail': httpVueLoader('js/ItemDetail.vue'),
-            'bar-legend': httpVueLoader('js/BarLegend.vue')
-        },
-        props: {
-        },
         data: function() {
             return {
                 active_resource: null

@@ -15,6 +15,7 @@ export default {
         "LetterCube",
         "NeighborGraph",
         "ResourceRepresentation",
+        "ResultDrawer",
         "SvgContainer"
     ].map(name => ([ name,
                      // We convert camelCase to kebab-case for component names
@@ -23,7 +24,10 @@ export default {
                                    .replace(/[A-Z]/g, m => "-" + m.toLowerCase()),
                                    httpVueLoader.load(`js/${name}.vue`))
                    ]))),
+
     // Specific prefixed components
-    Notification: Vue.component('x5gon-notification', httpVueLoader('js/Notification.vue')),
+    Filterbar: Vue.component('x5gon-filterbar', httpVueLoader('js/Filterbar.vue')),
+    Header: Vue.component('x5gon-header', httpVueLoader('js/Header.vue')),
     LoadingSpinner: Vue.component('x5gon-loading-spinner', httpVueLoader('js/LoadingSpinner.vue')),
+    Notification: Vue.component('x5gon-notification', httpVueLoader('js/Notification.vue')),
 }

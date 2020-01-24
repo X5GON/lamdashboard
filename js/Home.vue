@@ -12,10 +12,6 @@
 
 <script>
   module.exports = {
-      components: {
-          'x5gon-filterbar': httpVueLoader('js/Filterbar.vue'),
-          'x5gon-header': httpVueLoader('js/Header.vue')
-      },
       data: function() {
           return {
               query: this.$route.query.q

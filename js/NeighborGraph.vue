@@ -27,10 +27,6 @@
 
 <script>
     module.exports = {
-        components: {
-            'svg-container': httpVueLoader('js/SvgContainer.vue'),
-            'resource-representation': httpVueLoader('js/ResourceRepresentation.vue'),
-        },
         props: [ "reference", "neighbors" ],
         methods: {
             on_mouseover: function (item) {

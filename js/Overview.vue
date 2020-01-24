@@ -71,14 +71,6 @@
 
 <script>
     module.exports = {
-        components: {
-            'resource-representation': httpVueLoader('js/ResourceRepresentation.vue'),
-            'neighbor-graph': httpVueLoader('js/NeighborGraph.vue'),
-            'item-detail': httpVueLoader('js/ItemDetail.vue'),
-            'svg-container': httpVueLoader('js/SvgContainer.vue'),
-            'bar-legend': httpVueLoader('js/BarLegend.vue'),
-            'concept-bar': httpVueLoader('js/ConceptBar.vue'),
-        },
         data: function () {
             return {
                 active_resource: this.overview_reference

@@ -24,10 +24,6 @@
                 default: false
             }
         },
-        components: {
-            'svg-container': httpVueLoader('js/SvgContainer.vue'),
-            'resource-representation': httpVueLoader('js/ResourceRepresentation.vue'),
-        }
     };
 </script>
 

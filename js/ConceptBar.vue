@@ -22,9 +22,6 @@
         props: {
             concepts: Array, // Array of { label, value } elements
         },
-        components: {
-            'svg-container': httpVueLoader('js/SvgContainer.vue'),
-        },
         methods: {
             color_palette: function (i) {
                 return this.$constant.palette.concepts[i];
