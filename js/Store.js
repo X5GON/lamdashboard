@@ -152,7 +152,7 @@ const store = new Vuex.Store({
                         // FIXME: Debug mode, we use dumps from old knnladmdsh API
                         commit('set_overview_reference', output.res_in_focus);
                         commit('set_overview_neighbors', output.neighbors);
-                        commit('populate_basket', 5);
+                        commit('populate_basket', 10);
                         commit('set_sequence', shuffle(this.state.basket.slice()));
                         output = output.neighbors;
                     }

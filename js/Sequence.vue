@@ -2,12 +2,16 @@
   <div class="view-sequence">
     <x5gon-header class="overlay"></x5gon-header>
     <h1>Sequence</h1>
-    <div class="sequence-list">
-      <item-detail v-for="item in items"
-                   :key="item.url"
-                   class="miniature"
-                   :item="item"></item-detail>
-    </div>
+    <svg-container v-if="items.length > 0" :key="items.length" :viewbox="`0 0 ${x_max} 300`">
+      <g>
+        <resource-representation v-for="item in positioned_items"
+                                 :x="item.x_position"
+                                 :y="70"
+                                 :key="item.url"
+                                 :title="item.title"
+                                 :item="item"></resource-representation>
+      </g>
+    </svg-container>
     <div class="sequence-menu right-drawer-menu">
       <ul class="sequence-menu-list">
         <li @click="do_organize"><img alt="" src="img/icon_organize.svg">Organize</li>
@@ -34,8 +38,25 @@
   module.exports = {
       computed: {
           items: function () {
-              return this.$store.state.sequence
-          }
+              return this.$store.state.sequence;
+          },
+          positioned_items: function () {
+              // Return item list with x_position / y_position information added
+              let x = 0;
+              // This should be factorized somehow with the code in ResourceRepresentation
+              let scale =  d3.scaleLinear()
+                  .domain([ 60, this.$constant.max_duration ])
+                  .range([ 20, 2 * this.$constant.max_width ]);
+              return this.items.map(item => {
+                  x = x + scale(item.length) + 10;
+                  item.x_position = x;
+                  return item;
+              });
+          },
+          x_max: function () {
+              return this.items.length > 0 ? this.positioned_items[this.items.length - 1].x_position + this.$constant.max_width : 0;
+          },
+
       },
       methods: {
           show_basket: function () {
@@ -48,6 +69,11 @@
           do_addition: function () {
           },
           do_export: function () {
+          }
+      },
+      mounted: function () {
+          if (this.$route.query.q) {
+              this.$store.dispatch('submit_query', this.$route.query.q);
           }
       }
     }
