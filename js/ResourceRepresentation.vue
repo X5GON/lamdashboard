@@ -64,19 +64,19 @@
             },
             max_duration: {
                 type: Number,
-                default: 100000
+                default: this.$constant.max_duration
             },
             max_difficulty: {
                 type: Number,
-                default: 40
+                default: this.$constant.max_difficulty
             },
             max_width: {
                 type: Number,
-                default: 50
+                default: this.$constant.max_width
             },
             max_height: {
                 type: Number,
-                default: 105
+                default: this.$constant.max_height
             },
             concept_count: {
                 type: Number,
