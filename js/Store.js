@@ -152,6 +152,8 @@ const store = new Vuex.Store({
                         // FIXME: Debug mode, we use dumps from old knnladmdsh API
                         commit('set_overview_reference', output.res_in_focus);
                         commit('set_overview_neighbors', output.neighbors);
+                        commit('populate_basket', 5);
+                        commit('set_sequence', shuffle(this.state.basket.slice()));
                         output = output.neighbors;
                     }
                     commit('update_search_results', output)
@@ -224,10 +226,6 @@ const store = new Vuex.Store({
 
         async sort_basket({ commit }) {
             // Call API
-            console.log("sort_basket", this.state.basket);
-            commit('set_sequence', shuffle(this.state.basket.slice()));
-            return;
-
             this.dispatch("start_loading", `Sorting basket...`);
             let response = null;
             try {
