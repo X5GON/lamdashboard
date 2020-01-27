@@ -20,6 +20,10 @@
              @click="show_basket"
              src="img/basket.svg"></img>
       </div>
+      <img class="toolbar-icon-debug toolbar-icon"
+           title="Populate"
+           @click="populate"
+           src="img/debug_icon.svg"></img>
     </div>
     <div class="toolbar-left">
       <img class="toolbar-icon"
@@ -126,7 +130,12 @@
             },
             show_search: function () {
                 this.$router.push({ path: '/search', query: { q: this.query }});
-            }
+            },
+            populate: function () {
+              // Debug function
+              this.$store.dispatch('populate_basket', 5);
+          }
+
         },
         computed: {
             ...Vuex.mapState([ "overview_reference", "overview_neighbors", "query" ]),
