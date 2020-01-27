@@ -116,7 +116,7 @@ const store = new Vuex.Store({
                         // FIXME: Debug mode, we use dumps from old knnladmdsh API
                         commit('set_overview_reference', output.res_in_focus);
                         commit('set_overview_neighbors', output.neighbors);
-
+                        output = output.neighbors;
                     }
                     commit('update_search_results', output)
                 });
