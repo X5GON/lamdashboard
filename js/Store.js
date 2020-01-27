@@ -1,5 +1,32 @@
 import constant from './Constants.js';
 
+/**
+ * Randomly shuffle an array (in place)
+ * https://stackoverflow.com/a/2450976/1293256
+ * @param  {Array} array The array to shuffle
+ * @return {String}      The first item in the shuffled array
+ */
+let shuffle = function (array) {
+
+    var currentIndex = array.length;
+    var temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+          // Pick a remaining element...
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+
+          // And swap it with the current element.
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
+      }
+
+    return array;
+
+};
+
 // Store for application global state
 const store = new Vuex.Store({
 
@@ -60,6 +87,15 @@ const store = new Vuex.Store({
             if (state.basket.indexOf(item) == -1) {
                 state.basket.push(item);
             }
+        },
+        populate_basket(state, count) {
+            // Debug method - populate the basket with count items from overview_neighbors
+            let items = shuffle(state.overview_neighbors.slice()).slice(0, count);
+            items.forEach(item => this.commit('add_to_basket', item));
+        },
+
+        set_sequence(state, sequence) {
+            state.sequence = sequence;
         }
     },
 
@@ -180,6 +216,49 @@ const store = new Vuex.Store({
 
         async add_to_basket({ commit }, item) {
             commit("add_to_basket", item);
+        },
+
+        async populate_basket({ commit }, count) {
+            commit("populate_basket", count);
+        },
+
+        async sort_basket({ commit }) {
+            // Call API
+            console.log("sort_basket", this.state.basket);
+            commit('set_sequence', shuffle(this.state.basket.slice()));
+            return;
+
+            this.dispatch("start_loading", `Sorting basket...`);
+            let response = null;
+            try {
+                response = await fetch(constant.api.sort_basket, {
+                    method: 'POST',
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify({
+                        resource_ids: [ this.state.basket.map(item => item.id) ]
+                    })
+                });
+            } catch (error) {
+                this.dispatch("stop_loading", "");
+                this.dispatch("show_notification", `Error while sorting basket: ${error}`, "error");
+
+            }
+            response.json()
+                .catch( (error) => {
+                    this.dispatch("stop_loading", "");
+                    this.dispatch("show_notification", `Error when sorting basket ${error}`, "error");
+                })
+                .then( (data) => {
+                    this.dispatch("stop_loading", "");
+                    commit('set_sequence', data.output);
+                });
         },
 
         async start_loading({ commit }, message = "Loading...") {
