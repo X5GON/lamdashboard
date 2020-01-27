@@ -1,5 +1,6 @@
 <template>
-  <div class="view-overview">
+  <div class="view-overview"
+       :class="{ fullscreen: is_fullscreen }">
     <neighbor-graph class="neighbor-graph"
                     @resource_mouseover="on_mouseover"
                     :highlight_concept="highlighted_concept"
@@ -27,6 +28,13 @@
            src="img/search.svg"></img>
     </div>
     <div v-if="active_resource" class="resource-information">
+      <div class="toolbar-fullscreen">
+        <img class="toolbar-icon toolbar-icon-fullscreen"
+             title="Toggle fullscreen"
+             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+             alt=" "
+             @click="toggle_fullscreen"></img>
+      </div>
       <div class="resource-metadata">
         <svg-container class="resource-representation">
           <resource-representation
@@ -49,12 +57,14 @@
         </ul>
       </div>
       <div class="resource-content">
-        <h1>{{ active_resource.title }}</h1>
-        <concept-bar
-          class="resource-content-conceptbar"
-          @concept_mouseover="on_bar_mouseover"
-          @concept_mouseout="on_bar_mouseout"
-          :concepts="active_resource_concepts"></concept-bar>
+        <div class="resource-content-titlebar">
+          <h1>{{ active_resource.title }}</h1>
+          <concept-bar
+            class="resource-content-conceptbar"
+            @concept_mouseover="on_bar_mouseover"
+            @concept_mouseout="on_bar_mouseout"
+            :concepts="active_resource_concepts"></concept-bar>
+        </div>
         <p>Provider: {{ active_resource.provider }}</p>
         <p>Author: {{ active_resource.author ? active_resource.author.join(", ") : "" }}</p>
         <div class="resource-content-columns">
@@ -77,7 +87,8 @@
         data: function () {
             return {
                 active_resource: this.overview_reference,
-                highlighted_concept: null
+                highlighted_concept: null,
+                is_fullscreen: false,
             }
         },
         beforeRouteUpdate: function (to, from, next) {
@@ -98,6 +109,10 @@
             },
             on_bar_mouseout: function (concept) {
                 this.highlighted_concept = null;
+            },
+            toggle_fullscreen: function () {
+                console.log("Toggle fullscreen", this.is_fullscreen);
+                this.is_fullscreen = ! this.is_fullscreen;
             },
             add_to_basket: function () {
                 if (this.active_resource) {
@@ -184,7 +199,11 @@
       width: 99.9vw;
       height: 50vh;
   }
+  .fullscreen .neighbor-graph svg {
+      height: calc(100vh - 120px);
+  }
   .resource-information {
+      position: relative;
       background-color: #fff;
       display: flex;
       flex-direction: row;
@@ -197,6 +216,19 @@
       font-size: 18px;
       font-weight: 600;
       margin-top: 18px;
+  }
+  .toolbar-fullscreen {
+      position: absolute;
+      top: 13px;
+      left: 13px;
+  }
+  .toolbar-icon-fullscreen {
+      pointer-events: all;
+      box-sizing: border-box;
+      background: url(../img/overview_fullscreen.svg) center center no-repeat;
+  }
+  .fullscreen .toolbar-icon-fullscreen {
+      background: url(../img/overview_halfscreen.svg) center center no-repeat;
   }
   .resource-metadata {
       background: linear-gradient(180deg, #3E1966 0%, rgba(153, 159, 178, 0) 100%);
@@ -221,6 +253,16 @@
   .resource-content h1 {
       font-size: 28px;
       line-height: 34px;
+  }
+  .fullscreen .resource-information {
+      color: white;
+      background-color: #000d32;
+  }
+  .fullscreen .resource-content-titlebar {
+      height: 120px;
+  }
+  .fullscreen .resource-metadata {
+      margin-top: 120px;
   }
   .resource-content-columns {
       display: flex;
