@@ -151,6 +151,9 @@
                                                              result.push(s  * h);
                                                              return result }, []);
                 return heights;
+            },
+            concept_classes: function () {
+                return this.concepts.map(c => `concept-${c[1].replace(/.*\//, '')}`)
             }
         }
     };
