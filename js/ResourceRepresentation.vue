@@ -1,5 +1,8 @@
 <template>
-  <g @mouseover="on_mouseover" @click="on_click" @dblclick="on_dblclick"
+  <g :class="concept_classes"
+     @mouseover="on_mouseover"
+     @click="on_click"
+     @dblclick="on_dblclick"
      :transform="`translate(${x}, ${y}) scale(1,-1)`">
     <circle id="circle" fill="url(#paint0_radial)" fill-opacity="1" fill-rule="nonzero" stroke="none" cx="0" cy="0" :r="radius"></circle>
     <path v-for="(item, index) in reversed_concepts"
