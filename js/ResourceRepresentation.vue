@@ -64,19 +64,19 @@
             },
             max_duration: {
                 type: Number,
-                default: this.$constant.max_duration
+                default: Vue.prototype.$constant.max_duration
             },
             max_difficulty: {
                 type: Number,
-                default: this.$constant.max_difficulty
+                default: Vue.prototype.$constant.max_difficulty
             },
             max_width: {
                 type: Number,
-                default: this.$constant.max_width
+                default: Vue.prototype.$constant.max_width
             },
             max_height: {
                 type: Number,
-                default: this.$constant.max_height
+                default: Vue.prototype.$constant.max_height
             },
             concept_count: {
                 type: Number,
