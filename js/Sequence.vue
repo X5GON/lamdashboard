@@ -8,6 +8,13 @@
                    class="miniature"
                    :item="item"></item-detail>
     </div>
+    <div class="sequence-menu right-drawer-menu">
+      <ul class="sequence-menu-list">
+        <li @click="do_organize"><img alt="" src="img/icon_organize.svg">Organize</li>
+        <li @click="do_addition"><img alt="" src="img/icon_addition.svg">Automatic addition of resources</li>
+        <li @click="do_export"><img alt="" src="img/icon_export.svg">Export</li>
+      </ul>
+    </div>
     <div class="toolbar">
       <img class="toolbar-icon"
            title="Help"
@@ -19,13 +26,6 @@
            alt="Basket"
            @click="show_basket"
            src="img/basket.svg"></img>
-    </div>
-    <div class="sequence-menu right-drawer-menu">
-      <ul>
-        <li>Organize</li>
-        <li>Automatic addition of resources</li>
-        <li>Export</li>
-      </ul>
     </div>
   </div>
 </template>
@@ -43,7 +43,12 @@
           },
           show_help: function () {
           },
-
+          do_organize: function () {
+          },
+          do_addition: function () {
+          },
+          do_export: function () {
+          }
       }
     }
 </script>
@@ -85,9 +90,28 @@
       top: 0;
       bottom: 0;
       right: 0;
-      width: 36px;
+      width: 78px;
+      padding-top: 180px;
+      background-color: #505973;
+      color: #fff;
   }
   .right-drawer-menu:hover {
-      width: 120px;
+      width: 300px;
+  }
+  .sequence-menu-list {
+      list-style: none;
+      display: none;
+  }
+  .sequence-menu:hover .sequence-menu-list {
+      display: block;
+      margin-left: 4px;
+      font-family: Open Sans;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+      color: #000D32;
+  }
+  .sequence-menu-list li:hover {
+      border: 1px solid #000D3299;
   }
 </style>
