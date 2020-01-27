@@ -5,13 +5,16 @@
       <rect x="0" y="0" width="100" height="1" stroke="#fff" stroke-opacity="1" stroke-width=".1" fill="none"></rect>
       <g id="reference">
         <resource-representation class="highlightable"
+                                 :class="{ active: is_active(reference) }"
                                  @resource_mouseover="on_mouseover(reference)"
                                  @resource_click="on_click(reference)"
                                  @resource_dblclick="on_dblclick(reference)"
                                  @concept_mouseover="on_concept_mouseover"
                                  :item="reference"></resource-representation>
       </g>
-      <resource-representation class="highlightable" v-for="item in neighbors"
+      <resource-representation v-for="item in neighbors"
+                               :class="{ active: is_active(item) }"
+                               class="highlightable"
                                :key="item.id"
                                :x="30000*item.reduction_coordinates[0]"
                                :y="30000*item.reduction_coordinates[1]"
@@ -27,7 +30,7 @@
 
 <script>
     module.exports = {
-        props: [ "reference", "neighbors" ],
+        props: [ "reference", "neighbors", "highlight_concept" ],
         methods: {
             on_mouseover: function (item) {
                 this.$emit("resource_mouseover", item);
@@ -40,8 +43,12 @@
             },
             on_concept_mouseover: function (concept) {
                 this.$emit("concept_mouseover", concept);
+            },
+            is_active: function (item) {
+                // highlight_concept is the concept url
+                return (this.highlight_concept && item.wikifier.map(t => t[1]).indexOf(this.highlight_concept) != -1)
             }
-        },
+        }
     }
 </script>
 
@@ -50,6 +57,10 @@
       opacity: .6;
   }
   .highlightable:hover {
+      opacity: 1;
+      border: 1px solid black;
+  }
+  .active {
       opacity: 1;
   }
 </style>

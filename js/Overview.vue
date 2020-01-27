@@ -2,6 +2,7 @@
   <div class="view-overview">
     <neighbor-graph class="neighbor-graph"
                     @resource_mouseover="on_mouseover"
+                    :highlight_concept="highlighted_concept"
                     :reference="overview_reference"
                     :neighbors="overview_neighbors"></neighbor-graph>
     <div class="toolbar">
@@ -51,6 +52,8 @@
         <h1>{{ active_resource.title }}</h1>
         <concept-bar
           class="resource-content-conceptbar"
+          @concept_mouseover="on_bar_mouseover"
+          @concept_mouseout="on_bar_mouseout"
           :concepts="active_resource_concepts"></concept-bar>
         <p>Provider: {{ active_resource.provider }}</p>
         <p>Author: {{ active_resource.author ? active_resource.author.join(", ") : "" }}</p>
@@ -73,7 +76,8 @@
     module.exports = {
         data: function () {
             return {
-                active_resource: this.overview_reference
+                active_resource: this.overview_reference,
+                highlighted_concept: null
             }
         },
         beforeRouteUpdate: function (to, from, next) {
@@ -88,6 +92,12 @@
         methods: {
             on_mouseover: function (item) {
                 this.active_resource = item;
+            },
+            on_bar_mouseover: function (concept) {
+                this.highlighted_concept = concept.url;
+            },
+            on_bar_mouseout: function (concept) {
+                this.highlighted_concept = null;
             },
             add_to_basket: function () {
                 if (this.active_resource) {
@@ -141,6 +151,7 @@
                     .slice(0, 5)
                     .map( ([label, url, ignore, value], i) => ({ label,
                                                                  value,
+                                                                 url,
                                                                  color: this.$constant.palette.concepts[i]
                                                                }));
             },
