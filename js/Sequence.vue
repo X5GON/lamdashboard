@@ -4,6 +4,7 @@
     <h1>Sequence</h1>
     <div class="sequence-list">
       <item-detail v-for="item in items"
+                   :key="item.url"
                    class="miniature"
                    :item="item"></item-detail>
     </div>
@@ -16,8 +17,15 @@
       <img class="toolbar-icon"
            title="Back to basket"
            alt="Basket"
-           @click="show_basker"
-           src="img/basket_icon.svg"></img>
+           @click="show_basket"
+           src="img/basket.svg"></img>
+    </div>
+    <div class="sequence-menu right-drawer-menu">
+      <ul>
+        <li>Organize</li>
+        <li>Automatic addition of resources</li>
+        <li>Export</li>
+      </ul>
     </div>
   </div>
 </template>
@@ -30,11 +38,12 @@
           }
       },
       methods: {
-          show_overview: function () {
+          show_basket: function () {
               this.$router.push('/basket');
           },
           show_help: function () {
           },
+
       }
     }
 </script>
@@ -70,5 +79,15 @@
       right: 22px;
       display: flex;
       flex-direction: column;
+  }
+  .right-drawer-menu {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 36px;
+  }
+  .right-drawer-menu:hover {
+      width: 120px;
   }
 </style>

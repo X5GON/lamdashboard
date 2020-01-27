@@ -4,6 +4,7 @@
     <h1>Basket</h1>
     <div class="basket-list">
       <item-detail v-for="item in items"
+                   :key="item.url"
                    class="miniature"
                    :item="item"></item-detail>
     </div>
@@ -18,11 +19,17 @@
            alt="Back"
            @click="show_overview"
            src="img/overview_icon.svg"></img>
+      <img class="toolbar-icon"
+           title="Organize sequence"
+           alt="Sequence"
+           @click="show_sequence"
+           src="img/sequence_icon.svg"></img>
     </div>
   </div>
 </template>
 
 <script>
+
   module.exports = {
       data: function() {
           return {
@@ -39,6 +46,10 @@
           },
           show_help: function () {
           },
+          show_sequence: function () {
+              this.$store.dispatch('sort_basket');
+              this.$router.push('/sequence');
+          }
       }
     }
 </script>

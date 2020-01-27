@@ -4,6 +4,7 @@ export default {
     api: {
         search: "http://wp3.x5gon.org/others/lamdsh/search",
         neighbors: "http://wp3.x5gon.org/others/lamdsh/knnlamdsh",
+        sort_basket: "http://wp3dev.x5gon.org/sequencing/sort",
     },
     // Color palettes
     palette: {
