@@ -14,6 +14,11 @@ defined in .vue syntax and loaded through http-vue-loader. This
 approach has one major drawback: since code is dynamically loaded and
 interpreted, the devtools interaction is not as direct as it could be.
 
+## Architecture
+
+All application-wide state (search results, basket, sequence) is
+stored in the Store component, especially interactions with the API.
+
 ## Hacking
 
 It is advised to install vuejs devtools extensions to facilitate debugging.
