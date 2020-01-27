@@ -12,14 +12,14 @@
            alt="?"
            @click="show_help"
            src="img/help.svg"></img>
-      <div class="toolbar-icon-basket toolbar-icon"
-           :data-count="basket_count">
+      <count-overlay class="toolbar-icon-basket toolbar-icon"
+                     :count="basket_count">
         <img class="toolbar-icon"
              title="Show basket"
              alt="Basket"
              @click="show_basket"
              src="img/basket.svg"></img>
-      </div>
+      </count-overlay>
       <img class="toolbar-icon-debug toolbar-icon"
            title="Populate"
            @click="populate"
@@ -309,19 +309,5 @@
       top: 120px;
       display: flex;
       flex-direction: column;
-  }
-  [data-count]::after{
-      position: absolute;
-      top: 0;
-      left: 0;
-      content: attr(data-count);
-      height: 14px;
-      color: #ffec09;
-      background-color: #2f3169;
-      display: block;
-      border-radius: 14px;
-      font-size: 14px;
-      text-align: center;
-      font-family: Open sans-serif;
   }
 </style>

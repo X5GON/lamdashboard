@@ -11,6 +11,7 @@ export default {
         // Other components (alphabetical order)
         "BarLegend",
         "ConceptBar",
+        "CountOverlay",
         "ItemDetail",
         "LetterCube",
         "NeighborGraph",
