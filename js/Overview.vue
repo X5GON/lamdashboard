@@ -169,6 +169,10 @@
     display: flex;
     flex-direction: column;
   }
+  .neighbor-graph svg {
+      width: 99.9vw;
+      height: 50vh;
+  }
   .resource-information {
       background-color: #fff;
       display: flex;

@@ -46,11 +46,6 @@
 </script>
 
   <style scoped>
-  svg {
-    width: 99.9vw;
-    height: 50vh;
-  }
-
   .highlightable {
       opacity: .6;
   }
