@@ -61,7 +61,7 @@
 
 <style scoped>
     g.concept {
-        pointer-events: bounding-box;
+        pointer-events: all;
     }
     g.concept:hover text {
         font-weight: 800;
