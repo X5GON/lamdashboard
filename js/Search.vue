@@ -36,15 +36,14 @@
                 return this.active_resource !== null ? this.active_resource.url : "null";
             },
             active_resource_legend: function () {
-                // Get the 5 top concepts of the resource
                 if (this.active_resource === null)
                     return null;
-                return (this.active_resource.wikifier || []).slice(0, 5).map((t, i) => ({ label: t[0],
-                                                                                  url: t[1],
-                                                                                  value: t[3],
-                                                                                  width: t[3] * 200,
-                                                                                  color: this.$constant.palette.concepts[i]
-                                                                                }));
+                return Object.values(this.active_resource.concepts).map((concept, i) => ({ label: concept.label,
+                                                                                           url: concept.url,
+                                                                                           value: concept.value,
+                                                                                           width: concept.value * 200,
+                                                                                           color: this.$constant.palette.concepts[i]
+                                                                                         }));
             }
         }
     }
