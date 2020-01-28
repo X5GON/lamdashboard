@@ -10,7 +10,7 @@
           @mouseover="on_concept_mouseover(item)"
           fill="none"
           stroke-linecap="round" stroke-opacity="1" stroke-width="4"
-          :stroke="color_palette(index)"
+          :stroke="color_palette(item, index)"
           :d="`M 0 0 l 0 ${y_concept[concept_count-index-1]}`"></path>
     <text v-if="title" :transform="`translate(-4, 0) rotate(90) scale(1,-1)`" fill="#fff" font-family="Open Sans" font-size="4">{{ title }}</text>
     <g v-if="legend" id="legend">
@@ -89,11 +89,15 @@
             y: {
                 type: Number,
                 default: 0
+            },
+            concept_palette: {
+                type: Function,
+                default: null
             }
         },
         methods: {
-            color_palette: function (i) {
-                return this.$constant.palette.concepts[i];
+            color_palette: function (concept, index) {
+                return this.concept_palette !== null ? this.concept_palette(concept[1]) : this.$constant.palette.concepts[index];
             },
             on_mouseover: function () {
                 this.$emit("resource_mouseover", this.item);

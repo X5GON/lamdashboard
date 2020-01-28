@@ -10,6 +10,7 @@
                                  @resource_click="on_click(reference)"
                                  @resource_dblclick="on_dblclick(reference)"
                                  @concept_mouseover="on_concept_mouseover"
+                                 @concept_palette="concept_palette"
                                  :item="reference"></resource-representation>
       </g>
       <resource-representation v-for="item in neighbors"
@@ -22,6 +23,7 @@
                                @resource_click="on_click(item)"
                                @resource_dblclick="on_dblclick(item)"
                                @concept_mouseover="on_concept_mouseover"
+                               @concept_palette="concept_palette"
                                :item="item">
       </resource-representation>
     </svg-container>
@@ -30,7 +32,7 @@
 
 <script>
     module.exports = {
-        props: [ "reference", "neighbors", "highlight_concept" ],
+        props: [ "reference", "neighbors", "highlight_concept", "concept_palette" ],
         methods: {
             on_mouseover: function (item) {
                 this.$emit("resource_mouseover", item);
