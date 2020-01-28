@@ -3,11 +3,11 @@
     <div v-bind:style="innerStyles" class="spinner-inner">
       <div class="cube panelLoad">
         <div class='cube-face cube-face-front' :style="{ color: '#26a658' }" >X</div>
-        <div class='cube-face cube-face-back'>5</div>
-        <div class='cube-face cube-face-left'>G</div>
+        <div class='cube-face cube-face-back'>N</div>
+        <div class='cube-face cube-face-left'>5</div>
         <div class='cube-face cube-face-right' :style="{ color: '#049ccd' }" >O</div>
-        <div class='cube-face cube-face-bottom'>N</div>
-        <div class='cube-face cube-face-top':style="{ color: '#26a658' }">X</div>
+        <div class='cube-face cube-face-bottom'>G</div>
+        <div class='cube-face cube-face-top'>!</div>
       </div>
     </div>
   </div>
@@ -106,22 +106,19 @@ module.exports = {
 
   @keyframes letter-cube-panel {
     0% {
-      transform: rotateY(0deg) rotateZ(0deg);
+        transform: rotateY(0deg) rotateZ(0deg);
     }
     20% {
-      transform: rotateY(90deg) rotateZ(0deg);
+        transform: rotateY(90deg) rotateZ(0deg);
     }
     40% {
-      transform: rotateX(45deg) rotateZ(45deg);
-    }
-    60% {
-      transform: rotateX(90deg) rotateY(180deg) rotateX(90deg);
+        transform: rotateX(45deg) rotateZ(45deg) rotateX(90deg);
     }
     80% {
-      transform: rotateX(310deg) rotateZ(230deg)
+        transform: rotateX(180deg) rotateX(180deg);
     }
     100% {
-      transform: rotateX(360deg) rotateZ(360deg)
+        transform: rotateX(360deg) rotateZ(360deg);
     }
   }
 </style>
