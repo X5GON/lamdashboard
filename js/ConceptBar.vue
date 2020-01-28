@@ -7,7 +7,7 @@
             stroke-linecap="round" stroke-opacity="1" stroke-width="5"
             @mouseover="on_concept_mouseover(item)"
             @mouseout="on_concept_mouseout(item)"
-            :stroke="color_palette(index)"
+            :stroke="item.color"
             :d="`M 0 0 l ${x_concept[concept_count-index-1]} 0`"></path>
       <text :transform="`translate(${(x_concept[concept_count-index-2] || 0) + 5} 1)`"
             @mouseover="on_concept_mouseover(item)"
@@ -21,12 +21,9 @@
   <script>
     module.exports = {
         props: {
-            concepts: Array, // Array of { label, value } elements
+            concepts: Array // Array of { label, value, url, color } elements
         },
         methods: {
-            color_palette: function (i) {
-                return this.$constant.palette.concepts[i];
-            },
             on_concept_mouseover: function (concept) {
                 this.$emit("concept_mouseover", concept);
             },
