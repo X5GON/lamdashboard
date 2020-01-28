@@ -4,6 +4,7 @@
     <neighbor-graph class="neighbor-graph"
                     @resource_mouseover="on_mouseover"
                     :highlight_concept="highlighted_concept"
+                    :concept_palette="concept_palette"
                     :reference="overview_reference"
                     :neighbors="overview_neighbors"></neighbor-graph>
     <div class="toolbar">
@@ -105,6 +106,10 @@
             }
         },
         methods: {
+            concept_palette: function (url) {
+                // Return a color for the given concept
+                return this.reference_palette[url] || "#f00";
+            },
             on_mouseover: function (item) {
                 this.active_resource = item;
             },
@@ -139,6 +144,12 @@
         },
         computed: {
             ...Vuex.mapState([ "overview_reference", "overview_neighbors", "query" ]),
+            reference_palette: function () {
+                // Return the palette with colors associated to the reference resource concepts
+                return Object.fromEntries(Object.keys(this.overview_reference.concepts)
+                                          .map((url, i) => [ url,
+                                                             this.$constant.palette.concepts[i] ]));
+            },
             active_resource_metadata: function () {
                 if (this.active_resource) {
                     return [ [ 'id', 'Identifier' ],
@@ -170,14 +181,16 @@
             active_resource_concepts: function () {
                 if (!this.active_resource)
                     return [];
-                return this.active_resource
-                    .wikifier
-                    .slice(0, 5)
-                    .map( ([label, url, ignore, value], i) => ({ label,
-                                                                 value,
-                                                                 url,
-                                                                 color: this.$constant.palette.concepts[i]
-                                                               }));
+                if (this.$constant.concept_mapping_from_reference) {
+                    return Object.values(this.active_resource.concepts).map(concept => Object.assign({}, concept, {
+                        color: this.reference_palette[concept.url] || '#f00' }));
+                } else {
+                    // Concepts not mapped from reference. Use an
+                    // index-based coloring scheme (meaningless, but
+                    // more aesthetic)
+                    return Object.values(this.active_resource.concepts).map((concept, i) => Object.assign({}, concept, {
+                        color: this.$constant.palette.concepts[i] }));
+                }
             },
             basket_count: function () {
                 return this.$store.state.basket.length;
