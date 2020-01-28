@@ -1,15 +1,15 @@
 <template>
   <svg-container :viewbox="`-3 -3 ${width} 6`" preserve_aspect_ratio="none">
-    <g v-for="(item, index) in reversed_concepts"
+    <g v-for="(item, index) in concepts"
        :class="concept_class(item)"
-       :id="`concept${concept_count-index}`">
+       :id="`concept${index+1}`">
       <path fill="none"
             stroke-linecap="round" stroke-opacity="1" stroke-width="5"
             @mouseover="on_concept_mouseover(item)"
             @mouseout="on_concept_mouseout(item)"
             :stroke="item.color"
-            :d="`M 0 0 l ${x_concept[concept_count-index-1]} 0`"></path>
-      <text :transform="`translate(${(x_concept[concept_count-index-2] || 0) + 5} 1)`"
+            :d="`M ${x_concept[index-1] || 0} 0 L ${width-10} 0`"></path>
+      <text :transform="`translate(${(x_concept[index-1] || 0) + 2} 1)`"
             @mouseover="on_concept_mouseover(item)"
             fill="#fff"
             font-family="Open Sans"
@@ -46,9 +46,6 @@
                 return d3.scaleLinear()
                     .domain([ 0, 1 ])
                     .range([ 0, this.width - 10 ]);
-            },
-            reversed_concepts: function () {
-                return this.concepts.slice().reverse();
             },
             x_concept: function () {
                 // Return an array with stacked lengths
