@@ -73,9 +73,46 @@ const store = new Vuex.Store({
             state.notification_messages.splice(i, 1);
         },
         set_overview_reference(state, resource) {
+            // Build an object holding the N most important concepts for the resource
+
+            // We normalize here the concepts array, which stores the
+            // top N concepts with { value, label, url } attributes
+
+            resource.concepts = Object.fromEntries(resource.wikifier
+                                                   .sort((a,b) => b[3] - a[3])
+                                                   .slice(0, 5)
+                                                   .map(c => [ c[1], { value: c[3],
+                                                                       label: c[0],
+                                                                       url: c[1] } ]))
             state.overview_reference = resource;
         },
         set_overview_neighbors(state, neighbors) {
+            // We normalize here the concepts array, which stores the
+            // top N concepts with { value, label, url } attributes
+
+            if (constant.concept_mapping_from_reference) {
+                // Populate concepts according to overview_reference
+                neighbors = neighbors.map(item => {
+                    let wikifier = Object.fromEntries(item.wikifier.map(c => [ c[1], c[3] ]));
+                    item.concepts = Object.fromEntries(Object.keys(state.overview_reference.concepts).map(url => [ url, {
+                        value: wikifier[url] || 0,
+                        label: state.overview_reference.concepts[url].label,
+                        url: url } ]));
+                    return item;
+                });
+            } else {
+                // Define concepts as top 5 concepts for the resource,
+                // ignoring reference concept
+                neighbors = neighbors.map(item  => {
+                    item.concepts = Object.fromEntries(item.wikifier
+                                                       .sort((a,b) => b[3] - a[3])
+                                                       .slice(0, 5)
+                                                       .map(c => [ c[1], { value: c[3],
+                                                                           label: c[0],
+                                                                           url: c[1] } ]));
+                    return item;
+                });
+            }
             state.overview_neighbors = neighbors;
         },
 
@@ -148,7 +185,7 @@ const store = new Vuex.Store({
                     console.log("query result", data, data.output);
                     let output = data.output;
                     commit('set_query', query);
-                    if (output.neighbors) {
+                    if (output && output.neighbors) {
                         // FIXME: Debug mode, we use dumps from old knnladmdsh API
                         commit('set_overview_reference', output.res_in_focus);
                         commit('set_overview_neighbors', output.neighbors);

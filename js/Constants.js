@@ -1,6 +1,7 @@
 export default {
     // For neighbors API call
     MAX_NEIGHBORS: 60,
+    concept_mapping_from_reference: false,
     max_concepts: 5,
     api: {
         search: "http://wp3.x5gon.org/others/lamdsh/search",

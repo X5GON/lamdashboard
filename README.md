@@ -23,6 +23,12 @@ stored in the Store component, especially interactions with the API.
 
 It is advised to install vuejs devtools extensions to facilitate debugging.
 
+## Debugging
+
+If you enter a query in the form d:NAME the application will fetch
+data/NAME.json as debug data. It will use it to populate search
+results, basket and sequence.
+
 ## Authors
 
 Architecture and implementation: Olivier Aubert <contact@olivieraubert.net>
