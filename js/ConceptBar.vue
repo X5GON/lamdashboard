@@ -1,5 +1,5 @@
 <template>
-  <svg-container viewbox="-3 -3 210 6" preserve_aspect_ratio="none">
+  <svg-container :viewbox="`-3 -3 ${width} 6`" preserve_aspect_ratio="none">
     <g v-for="(item, index) in reversed_concepts"
        :class="concept_class(item)"
        :id="`concept${concept_count-index}`">
@@ -21,7 +21,11 @@
   <script>
     module.exports = {
         props: {
-            concepts: Array // Array of { label, value, url, color } elements
+            concepts: Array, // Array of { label, value, url, color } elements
+            width: {
+                type: Number,
+                default: 210
+            }
         },
         methods: {
             on_concept_mouseover: function (concept) {
@@ -41,7 +45,7 @@
             scale: function () {
                 return d3.scaleLinear()
                     .domain([ 0, 1 ])
-                    .range([ 0, 200 ]);
+                    .range([ 0, this.width - 10 ]);
             },
             reversed_concepts: function () {
                 return this.concepts.slice().reverse();
@@ -52,7 +56,7 @@
                 let total = values.reduce((a, b) => a+b);
                 let s = 0;
                 let lengths = values.reduce((result, v) => { s = s + v / total;
-                                                             result.push(s  * 200);
+                                                             result.push(s  * (this.width - 10));
                                                              return result }, []);
                 return lengths;
             }
