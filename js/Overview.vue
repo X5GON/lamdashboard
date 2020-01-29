@@ -7,31 +7,13 @@
                     :concept_palette="concept_palette"
                     :reference="overview_reference"
                     :neighbors="overview_neighbors"></neighbor-graph>
-    <div class="toolbar">
-      <img class="toolbar-icon"
-           title="Help"
-           alt="?"
-           @click="show_help"
-           src="img/help.svg"></img>
-      <count-overlay class="toolbar-icon-basket toolbar-icon"
-                     :count="basket_count">
-        <img class="toolbar-icon"
-             title="Show basket"
-             alt="Basket"
-             @click="show_basket"
-             src="img/basket.svg"></img>
-      </count-overlay>
+
+    <x5gon-toolbar>
       <img class="toolbar-icon-debug toolbar-icon"
            title="Populate"
            @click="populate"
            src="img/debug_icon.svg"></img>
-    </div>
-    <div class="toolbar-left">
-      <img class="toolbar-icon"
-           title="Search"
-           @click="show_search"
-           src="img/search.svg"></img>
-    </div>
+    </x5gon-toolbar>
     <div v-if="active_resource" class="resource-information">
       <div class="toolbar-fullscreen">
         <img class="toolbar-icon toolbar-icon-fullscreen"
@@ -128,14 +110,6 @@
                     this.$store.dispatch('add_to_basket', this.active_resource);
                 }
             },
-            show_basket: function () {
-                this.$router.push('/basket');
-            },
-            show_help: function () {
-            },
-            show_search: function () {
-                this.$router.push({ path: '/search', query: { q: this.query }});
-            },
             populate: function () {
               // Debug function
               this.$store.dispatch('populate_basket', 5);
@@ -192,9 +166,6 @@
                         color: this.$constant.palette.concepts[i] }));
                 }
             },
-            basket_count: function () {
-                return this.$store.state.basket.length;
-            }
         },
         mounted: function () {
             if (this.$route.query.q) {
@@ -243,6 +214,11 @@
       position: absolute;
       top: 13px;
       left: 13px;
+  }
+  .toolbar-icon {
+      position: relative;
+      width: 32px;
+      height: 32px;
   }
   .toolbar-icon-fullscreen {
       pointer-events: all;
@@ -300,27 +276,5 @@
   .resource-content-conceptbar svg {
       width: 80%;
       height: 30px;
-  }
-  .toolbar-icon {
-      position: relative;
-      width: 32px;
-      height: 32px;
-  }
-  .toolbar-icon + .toolbar-icon {
-      margin-top: 12px;
-  }
-  .toolbar {
-      position: absolute;
-      top: 30px;
-      right: 22px;
-      display: flex;
-      flex-direction: column;
-  }
-  .toolbar-left {
-      position: absolute;
-      left: 22px;
-      top: 120px;
-      display: flex;
-      flex-direction: column;
   }
 </style>

@@ -19,18 +19,7 @@
         <li @click="do_export"><img alt="" src="img/icon_export.svg">Export</li>
       </ul>
     </div>
-    <div class="toolbar">
-      <img class="toolbar-icon"
-           title="Help"
-           alt="?"
-           @click="show_help"
-           src="img/help.svg"></img>
-      <img class="toolbar-icon"
-           title="Back to basket"
-           alt="Basket"
-           @click="show_basket"
-           src="img/basket.svg"></img>
-    </div>
+    <x5gon-toolbar></x5gon-toolbar>
   </div>
 </template>
 

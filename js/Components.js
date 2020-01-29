@@ -17,7 +17,8 @@ export default {
         "NeighborGraph",
         "ResourceRepresentation",
         "ResultDrawer",
-        "SvgContainer"
+        "SvgContainer",
+        "X5gonToolbar",
     ].map(name => ([ name,
                      // We convert camelCase to kebab-case for component names
                      Vue.component(name

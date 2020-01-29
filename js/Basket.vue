@@ -8,23 +8,7 @@
                    class="miniature"
                    :item="item"></item-detail>
     </div>
-    <div class="toolbar">
-      <img class="toolbar-icon"
-           title="Help"
-           alt="?"
-           @click="show_help"
-           src="img/help.svg"></img>
-      <img class="toolbar-icon"
-           title="Back to overview"
-           alt="Back"
-           @click="show_overview"
-           src="img/overview_icon.svg"></img>
-      <img class="toolbar-icon"
-           title="Organize sequence"
-           alt="Sequence"
-           @click="show_sequence"
-           src="img/sequence_icon.svg"></img>
-    </div>
+    <x5gon-toolbar></x5gon-toolbar>
   </div>
 </template>
 
@@ -41,15 +25,6 @@
           }
       },
       methods: {
-          show_overview: function () {
-              this.$router.push('/overview');
-          },
-          show_help: function () {
-          },
-          show_sequence: function () {
-              this.$store.dispatch('sort_basket');
-              this.$router.push('/sequence');
-          }
       }
     }
 </script>
