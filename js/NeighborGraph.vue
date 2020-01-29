@@ -4,7 +4,8 @@
       <rect x="0" y="0" width="1" height="100" stroke="#ff0" stroke-opacity="1" stroke-width=".1" fill="none"></rect>
       <rect x="0" y="0" width="100" height="1" stroke="#fff" stroke-opacity="1" stroke-width=".1" fill="none"></rect>
       <g id="reference">
-        <resource-representation class="highlightable"
+        <resource-representation v-if="reference"
+                                 class="highlightable"
                                  :class="{ active: is_active(reference) }"
                                  :x="30000*reference.reduction_coordinates[0]"
                                  :y="30000*reference.reduction_coordinates[1]"
