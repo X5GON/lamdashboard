@@ -6,6 +6,8 @@
       <g id="reference">
         <resource-representation class="highlightable"
                                  :class="{ active: is_active(reference) }"
+                                 :x="30000*reference.reduction_coordinates[0]"
+                                 :y="30000*reference.reduction_coordinates[1]"
                                  @resource_mouseover="on_mouseover(reference)"
                                  @resource_click="on_click(reference)"
                                  @resource_dblclick="on_dblclick(reference)"
