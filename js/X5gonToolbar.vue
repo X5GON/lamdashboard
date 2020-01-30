@@ -44,7 +44,7 @@
               this.$router.push({ path: '/search', query: { q: this.$store.state.query }});
           },
           show_overview: function () {
-              this.$router.push('/overview');
+              this.$router.push(this.$store.state.overview_reference ? `/overview/${this.$store.state.overview_reference.id}` : '/overview' );
           },
           show_basket: function () {
               this.$router.push('/basket');
