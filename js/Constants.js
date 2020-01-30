@@ -13,6 +13,8 @@ export default {
     max_difficulty: 40,
     max_width: 50,
     max_height: 105,
+    // In Overview
+    selection_lock_timeout: 1000,
     // Color palettes
     palette: {
         concepts: [ "#505973", "#e95c44", "#be4b4d", "#933b50", "#3e1966" ],

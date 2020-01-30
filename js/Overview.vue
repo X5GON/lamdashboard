@@ -3,6 +3,7 @@
        :class="{ fullscreen: is_fullscreen }">
     <neighbor-graph class="neighbor-graph"
                     @resource_mouseover="on_mouseover"
+                    @resource_click="on_resource_click"
                     :highlight_concept="highlighted_concept"
                     :concept_palette="concept_palette"
                     :reference="overview_reference"
@@ -76,6 +77,7 @@
                 active_resource: this.overview_reference,
                 highlighted_concept: null,
                 is_fullscreen: false,
+                selection_lock: null,
             }
         },
         beforeRouteUpdate: function (to, from, next) {
@@ -93,7 +95,16 @@
                 return this.reference_palette[url] || "#f00";
             },
             on_mouseover: function (item) {
+                if (this.selection_lock === null)
+                    this.active_resource = item;
+            },
+            on_resource_click: function (item) {
                 this.active_resource = item;
+                if (this.selection_lock !== null) {
+                    clearTimeout(this.selection_lock);
+                }
+                this.selection_lock = setTimeout(() => { this.selection_lock = null },
+                                                 this.$constant.selection_lock_timeout);
             },
             on_bar_mouseover: function (concept) {
                 this.highlighted_concept = concept.url;
