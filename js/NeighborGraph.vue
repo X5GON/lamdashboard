@@ -6,6 +6,7 @@
       <g id="reference">
         <resource-representation v-if="reference"
                                  class="highlightable"
+                                 is_reference
                                  :class="{ active: is_active(reference) }"
                                  :x="30000*reference.reduction_coordinates[0]"
                                  :y="30000*reference.reduction_coordinates[1]"
@@ -59,7 +60,7 @@
 
   <style scoped>
   .highlightable {
-      opacity: .6;
+      opacity: .5;
   }
   .highlightable:hover {
       opacity: 1;

@@ -4,7 +4,7 @@
      @click="on_click"
      @dblclick="on_dblclick"
      :transform="`translate(${x}, ${y}) scale(1,-1)`">
-    <circle id="circle" fill="url(#paint0_radial)" fill-opacity="1" fill-rule="nonzero" stroke="none" cx="0" cy="0" :r="radius"></circle>
+    <circle id="circle" fill="url(#paint0_radial)" fill-opacity="1" fill-rule="nonzero" :stroke="is_reference ? '#fff' : 'none'" stroke-width="1" cx="0" cy="0" :r="radius"></circle>
     <path v-for="(item, index) in reversed_concepts"
           :id="`concept${concept_count-index}`"
           @mouseover="on_concept_mouseover(item)"
@@ -57,6 +57,10 @@
             title: {
                 type: String,
                 default: null
+            },
+            is_reference: {
+                type: Boolean,
+                default: false
             },
             legend: {
                 type: Boolean,
