@@ -12,12 +12,13 @@ export default {
     max_duration: 100000,
     max_difficulty: 40,
     max_width: 50,
-    max_height: 105,
+    max_height: 200,
     // In Overview
     selection_lock_timeout: 1000,
     // Color palettes
     palette: {
-        concepts: [ "#505973", "#e95c44", "#be4b4d", "#933b50", "#3e1966" ],
+        //concepts: [ "#505973", "#e95c44", "#be4b4d", "#933b50", "#3e1966" ],
+        concepts: [ "#ff7070", "#18ffc3", "#d7d680", "#5db2fa", "#8888e2" ],
         blue_concepts: [ "#4279FF", "#719AFF", "#A0BCFF", "#D0DDFF", "#FFFFFF" ],
     }
 }

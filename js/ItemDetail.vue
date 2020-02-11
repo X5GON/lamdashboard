@@ -2,7 +2,7 @@
   <div v-if="item" class="view-itemdetail">
     <div class="itemdetail-title">{{ item ? item.title : "" }}</div>
     <div class="itemdetail-representation">
-      <svg-container>
+      <svg-container :viewbox="viewbox">
         <resource-representation :item="item"
                                  :max_width="30" :max_height="100"
                                  :x="70" :y="70"
@@ -24,6 +24,11 @@
                 default: false
             }
         },
+        computed: {
+            viewbox: function () {
+                return this.legend ? "0 0 110 200" : "0 50 110 200";
+            },
+        }
     };
 </script>
 

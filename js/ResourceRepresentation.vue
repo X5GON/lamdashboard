@@ -4,45 +4,62 @@
      @click="on_click"
      @dblclick="on_dblclick"
      :transform="`translate(${x}, ${y}) scale(1,-1)`">
-    <circle id="circle" fill="url(#paint0_radial)" fill-opacity="1" fill-rule="nonzero" :stroke="is_reference ? '#fff' : 'none'" stroke-width="1" cx="0" cy="0" :r="radius"></circle>
-    <path v-for="(item, index) in reversed_concepts"
-          :id="`concept${concept_count-index}`"
-          @mouseover="on_concept_mouseover(item)"
-          fill="none"
-          stroke-linecap="round" stroke-opacity="1" stroke-width="4"
-          :stroke="color_palette(item, index)"
-          :d="`M 0 0 l 0 ${y_concept[concept_count-index-1]}`"></path>
-    <text v-if="title" :transform="`translate(-4, 0) rotate(90) scale(1,-1)`" fill="#fff" font-family="Open Sans" font-size="4">{{ title }}</text>
-    <g v-if="legend" id="legend">
-      <g id="difficulty_hint">
-        <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
-              :d="`M 0 ${bar_height+2} l -${difficulty_legend_offset} 0`"></path>
-        <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
-              :d="`M 0 -2 l -${difficulty_legend_offset} 0`"></path>
-        <path fill="none" stroke="#505973" stroke-width=".15"
-              :d="`M -${difficulty_legend_offset} -2 l 0 ${bar_height+4}`"
-              marker-start="url(#triangle)"
-              marker-end="url(#triangle)"></path>
-        <text :transform="`translate(-${difficulty_legend_offset + 1}, ${bar_height/2-10}) rotate(90) scale(1,-1)`"
-              fill="#505973"
-              font-family="Open Sans"
-              font-size="3">DIFFICULTY</text>
+
+      <circle id="circle" fill="url(#paint0_radial)" :fill-opacity="is_reference ? 1 : 0" fill-rule="nonzero" :stroke="is_reference ? 'none' : '#ff7070'" stroke-width="3" cx="0" cy="0" :r="radius"></circle>
+
+      <g v-if="is_reference">
+        <path v-for="(item, index) in reversed_concepts"
+              :id="`concept${concept_count-index}`"
+              @mouseover="on_concept_mouseover(item)"
+              fill="none"
+              stroke-opacity="1" stroke-width="10"
+              :stroke="color_palette(item, index)"
+              :d="`M 0 0 l 0 ${y_concept[concept_count-index-1]}`"></path>
       </g>
-      <g id="length_hint">
-        <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
-              :d="`M -${radius} -2 l 0 -${radius+5}`"></path>
-        <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
-              :d="`M ${radius} -2 l 0 -${radius+5}`"></path>
-        <path fill="none" stroke="#505973" stroke-width=".15"
-              :d="`M -${radius} -${radius+5} l ${2*radius} 0`"
-              marker-start="url(#triangle)"
-              marker-end="url(#triangle)"></path>
-        <text :transform="`translate(-6, -${radius+9}) scale(1,-1)`"
-              fill="#505973"
-              font-family="Open Sans"
-              font-size="3">LENGTH</text>
+      <g v-else>
+        <path stroke-opacity="1" stroke-width="4"
+              stroke="#ff7070"
+              :d="`M 0 0 l 0 ${bar_height}`"></path>
+
       </g>
-    </g>
+
+      <text v-if="title"
+            transform="translate(-4, 0) rotate(90) scale(1,-1)"
+            fill="#fff"
+            font-family="Open Sans"
+            font-size="6">
+        {{ title }}
+      </text>
+      <g v-if="legend" id="legend">
+        <g id="difficulty_hint">
+          <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
+                :d="`M 0 ${bar_height+2} l -${difficulty_legend_offset} 0`"></path>
+          <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
+                :d="`M 0 -2 l -${difficulty_legend_offset} 0`"></path>
+          <path fill="none" stroke="#505973" stroke-width=".15"
+                :d="`M -${difficulty_legend_offset} -2 l 0 ${bar_height+4}`"
+                marker-start="url(#triangle)"
+                marker-end="url(#triangle)"></path>
+          <text :transform="`translate(-${difficulty_legend_offset + 1}, ${bar_height/2-10}) rotate(90) scale(1,-1)`"
+                fill="#505973"
+                font-family="Open Sans"
+                font-size="3">DIFFICULTY</text>
+      </g>
+        <g id="length_hint">
+          <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
+                :d="`M -${radius} -2 l 0 -${radius+5}`"></path>
+          <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
+                :d="`M ${radius} -2 l 0 -${radius+5}`"></path>
+          <path fill="none" stroke="#505973" stroke-width=".15"
+                :d="`M -${radius} -${radius+5} l ${2*radius} 0`"
+                marker-start="url(#triangle)"
+                marker-end="url(#triangle)"></path>
+          <text :transform="`translate(-6, -${radius+9}) scale(1,-1)`"
+                fill="#505973"
+                font-family="Open Sans"
+                font-size="3">LENGTH</text>
+        </g>
+      </g>
   </g>
 </template>
 

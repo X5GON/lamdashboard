@@ -3,8 +3,8 @@
       <svg xmlns="http://www.w3.org/2000/svg" :view-box.camel="viewbox" :preserve-aspect-ratio.camel="preserve_aspect_ratio">
         <defs>
           <radialGradient id="paint0_radial">
-            <stop stop-color="#ff9059" stop-opacity="1" offset="0"/>
-            <stop stop-color="#ff9059" stop-opacity="0.2" offset="1"/>
+            <stop stop-color="#ffffff" stop-opacity=".9" offset="0"/>
+            <stop stop-color="#ffffff" stop-opacity=".4" offset="1"/>
           </radialGradient>
           <marker id="triangle" viewBox="0 0 20 20"
                   refX="10" refY="10"
