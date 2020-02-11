@@ -72,6 +72,9 @@
       width: 32px;
       height: 32px;
   }
+  .toolbar-icon:hover {
+      filter: drop-shadow(0px 0px 3px white);
+  }
   .toolbar-icon + .toolbar-icon {
       margin-top: 12px;
   }
