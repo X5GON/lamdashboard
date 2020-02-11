@@ -28,6 +28,7 @@
           <resource-representation
             :x="70"
             :y="70"
+            detailed_concepts
             :item="active_resource"
             is_reference
             :title="active_resource.title"></resource-representation>

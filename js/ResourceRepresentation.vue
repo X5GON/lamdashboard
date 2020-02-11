@@ -5,14 +5,14 @@
      @dblclick="on_dblclick"
      :transform="`translate(${x}, ${y}) scale(1,-1)`">
 
-      <circle id="circle" fill="url(#paint0_radial)" :fill-opacity="is_reference ? 1 : 0" fill-rule="nonzero" :stroke="is_reference ? 'none' : '#ff7070'" stroke-width="3" cx="0" cy="0" :r="radius"></circle>
+      <circle id="circle" fill="url(#paint0_radial)" :fill-opacity="is_reference ? 1 : 0" fill-rule="nonzero" :stroke="resource_stroke" stroke-width="3" cx="0" cy="0" :r="radius"></circle>
 
-      <g v-if="is_reference">
+      <g v-if="detailed_concepts">
         <path v-for="(item, index) in reversed_concepts"
               :id="`concept${concept_count-index}`"
               @mouseover="on_concept_mouseover(item)"
               fill="none"
-              stroke-opacity="1" stroke-width="10"
+              stroke-opacity="1" stroke-width="6"
               :stroke="color_palette(item, index)"
               :d="`M 0 0 l 0 ${y_concept[concept_count-index-1]}`"></path>
       </g>
@@ -76,6 +76,10 @@
                 default: null
             },
             is_reference: {
+                type: Boolean,
+                default: false
+            },
+            detailed_concepts: {
                 type: Boolean,
                 default: false
             },
@@ -179,7 +183,16 @@
             },
             concept_classes: function () {
                 return this.concepts.map(c => `concept-${c[1].replace(/.*\//, '')}`)
-            }
+            },
+            resource_stroke: function () {
+                if (this.is_reference) {
+                    return 'none';
+                } else if (this.detailed_concepts) {
+                    return '#fff';
+                } else {
+                    return '#ff7070';
+                }
+            },
         }
     };
 </script>

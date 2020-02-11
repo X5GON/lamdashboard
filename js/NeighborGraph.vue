@@ -9,6 +9,7 @@
                                :key="item.id"
                                :x="x_position(item)"
                                :y="y_position(item)"
+                               :detailed_concepts="active_resource == item"
                                @resource_mouseover="on_mouseover(item)"
                                @resource_click="on_click(item)"
                                @resource_dblclick="on_dblclick(item)"
@@ -21,6 +22,7 @@
                                class="highlightable"
                                id="reference"
                                is_reference
+                               detailed_concepts
                                :class="{ concept_related: is_concept_related(reference) }"
                                :x="x_position(reference)"
                                :y="y_position(reference)"

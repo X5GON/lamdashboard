@@ -5,6 +5,7 @@
       <svg-container :viewbox="viewbox">
         <resource-representation :item="item"
                                  :max_width="30" :max_height="100"
+                                 detailed_concepts
                                  :x="70" :y="70"
                                  :legend="legend"
                                  :title="item.title"></resource-representation>
