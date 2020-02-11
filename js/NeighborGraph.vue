@@ -3,20 +3,6 @@
     <svg-container zoomable id="graph" viewbox="-50 -500 1000 1000">
       <rect x="0" y="0" width="1" height="100" stroke="#ff0" stroke-opacity="1" stroke-width=".1" fill="none"></rect>
       <rect x="0" y="0" width="100" height="1" stroke="#fff" stroke-opacity="1" stroke-width=".1" fill="none"></rect>
-      <g id="reference">
-        <resource-representation v-if="reference"
-                                 class="highlightable"
-                                 is_reference
-                                 :class="{ active: is_active(reference) }"
-                                 :x="30000*reference.reduction_coordinates[0]"
-                                 :y="30000*reference.reduction_coordinates[1]"
-                                 @resource_mouseover="on_mouseover(reference)"
-                                 @resource_click="on_click(reference)"
-                                 @resource_dblclick="on_dblclick(reference)"
-                                 @concept_mouseover="on_concept_mouseover"
-                                 @concept_palette="concept_palette"
-                                 :item="reference"></resource-representation>
-      </g>
       <resource-representation v-for="item in neighbors"
                                :class="{ active: is_active(item) }"
                                class="highlightable"
@@ -30,6 +16,19 @@
                                @concept_palette="concept_palette"
                                :item="item">
       </resource-representation>
+      <resource-representation v-if="reference"
+                               class="highlightable"
+                               id="reference"
+                               is_reference
+                               :class="{ active: is_active(reference) }"
+                               :x="30000*reference.reduction_coordinates[0]"
+                               :y="30000*reference.reduction_coordinates[1]"
+                               @resource_mouseover="on_mouseover(reference)"
+                               @resource_click="on_click(reference)"
+                                 @resource_dblclick="on_dblclick(reference)"
+                               @concept_mouseover="on_concept_mouseover"
+                               @concept_palette="concept_palette"
+                               :item="reference"></resource-representation>
     </svg-container>
   </div>
 </template>
