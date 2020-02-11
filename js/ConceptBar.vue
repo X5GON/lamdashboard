@@ -4,16 +4,16 @@
        :class="concept_class(item)"
        :id="`concept${index+1}`">
       <path fill="none"
-            stroke-linecap="round" stroke-opacity="1" stroke-width="5"
+            stroke-opacity="1" stroke-width="5"
             @mouseover="on_concept_mouseover(item)"
             @mouseout="on_concept_mouseout(item)"
             :stroke="item.color"
             :d="`M ${x_concept[index-1] || 0} 0 L ${width-10} 0`"></path>
       <text :transform="`translate(${(x_concept[index-1] || 0) + 2} 1)`"
             @mouseover="on_concept_mouseover(item)"
-            fill="#fff"
+            fill="#000"
             font-family="Open Sans"
-            font-size="3">{{ item.label }}</text>
+            font-size="3">{{ item.label.toUpperCase() }}</text>
     </g>
   </svg-container>
 </template>

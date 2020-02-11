@@ -61,6 +61,5 @@
   }
   .view-barlegend-value {
       height: 0px;
-      border-radius: 10px;
   }
 </style>
