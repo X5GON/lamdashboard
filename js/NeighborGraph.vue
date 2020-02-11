@@ -4,11 +4,11 @@
       <rect x="0" y="0" width="1" height="100" stroke="#ff0" stroke-opacity="1" stroke-width=".1" fill="none"></rect>
       <rect x="0" y="0" width="100" height="1" stroke="#fff" stroke-opacity="1" stroke-width=".1" fill="none"></rect>
       <resource-representation v-for="item in neighbors"
-                               :class="{ active: is_active(item) }"
+                               :class="{ concept_related: is_concept_related(item) }"
                                class="highlightable"
                                :key="item.id"
-                               :x="30000*item.reduction_coordinates[0]"
-                               :y="30000*item.reduction_coordinates[1]"
+                               :x="x_position(item)"
+                               :y="y_position(item)"
                                @resource_mouseover="on_mouseover(item)"
                                @resource_click="on_click(item)"
                                @resource_dblclick="on_dblclick(item)"
@@ -21,25 +21,32 @@
                                class="highlightable"
                                id="reference"
                                is_reference
-                               :class="{ active: is_active(reference) }"
-                               :x="30000*reference.reduction_coordinates[0]"
-                               :y="30000*reference.reduction_coordinates[1]"
+                               :class="{ concept_related: is_concept_related(reference) }"
+                               :x="x_position(reference)"
+                               :y="y_position(reference)"
                                @resource_mouseover="on_mouseover(reference)"
                                @resource_click="on_click(reference)"
-                                 @resource_dblclick="on_dblclick(reference)"
+                               @resource_dblclick="on_dblclick(reference)"
                                @concept_mouseover="on_concept_mouseover"
                                @concept_palette="concept_palette"
                                :title="reference.title"
                                :item="reference"></resource-representation>
+      <path v-if="active_resource" :d="resource_link_path" stroke="#fff" stroke-width="1"></path>
     </svg-container>
   </div>
 </template>
 
 <script>
     module.exports = {
+        data: function () {
+            return {
+                active_resource: null
+            }
+        },
         props: [ "reference", "neighbors", "highlight_concept", "concept_palette" ],
         methods: {
             on_mouseover: function (item) {
+                this.active_resource = item;
                 this.$emit("resource_mouseover", item);
             },
             on_click: function (item) {
@@ -51,23 +58,34 @@
             on_concept_mouseover: function (concept) {
                 this.$emit("concept_mouseover", concept);
             },
-            is_active: function (item) {
+            is_concept_related: function (item) {
                 // highlight_concept is the concept url
                 return (this.highlight_concept && item.wikifier.map(t => t[1]).indexOf(this.highlight_concept) != -1)
-            }
+            },
+            x_position: function (item) {
+                return 30000 * item.reduction_coordinates[0];
+            },
+            y_position: function (item) {
+                return 30000 * item.reduction_coordinates[1];
+            },
+        },
+        computed: {
+            resource_link_path: function () {
+                return `M ${this.x_position(this.reference)} ${this.y_position(this.reference)} L ${this.x_position(this.active_resource)} ${this.y_position(this.active_resource)})`;
+            },
         }
     }
 </script>
 
   <style scoped>
   .highlightable {
-      opacity: .5;
+      opacity: .6;
   }
   .highlightable:hover {
       opacity: 1;
       border: 1px solid black;
   }
-  .active {
+  .concept_related {
       opacity: 1;
   }
 </style>
