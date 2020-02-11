@@ -29,6 +29,7 @@
             :x="70"
             :y="70"
             :item="active_resource"
+            is_reference
             :title="active_resource.title"></resource-representation>
         </svg-container>
         <img @click="add_to_basket"
@@ -240,18 +241,18 @@
       background: url(../img/overview_halfscreen.svg) center center no-repeat;
   }
   .resource-metadata {
-      background: linear-gradient(180deg, #3E1966 0%, rgba(153, 159, 178, 0) 100%);
+      background: #40CB76;
       height: 100%;
       width: 15%;
       overflow-y: hidden;
-      color: #4f4f4f;
+      color: #000;
       padding: 12px;
   }
   .resource-metadata-list {
       list-style: none;
   }
   .resource-representation {
-      width: 40%;
+      width: 90%;
       margin: auto;
   }
   .resource-content {
@@ -265,7 +266,7 @@
   }
   .fullscreen .resource-information {
       color: white;
-      background-color: #000d32;
+      background-color: #343637;
   }
   .fullscreen .resource-content-titlebar {
       height: 120px;
