@@ -20,8 +20,8 @@
               <div class="resultdrawer-item-provider">{{ res.provider }}</div>
             </div>
             <div class="resultdrawer-item-line">
-              <div class="resultdrawer-item-type">Author</div>
-              <div class="resultdrawer-item-author">{{ res.author ? res.author.join(", ") : "" }}</div>
+              <div class="resultdrawer-item-type">Author(s)</div>
+              <div class="resultdrawer-item-author">{{ res.authors ? res.authors.join(", ") : "" }}</div>
             </div>
           </div>
         </li>
