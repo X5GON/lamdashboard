@@ -40,6 +40,7 @@
 
 <script>
     module.exports = {
+        name: 'NeighborGraph',
         data: function () {
             return {
                 active_resource: null
@@ -65,15 +66,33 @@
                 return (this.highlight_concept && item.wikifier.map(t => t[1]).indexOf(this.highlight_concept) != -1)
             },
             x_position: function (item) {
-                return 30000 * item.reduction_coordinates[0];
+                return this.x_scale(item.projection[0]);
             },
             y_position: function (item) {
-                return 30000 * item.reduction_coordinates[1];
+                return this.y_scale(item.projection[1]);
             },
         },
         computed: {
             resource_link_path: function () {
                 return `M ${this.x_position(this.reference)} ${this.y_position(this.reference)} L ${this.x_position(this.active_resource)} ${this.y_position(this.active_resource)})`;
+            },
+            x_extent: function () {
+                return d3.extent(this.neighbors.map(n => n.projection[0]));
+            },
+            y_extent: function () {
+                return d3.extent(this.neighbors.map(n => n.projection[1]));
+            },
+            x_scale: function () {
+                let scale = d3.scaleLinear()
+                    .domain(this.x_extent)
+                    .range([ 0, 8000 ]); // pixels
+                return scale;
+            },
+            y_scale: function () {
+                let scale = d3.scaleLinear()
+                    .domain(this.y_extent)
+                    .range([ 0, 4000 ]); // pixels
+                return scale;
             },
         }
     }
