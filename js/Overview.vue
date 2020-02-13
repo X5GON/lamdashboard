@@ -63,7 +63,7 @@
                       :items="active_resource_keywords"></bar-legend>
           <div class="resource-content-content">
             <h2>Resource content</h2>
-              <div class="resource-content-text">
+              <div class="resource-content-description">
                 {{ active_resource.description }}
             </div>
           </div>
@@ -135,9 +135,9 @@
             ...Vuex.mapState([ "overview_reference", "overview_neighbors", "query" ]),
             reference_palette: function () {
                 // Return the palette with colors associated to the reference resource concepts
-                return Object.fromEntries(Object.keys(this.overview_reference.wikifier)
-                                          .map((url, i) => [ url,
-                                                             this.$constant.palette.concepts[i] ]));
+                return Object.fromEntries(this.overview_reference.common_wikifier
+                                          .map((wk, i) => [ wk.url,
+                                                            this.$constant.palette.concepts[i] ]));
             },
             active_resource_metadata: function () {
                 if (this.active_resource) {
@@ -170,16 +170,8 @@
             active_resource_concepts: function () {
                 if (!this.active_resource)
                     return [];
-                if (this.$constant.concept_mapping_from_reference) {
-                    return Object.values(this.active_resource.wikifier).map(concept => Object.assign({}, concept, {
-                        color: this.reference_palette[concept.url] || '#f00' }));
-                } else {
-                    // Concepts not mapped from reference. Use an
-                    // index-based coloring scheme (meaningless, but
-                    // more aesthetic)
-                    return Object.values(this.active_resource.wikifier).map((concept, i) => Object.assign({}, concept, {
-                        color: this.$constant.palette.concepts[i] }));
-                }
+                return Object.values(this.active_resource.common_wikifier).map(concept => Object.assign({}, concept, {
+                    color: this.reference_palette[concept.url] || '#eee' }));
             },
         },
         mounted: function () {
@@ -285,7 +277,14 @@
       margin-right: 20px;
       width: 210px;
   }
-  .resource-content-text {
+  .resource-content-content h2 {
+      font-family: IBM Plex Serif;
+      font-size: 18px;
+      font-weight: 600;
+      padding-bottom: 6px;
+  }
+  .resource-content-description {
+      font-family: Open Sans;
       font-size: 16px;
   }
   .resource-content-conceptbar svg {
