@@ -164,7 +164,7 @@
                     .map( (kw, i) => ({ label: kw.label,
                                         value: kw.value,
                                         width: kw.value * 200,
-                                        color: this.$constant.palette.concepts[i]
+                                        color: this.$constant.palette.blue_concepts[i]
                                       }));
             },
             active_resource_concepts: function () {
