@@ -63,7 +63,8 @@
                       :items="active_resource_keywords"></bar-legend>
           <div class="resource-content-content">
             <h2>Resource content</h2>
-            <div class="resource-content-text">
+              <div class="resource-content-text">
+                {{ active_resource.description }}
             </div>
           </div>
         </div>
@@ -160,11 +161,11 @@
                     return [];
                 return this.active_resource
                     .keywords
-                    .slice(0, 5)
-                    .map( ([label, value], i) => ({ label, value,
-                                                    width: value * 200,
-                                                    color: this.$constant.palette.concepts[i]
-                                                  }));
+                    .map( (kw, i) => ({ label: kw.label,
+                                        value: kw.value,
+                                        width: kw.value * 200,
+                                        color: this.$constant.palette.concepts[i]
+                                      }));
             },
             active_resource_concepts: function () {
                 if (!this.active_resource)
