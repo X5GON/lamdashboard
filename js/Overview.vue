@@ -54,6 +54,12 @@
             @concept_mouseover="on_bar_mouseover"
             @concept_mouseout="on_bar_mouseout"
             :concepts="active_resource_concepts"></concept-bar>
+          <concept-bar
+            class="resource-content-conceptbar-small"
+            @concept_mouseover="on_bar_mouseover"
+            @concept_mouseout="on_bar_mouseout"
+            :height="2"
+            :concepts="reference_resource_concepts"></concept-bar>
         </div>
         <p>Provider: {{ active_resource.provider }}</p>
         <p>Author: {{ active_resource.author ? active_resource.author.join(", ") : "" }}</p>
@@ -96,7 +102,7 @@
         methods: {
             concept_palette: function (url) {
                 // Return a color for the given concept
-                return this.reference_palette[url] || "#f00";
+                return this.reference_palette[url] || "#eee";
             },
             on_mouseover: function (item) {
                 if (this.selection_lock === null)
@@ -128,8 +134,12 @@
             populate: function () {
               // Debug function
               this.$store.dispatch('populate_basket', 5);
-          }
-
+            },
+            colorized_concepts: function (concepts) {
+                return concepts.map(concept => ({
+                    ...concept,
+                    color: this.reference_palette[concept.url] || '#eee' }));
+            },
         },
         computed: {
             ...Vuex.mapState([ "overview_reference", "overview_neighbors", "query" ]),
@@ -168,10 +178,10 @@
                                       }));
             },
             active_resource_concepts: function () {
-                if (!this.active_resource)
-                    return [];
-                return Object.values(this.active_resource.common_wikifier).map(concept => Object.assign({}, concept, {
-                    color: this.reference_palette[concept.url] || '#eee' }));
+                return this.active_resource ? this.colorized_concepts(this.active_resource.common_wikifier) : [];
+            },
+            reference_resource_concepts: function () {
+                return this.overview_reference ? this.colorized_concepts(this.overview_reference.common_wikifier) : [];
             },
         },
         mounted: function () {
@@ -290,5 +300,9 @@
   .resource-content-conceptbar svg {
       width: 80%;
       height: 30px;
+  }
+  .resource-content-conceptbar-small svg {
+      width: 80%;
+      height: 10px;
   }
 </style>
