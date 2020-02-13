@@ -74,7 +74,7 @@
         },
         computed: {
             resource_link_path: function () {
-                return `M ${this.x_position(this.reference)} ${this.y_position(this.reference)} L ${this.x_position(this.active_resource)} ${this.y_position(this.active_resource)})`;
+                return `M ${this.x_position(this.reference)} ${this.y_position(this.reference)} L ${this.x_position(this.active_resource)} ${this.y_position(this.active_resource)}`;
             },
             x_extent: function () {
                 return d3.extent(this.neighbors.map(n => n.projection[0]));
@@ -85,13 +85,13 @@
             x_scale: function () {
                 let scale = d3.scaleLinear()
                     .domain(this.x_extent)
-                    .range([ 0, 8000 ]); // pixels
+                    .range([ 0, 6000 ]); // pixels
                 return scale;
             },
             y_scale: function () {
                 let scale = d3.scaleLinear()
                     .domain(this.y_extent)
-                    .range([ 0, 4000 ]); // pixels
+                    .range([ 0, 3000 ]); // pixels
                 return scale;
             },
         }
