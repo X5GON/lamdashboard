@@ -7,6 +7,7 @@
 
 <script>
     module.exports = {
+        name: "LoadingSpinner",
         computed: {
             ...Vuex.mapState([ "loading_message" ]),
         }

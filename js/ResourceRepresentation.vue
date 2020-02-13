@@ -69,6 +69,7 @@
       viewbox.
     */
     module.exports = {
+        name: "ResourceRepresentation",
         props: {
             item: Object,
             title: {

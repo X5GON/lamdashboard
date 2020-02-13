@@ -15,6 +15,7 @@
 
 <script>
     module.exports = {
+        name: "Search",
         data: function() {
             return {
                 active_resource: null

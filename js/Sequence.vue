@@ -25,6 +25,7 @@
 
 <script>
   module.exports = {
+      name: "Sequence",
       computed: {
           items: function () {
               return this.$store.state.sequence;

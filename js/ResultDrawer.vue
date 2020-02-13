@@ -32,6 +32,7 @@
 
 <script>
   module.exports = {
+      name: "ResultDrawer",
       props: {
           results: Array
       },

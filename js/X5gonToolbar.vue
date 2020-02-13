@@ -34,6 +34,7 @@
 <script>
 
   module.exports = {
+      name: "X5gonToolbar",
       computed: {
           basket_count: function () {
               return this.$store.state.basket.length;

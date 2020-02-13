@@ -74,6 +74,7 @@
 
 <script>
     module.exports = {
+        name: "Overview",
         data: function () {
             return {
                 active_resource: this.overview_reference,

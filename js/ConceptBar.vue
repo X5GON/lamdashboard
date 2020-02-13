@@ -20,6 +20,7 @@
 
   <script>
     module.exports = {
+        name: "ConceptBar",
         props: {
             concepts: Array, // Array of { label, value, url, color } elements
             width: {

@@ -16,6 +16,7 @@
 <script>
 /* Source: https://github.com/nguyenvanduocit/vue-loading-spinner */
 module.exports = {
+  name: "LetterCube",
   props: {
     size: {
       default: '120px'

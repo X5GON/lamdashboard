@@ -12,6 +12,7 @@
 
 <script>
   module.exports = {
+      name: "Home",
       data: function() {
           return {
               query: this.$route.query.q

@@ -8,6 +8,7 @@
 
 <script>
     module.exports = {
+        name: "Notification",
         computed: {
             messages: function () {
                 return this.$store.state.notification_messages;

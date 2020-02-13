@@ -10,6 +10,7 @@
     const items = [ "Provider", "Modality", "Language", "Culture", "Theme" ];
 
     module.exports = {
+        name: "FilterBar",
         data: function() {
             return {
                 items: items

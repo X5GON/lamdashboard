@@ -15,6 +15,7 @@
 <script>
 
   module.exports = {
+      name: "Basket",
       data: function() {
           return {
           }

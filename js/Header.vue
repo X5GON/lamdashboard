@@ -5,6 +5,9 @@
 </template>
 
 <script>
+    module.exports = {
+        name: "Header",
+    };
 </script>
 
 <style type="text/css">

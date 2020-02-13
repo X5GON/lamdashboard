@@ -16,6 +16,7 @@
 
 <script>
     module.exports = {
+        name: "BarLegend",
         data: function() {
             return {
             }

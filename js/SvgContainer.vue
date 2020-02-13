@@ -24,6 +24,7 @@
 
 <script>
     module.exports = {
+        name: "SvgContainer",
         props: {
             viewbox: {
                 type: String,

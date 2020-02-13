@@ -18,6 +18,7 @@
 
 <script>
     module.exports = {
+        name: "ItemDetail",
         props: {
             item: Object,
             legend: {
