@@ -1,10 +1,10 @@
 <template>
-  <svg-container :viewbox="`-3 -3 ${width} 6`" preserve_aspect_ratio="none">
+  <svg-container :viewbox="`-3 -3 ${width} ${height + 1}`" preserve_aspect_ratio="none">
     <g v-for="(item, index) in concepts"
        :class="concept_class(item)"
        :id="`concept${index+1}`">
       <path fill="none"
-            stroke-opacity="1" stroke-width="5"
+            stroke-opacity="1" :stroke-width="height"
             @mouseover="on_concept_mouseover(item)"
             @mouseout="on_concept_mouseout(item)"
             :stroke="item.color"
@@ -13,7 +13,7 @@
             @mouseover="on_concept_mouseover(item)"
             fill="#000"
             font-family="Open Sans"
-            font-size="3">{{ item.label.toUpperCase() }}</text>
+            :font-size="height - 2">{{ item.label.toUpperCase() }}</text>
     </g>
   </svg-container>
 </template>
@@ -26,6 +26,10 @@
             width: {
                 type: Number,
                 default: 210
+            },
+            height: {
+                type: Number,
+                default: 5
             }
         },
         methods: {
