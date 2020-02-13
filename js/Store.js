@@ -51,10 +51,6 @@ const store = new Vuex.Store({
     // Mutation are synchronous. They should normally not be directly called, but instead through actions (see below)
     mutations: {
         update_search_results(state, results) {
-            results.forEach(r => {
-                                   r.duration = moment.duration(r.duration).asSeconds();
-                                 });
-
             state.search_results = results;
         },
         set_query(state, query) {
@@ -77,17 +73,9 @@ const store = new Vuex.Store({
             state.notification_messages.splice(i, 1);
         },
         set_overview_reference(state, resource) {
-            // Build an object holding the N most important concepts for the resource
-
-            // We normalize here the concepts array, which stores the
-            // top N concepts with { value, label, url } attributes
-            resource.duration = moment.duration(resource.duration).asSeconds();
             state.overview_reference = resource;
         },
         set_overview_neighbors(state, neighbors) {
-            neighbors.forEach(r => {
-                r.duration = moment.duration(r.duration).asSeconds();
-            });
             state.overview_neighbors = neighbors;
         },
 
