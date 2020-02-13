@@ -137,8 +137,8 @@ const store = new Vuex.Store({
                         'Access-Control-Allow-Origin': '*'
                     },
                     body: JSON.stringify({ q: query,
-                                           max_resources: constants.max_search_results,
-                                           max_concepts: constants.max_concepts,
+                                           max_resources: constant.max_search_results,
+                                           max_concepts: constant.max_concepts,
                                          })
                 });
             }
