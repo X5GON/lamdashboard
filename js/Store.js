@@ -165,8 +165,8 @@ const store = new Vuex.Store({
             let response = null;
             try {
                 response = await fetch(
-                    // FIXME: Debug mode, we use dumps from old knnladmdsh API
-                    resource_id == 23345 ? "data/n23345.json" : constant.api.neighbors, {
+                    // FIXME: Debug mode, using local dumps:
+                    resource_id == 23345 || resource_id == 23344 ? `data/n${resource_id}.json` : constant.api.neighbors, {
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',
