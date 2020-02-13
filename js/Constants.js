@@ -4,13 +4,16 @@ export default {
     concept_mapping_from_reference: false,
     max_concepts: 5,
     api: {
-        search: "http://wp3.x5gon.org/others/lamdsh/search",
-        neighbors: "http://wp3.x5gon.org/others/lamdsh/knnlamdsh",
-        sort_basket: "http://wp3dev.x5gon.org/sequencing/sort",
+        search: 'http://wp3dev.x5gon.org/others/modelsdsh/search',
+        neighbors: 'http://wp3dev.x5gon.org/others/modelsdsh/neighbors',
+
+        sequence_sort: 'http://wp3dev.x5gon.org/sequencing/sort',
+        sequence_insert: 'http://wp3dev.x5gon.org/sequencing/insert',
+
     },
     // For resource representation
-    max_duration: 100000,
-    max_difficulty: 40,
+    max_duration: 7200,
+    max_difficulty: 1,
     max_width: 50,
     max_height: 200,
     // In Overview
