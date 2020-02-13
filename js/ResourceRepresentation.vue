@@ -33,11 +33,11 @@
       <g v-if="legend" id="legend">
         <g id="difficulty_legend">
           <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
-                :d="`M 0 ${bar_height+2} l -${difficulty_legend_offset} 0`"></path>
+                :d="`M 0 ${bar_height} l -${difficulty_legend_offset} 0`"></path>
           <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
-                :d="`M 0 -2 l -${difficulty_legend_offset} 0`"></path>
+                :d="`M 0 0 l -${difficulty_legend_offset} 0`"></path>
           <path fill="none" stroke="#505973" stroke-width=".15"
-                :d="`M -${difficulty_legend_offset} -2 l 0 ${bar_height+4}`"
+                :d="`M -${difficulty_legend_offset} 0 l 0 ${bar_height}`"
                 marker-start="url(#triangle)"
                 marker-end="url(#triangle)"></path>
           <text :transform="`translate(-${difficulty_legend_offset + 1}, ${bar_height/2-10}) rotate(90) scale(1,-1)`"
