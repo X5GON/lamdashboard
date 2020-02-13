@@ -122,7 +122,7 @@
         },
         methods: {
             color_palette: function (concept, index) {
-                return this.concept_palette !== null ? this.concept_palette(concept[1]) : this.$constant.palette.concepts[index];
+                return this.concept_palette !== null ? this.concept_palette(concept.url) : this.$constant.palette.concepts[index];
             },
             on_mouseover: function () {
                 this.$emit("resource_mouseover", this.item);
@@ -157,17 +157,13 @@
                 return this.difficulty_scale(this.item.difficulty);
             },
             concepts: function () {
-                let count = this.concept_count;
-                return this.item ? this.item.wikifier.slice(0, count) : [];
+                return this.item ? this.item.wikifier : [];
             },
             difficulty_legend_offset: function () {
                 return this.radius + 10;
             },
             duration_legend_offset: function () {
                 return this.max_width / 2 + 10;
-            },
-            reversed_concepts: function () {
-                return this.concepts.slice().reverse();
             },
             y_concept: function () {
                 // Return an array with stacked lengths

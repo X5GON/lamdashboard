@@ -38,10 +38,10 @@
             active_resource_legend: function () {
                 if (this.active_resource === null)
                     return null;
-                return Object.values(this.active_resource.concepts).map((concept, i) => ({ label: concept.label,
+                return Object.values(this.active_resource.wikifier).map((concept, i) => ({ label: concept.label,
                                                                                            url: concept.url,
                                                                                            value: concept.value,
-                                                                                           width: concept.value * 200,
+                                                                                           width: concept.value * 200, // FIXME: remove constanat
                                                                                            color: this.$constant.palette.concepts[i]
                                                                                          }));
             }

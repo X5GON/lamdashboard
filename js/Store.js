@@ -51,6 +51,10 @@ const store = new Vuex.Store({
     // Mutation are synchronous. They should normally not be directly called, but instead through actions (see below)
     mutations: {
         update_search_results(state, results) {
+            results.forEach(r => {
+                                   r.duration = moment.duration(r.duration).asSeconds();
+                                 });
+
             state.search_results = results;
         },
         set_query(state, query) {
@@ -77,42 +81,13 @@ const store = new Vuex.Store({
 
             // We normalize here the concepts array, which stores the
             // top N concepts with { value, label, url } attributes
-
-            resource.concepts = Object.fromEntries(resource.wikifier
-                                                   .sort((a,b) => b[3] - a[3])
-                                                   .slice(0, 5)
-                                                   .map(c => [ c[1], { value: c[3],
-                                                                       label: c[0],
-                                                                       url: c[1] } ]))
+            resource.duration = moment.duration(resource.duration).asSeconds();
             state.overview_reference = resource;
         },
         set_overview_neighbors(state, neighbors) {
-            // We normalize here the concepts array, which stores the
-            // top N concepts with { value, label, url } attributes
-
-            if (constant.concept_mapping_from_reference) {
-                // Populate concepts according to overview_reference
-                neighbors = neighbors.map(item => {
-                    let wikifier = Object.fromEntries(item.wikifier.map(c => [ c[1], c[3] ]));
-                    item.concepts = Object.fromEntries(Object.keys(state.overview_reference.concepts).map(url => [ url, {
-                        value: wikifier[url] || 0,
-                        label: state.overview_reference.concepts[url].label,
-                        url: url } ]));
-                    return item;
-                });
-            } else {
-                // Define concepts as top 5 concepts for the resource,
-                // ignoring reference concept
-                neighbors = neighbors.map(item  => {
-                    item.concepts = Object.fromEntries(item.wikifier
-                                                       .sort((a,b) => b[3] - a[3])
-                                                       .slice(0, 5)
-                                                       .map(c => [ c[1], { value: c[3],
-                                                                           label: c[0],
-                                                                           url: c[1] } ]));
-                    return item;
-                });
-            }
+            neighbors.forEach(r => {
+                r.duration = moment.duration(r.duration).asSeconds();
+            });
             state.overview_neighbors = neighbors;
         },
 
@@ -161,14 +136,10 @@ const store = new Vuex.Store({
                         'Accept': 'application/json',
                         'Access-Control-Allow-Origin': '*'
                     },
-                    body: JSON.stringify({ search: query,
-                                           type: [],
-                                           available_langs: [],
-                                           provider: [],
-                                           orig_lang: [],
-                                           use_model: true,
-                                           remove_duplicates: true,
-                                           model_type: "wikifier" })
+                    body: JSON.stringify({ q: query,
+                                           max_resources: constants.max_search_results,
+                                           max_concepts: constants.max_concepts,
+                                         })
                 });
             }
             response.json()
@@ -182,18 +153,20 @@ const store = new Vuex.Store({
                         this.dispatch("show_notification", `No data for ${query}`, "error");
                         return;
                     }
-                    console.log("query result", data, data.output);
-                    let output = data.output;
+                    console.log("query result", data, data.result);
+                    let result = data.result;
                     commit('set_query', query);
+                    /*
                     if (output && output.neighbors) {
-                        // FIXME: Debug mode, we use dumps from old knnladmdsh API
-                        commit('set_overview_reference', output.res_in_focus);
+                    // FIXME: Debug mode, we use dumps from old knnladmdsh API
+                    commit('set_overview_reference', output.res_in_focus);
                         commit('set_overview_neighbors', output.neighbors);
                         commit('populate_basket', 10);
                         commit('set_sequence', shuffle(this.state.basket.slice()));
                         output = output.neighbors;
                     }
-                    commit('update_search_results', output)
+                    */
+                    commit('update_search_results', result);
                 });
         },
 
@@ -205,24 +178,20 @@ const store = new Vuex.Store({
             try {
                 response = await fetch(
                     // FIXME: Debug mode, we use dumps from old knnladmdsh API
-                    resource_id == 1473 ? "data/1.json" : constant.api.neighbors, {
+                    resource_id == 23345 ? "data/n23345.json" : constant.api.neighbors, {
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',
                     credentials: 'same-origin',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json',
+                        'Accept': 'application/json, text/plain',
                         'Access-Control-Allow-Origin': '*'
                     },
-                    body: JSON.stringify({ resource_id: resource_id,
-                                           n_neighbors: constant.MAX_NEIGHBORS,
-                                           type: [],
-                                           available_langs: [],
-                                           provider: [],
-                                           orig_lang: [],
-                                           remove_duplicates: true,
-                                           model_type: "wikifier" })
+                    body: JSON.stringify({ id: resource_id,
+                                           max_concepts: constant.max_concepts,
+                                           max_resources: constant.max_neighbors
+                                         })
                 });
             } catch (error) {
                 this.dispatch("stop_loading", "");
@@ -240,8 +209,8 @@ const store = new Vuex.Store({
                         this.dispatch("show_notification", `No neighbors for ${resource_id}`, "error");
                         return;
                     }
-                    commit("set_overview_reference", data.output.res_in_focus);
-                    commit('set_overview_neighbors', data.output.neighbors);
+                    commit("set_overview_reference", data.reference);
+                    commit('set_overview_neighbors', data.neighbors);
                 });
         },
 
@@ -266,9 +235,9 @@ const store = new Vuex.Store({
             this.dispatch("start_loading", `Sorting basket...`);
             let response = null;
             try {
-                response = await fetch(constant.api.sort_basket, {
+                response = await fetch(constant.api.sequence_sort, {
                     method: 'POST',
-                    mode: 'cors',
+                    mode: 'no-cors',
                     cache: 'no-cache',
                     credentials: 'same-origin',
                     headers: {
@@ -277,7 +246,7 @@ const store = new Vuex.Store({
                         'Access-Control-Allow-Origin': '*'
                     },
                     body: JSON.stringify({
-                        resource_ids: [ this.state.basket.map(item => item.id) ]
+                        basket: this.state.basket.map(item => item.id)
                     })
                 });
             } catch (error) {

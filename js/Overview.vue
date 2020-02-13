@@ -133,7 +133,7 @@
             ...Vuex.mapState([ "overview_reference", "overview_neighbors", "query" ]),
             reference_palette: function () {
                 // Return the palette with colors associated to the reference resource concepts
-                return Object.fromEntries(Object.keys(this.overview_reference.concepts)
+                return Object.fromEntries(Object.keys(this.overview_reference.wikifier)
                                           .map((url, i) => [ url,
                                                              this.$constant.palette.concepts[i] ]));
             },
@@ -169,13 +169,13 @@
                 if (!this.active_resource)
                     return [];
                 if (this.$constant.concept_mapping_from_reference) {
-                    return Object.values(this.active_resource.concepts).map(concept => Object.assign({}, concept, {
+                    return Object.values(this.active_resource.wikifier).map(concept => Object.assign({}, concept, {
                         color: this.reference_palette[concept.url] || '#f00' }));
                 } else {
                     // Concepts not mapped from reference. Use an
                     // index-based coloring scheme (meaningless, but
                     // more aesthetic)
-                    return Object.values(this.active_resource.concepts).map((concept, i) => Object.assign({}, concept, {
+                    return Object.values(this.active_resource.wikifier).map((concept, i) => Object.assign({}, concept, {
                         color: this.$constant.palette.concepts[i] }));
                 }
             },

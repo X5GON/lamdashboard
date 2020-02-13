@@ -1,6 +1,7 @@
 export default {
     // For neighbors API call
-    MAX_NEIGHBORS: 60,
+    max_neighbors: 80,
+    max_search_results: 30,
     concept_mapping_from_reference: false,
     max_concepts: 5,
     api: {
