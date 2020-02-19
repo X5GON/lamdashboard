@@ -5,7 +5,10 @@
      @dblclick="on_dblclick"
      :transform="`translate(${x}, ${y}) scale(1,-1)`">
 
-      <circle id="circle" fill="url(#paint0_radial)" :fill-opacity="is_reference ? 1 : 0" fill-rule="nonzero" :stroke="resource_stroke" stroke-width="2" cx="0" cy="0" :r="radius"></circle>
+    <circle v-if="legend" id="circle_legend_demiheure" fill="none" stroke="#fff" stroke-width=".1" stroke-dasharray=".2 1" cx="0" cy="0" :r="duration_scale(30*60)"></circle>
+    <circle v-if="legend" id="circle_legend_heure" fill="none" stroke="#fff" stroke-width=".1" stroke-dasharray=".2 1" cx="0" cy="0" :r="duration_scale(60*60)"></circle>
+
+    <circle id="circle" fill="url(#paint0_radial)" :fill-opacity="is_reference ? 1 : 0" fill-rule="nonzero" :stroke="resource_stroke" stroke-width="2" cx="0" cy="0" :r="radius"></circle>
 
       <g v-if="detailed_concepts">
         <path v-for="(item, index) in concepts"
@@ -54,10 +57,11 @@
                 :d="`M -${radius} -${radius+5} l ${2*radius} 0`"
                 marker-start="url(#triangle)"
                 marker-end="url(#triangle)"></path>
-          <text :transform="`translate(-6, -${radius+9}) scale(1,-1)`"
+          <text :transform="`translate(0, -${radius+9}) scale(1,-1)`"
+                text-anchor="middle"
                 fill="#505973"
                 font-family="Open Sans"
-                font-size="3">DURATION</text>
+                font-size="3">{{ duration_label }}</text>
         </g>
       </g>
   </g>
@@ -150,6 +154,16 @@
                 return d3.scaleLinear()
                     .domain([ 1, this.max_difficulty ])
                     .range([ 30, this.max_height - this.max_width / 2 ]);
+            },
+            duration_label: function () {
+                if (!this.item)
+                    return "";
+                let minutes = Math.floor(this.item.duration / 60);
+                if (minutes >= 60) {
+                    return `DURATION: ${Math.floor(minutes / 60)} h ${minutes % 60} min.`;
+                } else {
+                    return `DURATION: ${minutes} min.`;
+                }
             },
             radius: function () {
                 return this.duration_scale(this.item ? this.item.duration : 0);
