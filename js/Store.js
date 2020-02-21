@@ -52,6 +52,7 @@ const store = new Vuex.Store({
     mutations: {
         update_search_results(state, results) {
             state.search_results = results;
+            results.forEach(r => state.resources[r.id] = r);
         },
         set_query(state, query) {
             state.query = query;
@@ -74,9 +75,11 @@ const store = new Vuex.Store({
         },
         set_overview_reference(state, resource) {
             state.overview_reference = resource;
+            state.resources[resource.id] = resource;
         },
         set_overview_neighbors(state, neighbors) {
             state.overview_neighbors = neighbors;
+            neighbors.forEach(r => state.resources[r.id] = r);
         },
 
         set_loading_message(state, message = "Loading...") {
@@ -95,7 +98,7 @@ const store = new Vuex.Store({
         },
 
         set_sequence(state, sequence) {
-            state.sequence = sequence;
+            state.sequence = sequence.map(id => state.resources[id]);
         }
     },
 
@@ -225,7 +228,7 @@ const store = new Vuex.Store({
             try {
                 response = await fetch(constant.api.sequence_sort, {
                     method: 'POST',
-                    mode: 'no-cors',
+                    mode: 'cors',
                     cache: 'no-cache',
                     credentials: 'same-origin',
                     headers: {
@@ -249,7 +252,7 @@ const store = new Vuex.Store({
                 })
                 .then( (data) => {
                     this.dispatch("stop_loading", "");
-                    commit('set_sequence', data.output);
+                    commit('set_sequence', data.output.sequence);
                 });
         },
 
