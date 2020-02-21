@@ -222,7 +222,11 @@ const store = new Vuex.Store({
         },
 
         async sort_basket({ commit }) {
-            // Call API
+            // The sort API does not want to get empty sequences
+            if (this.state.basket.length == 0) {
+                commit('set_sequence', []);
+                return;
+            }
             this.dispatch("start_loading", `Sorting basket...`);
             let response = null;
             try {
