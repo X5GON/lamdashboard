@@ -1,5 +1,5 @@
 <template>
-    <component v-bind:is="wrapper" selector=".zoomable">
+    <component v-bind:is="wrapper" :options="zoom_options" @init="panzoom_init" selector=".zoomable">
       <svg xmlns="http://www.w3.org/2000/svg" :view-box.camel="viewbox" :preserve-aspect-ratio.camel="preserve_aspect_ratio">
         <defs>
           <radialGradient id="paint0_radial">
@@ -25,6 +25,11 @@
 <script>
     module.exports = {
         name: "SvgContainer",
+        state: function () {
+            return {
+                panzoom: null,
+            }
+        },
         props: {
             viewbox: {
                 type: String,
@@ -49,7 +54,21 @@
                     return "pan-zoom"
                 else
                     return "div";
-            }
+            },
+            zoom_options: function () {
+                if (this.zoomable)
+                    return { minZoom: 0.2,
+                             maxZoom: 10 }
+                else
+                    return null;
+            },
+        },
+        methods: {
+            panzoom_init: function (panzoom_instance, id) {
+                console.log("Panzoom init", panzoom_instance, id);
+                this.panzoom = panzoom_instance;
+                this.panzoom.moveTo(0, -100);
+            },
         }
     };
 </script>
