@@ -135,104 +135,102 @@ const store = new Vuex.Store({
     // Actions are asynchronous. They are called with the dispatch method (or through mapActions in components)
     actions: {
 
-        async submit_query({ commit }, query) {
-            let response = null;
+        async query_api({ commit }, query) {
+            let { url, params, message } = query;
+            let _store = this;
+            this.dispatch("start_loading", message);
+            return new Promise(function (resolve, reject) {
+                try {
+                    fetch(url, {
+                        method: 'POST',
+                        //mode: 'cors',
+                        cache: 'no-cache',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify(params)
+                    }).catch(error => {
+                        _store.dispatch("stop_loading", "");
+                        reject(error);
+                        return;
+                    }).then(response => {
+                        if (response === undefined) {
+                            _store.dispatch("stop_loading", "");
+                            reject("Undefined result");
+                            return;
+                        }
+                        response.json()
+                            .catch(error => {
+                                _store.dispatch("stop_loading", "");
+                                reject(error);
+                                return;
+                            })
+                            .then(data => {
+                                _store.dispatch("stop_loading", "");
+                                if (!data) {
+                                    reject(error);
+                                    return;
+                                }
+                                resolve(data);
+                            })
+                    })
+                } catch (error) {
+                    _store.dispatch("stop_loading", "");
+                    reject(error);
+                    return;
+                }
+            });
+        },
 
-            this.dispatch("start_loading", `Searching for ${query}...`);
+        async submit_query({ commit }, query) {
+            let url = constant.api.search;
             if (query && query.startsWith('d:')) {
                 // Debug mode - use local resources
-                response = await fetch(`data/${query.substr(2)}.json`, {
-                    method: 'GET',
-                    cache: 'no-cache',
-                });
-            } else {
-                // Do the asynchronous call to the search API
-                response = await fetch(constant.api.search, {
-                    method: 'POST',
-                    mode: 'cors',
-                    cache: 'no-cache',
-                    credentials: 'same-origin',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    body: JSON.stringify({ q: query,
-                                           max_resources: constant.max_search_results,
-                                           max_concepts: constant.max_concepts,
-                                         })
-                });
+                url = `data/${query.substr(2)}.json`;
             }
-            response.json()
-                .catch( (error) => {
-                    this.dispatch("stop_loading", "");
-                    this.dispatch("show_notification", `Error when fetching ${query}`, "error");
-                })
-                .then( (data) => {
-                    this.dispatch("stop_loading", "");
-                    if (!data) {
-                        this.dispatch("show_notification", `No data for ${query}`, "error");
-                        return;
-                    }
-                    console.log("query result", data, data.result);
-                    let result = data.result;
-                    commit('set_query', query);
-                    /*
-                    if (output && output.neighbors) {
-                    // FIXME: Debug mode, we use dumps from old knnladmdsh API
-                    commit('set_overview_reference', output.res_in_focus);
-                        commit('set_overview_neighbors', output.neighbors);
-                        commit('populate_basket', 10);
-                        commit('set_sequence', shuffle(this.state.basket.slice()));
-                        output = output.neighbors;
-                    }
-                    */
-                    commit('update_search_results', result);
-                });
+
+            this.dispatch('query_api',
+                          { url: url,
+                            params: {
+                                q: query,
+                                max_resources: constant.max_search_results,
+                                max_concepts: constant.max_concepts,
+                            },
+                            message: `Searching for ${query}`
+                          }).then(data => {
+                             if (!data) {
+                                 this.dispatch("show_notification", `No data for ${query}`, "error");
+                                 return;
+                             }
+                             console.log("query result", data, data.result);
+                             let result = data.result;
+                             commit('set_query', query);
+                             commit('update_search_results', result);
+                         }).catch(error => {
+                             console.log("error", error);
+                             this.dispatch("show_notification", `Error when searching: ${error}`, "error");
+                         });
         },
 
         async activate_overview_reference({ commit }, resource_id) {
             // Query neighbors
             resource_id = Number(resource_id);
-            this.dispatch("start_loading", `Fetching neighbors...`);
-            let response = null;
-            try {
-                response = await fetch(
-                    // FIXME: Debug mode, using local dumps:
-                    resource_id == 23345 || resource_id == 23344 ? `data/n${resource_id}.json` : constant.api.neighbors, {
-                    method: 'POST',
-                    mode: 'cors',
-                    cache: 'no-cache',
-                    credentials: 'same-origin',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json, text/plain',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    body: JSON.stringify({ id: resource_id,
-                                           max_concepts: constant.max_concepts,
-                                           max_resources: constant.max_neighbors
-                                         })
-                });
-            } catch (error) {
-                this.dispatch("stop_loading", "");
-                this.dispatch("show_notification", `Error while fetching neighbors: ${error}`, "error");
+            let url = resource_id == 23345 || resource_id == 23344 ? `data/n${resource_id}.json` : constant.api.neighbors;
 
-            }
-            response.json()
-                .catch( (error) => {
-                    this.dispatch("stop_loading", "");
-                    this.dispatch("show_notification", `Error when fetching neighbors for ${resource_id}`, "error");
-                })
-                .then( (data) => {
-                    this.dispatch("stop_loading", "");
-                    if (!data) {
-                        this.dispatch("show_notification", `No neighbors for ${resource_id}`, "error");
-                        return;
-                    }
-                    commit("set_overview_reference", data.reference);
-                    commit('set_overview_neighbors', data.neighbors);
-                });
+            this.dispatch('query_api',
+                          { url: url,
+                            params: { id: resource_id,
+                                      max_concepts: constant.max_concepts,
+                                      max_resources: constant.max_neighbors
+                                    },
+                            message: "Fetching neighbors..."
+                          }).then(data => {
+                              commit("set_overview_reference", data.reference);
+                              commit('set_overview_neighbors', data.neighbors);
+                          }).catch(error => {
+                              this.dispatch("show_notification", `Error when fetching neighbors: ${error}`, "error");
+                          });
         },
 
         async show_notification({ commit }, message, type, duration=5000) {
@@ -257,79 +255,39 @@ const store = new Vuex.Store({
                 commit('set_sequence', []);
                 return;
             }
-            this.dispatch("start_loading", `Sorting basket...`);
-            let response = null;
-            try {
-                response = await fetch(constant.api.sequence_sort, {
-                    method: 'POST',
-                    mode: 'cors',
-                    cache: 'no-cache',
-                    credentials: 'same-origin',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    body: JSON.stringify({
-                        basket: this.state.basket.map(item => item.id)
-                    })
-                });
-            } catch (error) {
-                this.dispatch("stop_loading", "");
-                this.dispatch("show_notification", `Error while sorting basket: ${error}`, "error");
-
-            }
-            response.json()
-                .catch( (error) => {
-                    this.dispatch("stop_loading", "");
-                    this.dispatch("show_notification", `Error when sorting basket ${error}`, "error");
-                })
-                .then( (data) => {
-                    this.dispatch("stop_loading", "");
-                    commit('set_sequence', data.output.sequence);
-                });
+            this.dispatch('query_api',
+                          { url: constant.api.sequence_sort,
+                            params: {
+                                basket: this.state.basket.map(item => item.id)
+                            },
+                            message: "Sorting basket..."
+                          }).then(data => {
+                              commit('set_sequence', data.output.sequence);
+                          }).catch(error => {
+                              this.dispatch("show_notification", `Error when sorting basket: ${error}`, "error");
+                          });
         },
 
         async suggest_insertions({ commit }) {
             if (this.state.sequence.length == 0) {
                 return;
             }
-            this.dispatch("start_loading", `Getting insertion suggestions...`);
-            let response = null;
-            try {
-                response = await fetch(constant.api.sequence_insert, {
-                    method: 'POST',
-                    mode: 'cors',
-                    cache: 'no-cache',
-                    credentials: 'same-origin',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    body: JSON.stringify({
-                        sequence: this.state.sequence.map(item => item.id),
-                        concept_weights: this.state.sequence[0].wikifier.map(w => ({
-                            concept: w.url,
-                            weight: w.value,
-                        })),
-                    })
-                });
-            } catch (error) {
-                this.dispatch("stop_loading", "");
-                this.dispatch("show_notification", `Error while sorting basket: ${error}`, "error");
-
-            }
-            response.json()
-                .catch( (error) => {
-                    this.dispatch("stop_loading", "");
-                    this.dispatch("show_notification", `Error when sorting basket ${error}`, "error");
-                })
-                .then( (data) => {
-                    this.dispatch("stop_loading", "");
-                    commit('set_sequence', data.output.sequence);
-                    commit('set_insertions', data.output.insertions);
-                });
+            this.dispatch('query_api',
+                          { url: constant.api.sequence_insert,
+                            params: {
+                                sequence: this.state.sequence.map(item => item.id),
+                                concept_weights: this.state.sequence[0].wikifier.map(w => ({
+                                    concept: w.url,
+                                    weight: w.value,
+                                }))
+                            },
+                            message: "Fetching resource suggestions..."
+                          }).then(data => {
+                              commit('set_sequence', data.output.sequence);
+                              commit('set_insertions', data.output.insertions);
+                          }).catch(error => {
+                              this.dispatch("show_notification", `Error when getting insert suggestions: ${error}`, "error");
+                          });
         },
 
         async start_loading({ commit }, message = "Loading...") {
