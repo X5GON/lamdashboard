@@ -106,9 +106,11 @@ const store = new Vuex.Store({
         },
 
         set_insertions(state, insertions) {
-            state.insertions = insertions.map(id => state.resources[id] || id);
-            console.log("insertions", state.insertions);
-            // insertions.forEach(r => state.resources[r.id] = r);
+            insertions = insertions.map(i => (i === null ? null : { ...i.resource,
+                                                                    insertion_confidence: i.confidence }));
+            console.log("insertions", insertions);
+            state.insertions = insertions;
+            insertions.filter(i => i !== null).forEach(r => state.resources[r.id] = r);
         },
 
         validate_insertion(state, index) {
