@@ -29,11 +29,13 @@
         <h1>{{ resource.title }}</h1>
         <concept-bar
           class="resource-content-conceptbar"
+          :style="{ marginLeft: '-16px' }"
           @concept_mouseover="on_bar_mouseover"
           @concept_mouseout="on_bar_mouseout"
           :concepts="resource_concepts"></concept-bar>
         <concept-bar
           class="resource-content-conceptbar-small"
+          :style="{ marginLeft: '-16px' }"
           @concept_mouseover="on_bar_mouseover"
           @concept_mouseout="on_bar_mouseout"
           :height="2"
