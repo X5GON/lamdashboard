@@ -2,7 +2,7 @@
   <div class="view-sequence">
     <x5gon-header class="overlay"></x5gon-header>
     <h1>Sequence</h1>
-    <svg-container v-if="items.length > 0" :key="items.length" :viewbox="`0 0 ${x_max} 300`">
+    <svg-container class="svg-content" v-if="items.length > 0" :key="items.length" :viewbox="`0 0 ${x_max} 300`">
       <g>
         <resource-representation v-for="item in positioned_items"
                                  :x="item.x_position"
@@ -101,6 +101,9 @@
       right: 22px;
       display: flex;
       flex-direction: column;
+  }
+  .svg-content {
+      width: calc(100% - 78px);
   }
   .right-drawer-menu {
       position: fixed;
