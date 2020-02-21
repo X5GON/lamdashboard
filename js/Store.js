@@ -110,7 +110,13 @@ const store = new Vuex.Store({
                                                                     insertion_confidence: i.confidence }));
             console.log("insertions", insertions);
             state.insertions = insertions;
-            insertions.filter(i => i !== null).forEach(r => state.resources[r.id] = r);
+            insertions
+                .filter(i => i !== null)
+                .forEach(r => {
+                    state.resources[r.id] = r
+                    // Limit number of concepts
+                    r.wikifier = r.wikifier.slice(0, constant.max_concepts);
+                });
         },
 
         validate_insertion(state, index) {
