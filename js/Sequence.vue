@@ -37,10 +37,12 @@
               // This should be factorized somehow with the code in ResourceRepresentation
               let scale =  d3.scaleLinear()
                   .domain([ 60, this.$constant.max_duration ])
-                  .range([ 10, 2 * this.$constant.max_width ]);
+                  .range([ 10, this.$constant.max_width ]);
               return this.items.map(item => {
-                  x = x + scale(item.duration) + 10;
+                  let width = scale(item.duration);
+                  x = x + scale(item.duration);
                   item.x_position = x;
+                  x = x + scale(item.duration) + 10;
                   return item;
               });
           },
@@ -103,6 +105,7 @@
       flex-direction: column;
   }
   .svg-content {
+      margin-top: 50px;
       width: calc(100% - 78px);
   }
   .right-drawer-menu {
