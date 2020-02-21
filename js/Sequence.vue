@@ -4,11 +4,11 @@
     <h1>Sequence</h1>
     <svg-container class="svg-content" v-if="items.length > 0" :key="items.length" :viewbox="`0 0 ${x_max} 300`">
       <g>
-        <resource-representation v-for="item in positioned_items"
+        <resource-representation v-for="(item, index) in positioned_items"
                                  :x="item.x_position"
-                                 :y="70"
+                                 :y="item.is_suggested ? 100 : 150"
                                  detailed_concepts
-                                 :key="item.url"
+                                 :key="`${index}-${item.url}`"
                                  :title="item.title"
                                  :item="item"></resource-representation>
       </g>
@@ -28,8 +28,21 @@
   module.exports = {
       name: "Sequence",
       computed: {
+          ...Vuex.mapState([ "sequence", "insertions" ]),
           items: function () {
-              return this.$store.state.sequence;
+              // Merge sequence and insertions
+              if (this.insertions.length == 0) {
+                  return this.sequence;
+              };
+              let res = [];
+              for (let i = 0 ; i < this.sequence.length ; i++) {
+                  res.push(this.sequence[i]);
+                  if (this.insertions[i] !== null && typeof this.insertions[i] == 'object') {
+                      this.insertions[i].is_suggested = true;
+                      res.push(this.insertions[i]);
+                  }
+              }
+              return res;
           },
           positioned_items: function () {
               // Return item list with x_position / y_position information added
@@ -60,6 +73,7 @@
           do_organize: function () {
           },
           do_addition: function () {
+              this.$store.dispatch('suggest_insertions');
           },
           do_export: function () {
           }
@@ -107,6 +121,7 @@
   .svg-content {
       margin-top: 50px;
       width: calc(100% - 78px);
+      max-height: 60vh;
   }
   .right-drawer-menu {
       position: fixed;

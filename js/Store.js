@@ -42,6 +42,8 @@ const store = new Vuex.Store({
         basket: [],
         // Assume we only deal with 1 sequence in the app
         sequence: [],
+        // Insert suggestions
+        insertions: [],
         // List of notification messages
         notification_messages: [],
         // Loading message. If not null, display loading spinner
@@ -99,7 +101,16 @@ const store = new Vuex.Store({
 
         set_sequence(state, sequence) {
             state.sequence = sequence.map(id => state.resources[id]);
-        }
+            state.insertions = [];
+            console.log("sequence", state.sequence);
+        },
+
+        set_insertions(state, insertions) {
+            state.insertions = insertions.map(id => state.resources[id] || id);
+            console.log("insertions", state.insertions);
+            // insertions.forEach(r => state.resources[r.id] = r);
+        },
+
     },
 
     // Actions are asynchronous. They are called with the dispatch method (or through mapActions in components)
@@ -257,6 +268,48 @@ const store = new Vuex.Store({
                 .then( (data) => {
                     this.dispatch("stop_loading", "");
                     commit('set_sequence', data.output.sequence);
+                });
+        },
+
+        async suggest_insertions({ commit }) {
+            if (this.state.sequence.length == 0) {
+                return;
+            }
+            this.dispatch("start_loading", `Getting insertion suggestions...`);
+            let response = null;
+            try {
+                response = await fetch(constant.api.sequence_insert, {
+                    method: 'POST',
+                    mode: 'cors',
+                    cache: 'no-cache',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify({
+                        sequence: this.state.sequence.map(item => item.id),
+                        concept_weights: this.state.sequence[0].wikifier.map(w => ({
+                            concept: w.url,
+                            weight: w.value,
+                        })),
+                    })
+                });
+            } catch (error) {
+                this.dispatch("stop_loading", "");
+                this.dispatch("show_notification", `Error while sorting basket: ${error}`, "error");
+
+            }
+            response.json()
+                .catch( (error) => {
+                    this.dispatch("stop_loading", "");
+                    this.dispatch("show_notification", `Error when sorting basket ${error}`, "error");
+                })
+                .then( (data) => {
+                    this.dispatch("stop_loading", "");
+                    commit('set_sequence', data.output.sequence);
+                    commit('set_insertions', data.output.insertions);
                 });
         },
 
