@@ -64,6 +64,15 @@
                 font-size="3">{{ duration_label }}</text>
         </g>
       </g>
+
+      <g v-if="is_suggested">
+        <circle id="circle" fill="#fff" fill-rule="nonzero" cx="0" cy="0" :r="radius"></circle>
+        <path d="M -10 0 L 10 0 M 0 -10 L 0 10" stroke="#000D32" stroke-width="2" stroke-linecap="round"/>
+      </g>
+
+</svg>
+
+
   </g>
 </template>
 
@@ -81,6 +90,10 @@
                 default: null
             },
             is_reference: {
+                type: Boolean,
+                default: false
+            },
+            is_suggested: {
                 type: Boolean,
                 default: false
             },

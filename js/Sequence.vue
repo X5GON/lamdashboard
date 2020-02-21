@@ -2,11 +2,12 @@
   <div class="view-sequence">
     <x5gon-header class="overlay"></x5gon-header>
     <h1>Sequence</h1>
-    <svg-container class="svg-content" v-if="items.length > 0" :key="items.length" :viewbox="`0 0 ${x_max} 300`">
+    <svg-container class="svg-content" v-if="items.length > 0" :key="items.length" :viewbox="`0 0 ${x_max} 250`">
       <g>
         <resource-representation v-for="(item, index) in positioned_items"
                                  :x="item.x_position"
-                                 :y="item.is_suggested ? 100 : 150"
+                                 :y="100"
+                                 :is_suggested="item.is_suggested"
                                  detailed_concepts
                                  :key="`${index}-${item.url}`"
                                  :title="item.title"
@@ -120,6 +121,7 @@
   }
   .svg-content {
       margin-top: 50px;
+      margin-left: 10px;
       width: calc(100% - 78px);
       max-height: 60vh;
   }
