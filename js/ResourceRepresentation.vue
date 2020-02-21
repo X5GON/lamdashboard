@@ -70,9 +70,6 @@
         <path d="M -10 0 L 10 0 M 0 -10 L 0 10" stroke="#000D32" stroke-width="2" stroke-linecap="round"/>
       </g>
 
-</svg>
-
-
   </g>
 </template>
 
