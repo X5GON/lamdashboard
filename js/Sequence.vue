@@ -5,6 +5,7 @@
     <svg-container class="svg-content" v-if="items.length > 0" :key="items.length" :viewbox="`0 0 ${x_max} 250`">
       <g>
         <resource-representation v-for="(item, index) in positioned_items"
+                                 @resource_click="insert_resource(item)"
                                  :x="item.x_position"
                                  :y="100"
                                  :is_suggested="item.is_suggested"
@@ -40,6 +41,7 @@
                   res.push(this.sequence[i]);
                   if (this.insertions[i] !== null && typeof this.insertions[i] == 'object') {
                       this.insertions[i].is_suggested = true;
+                      this.insertions[i].insert_after = i;
                       res.push(this.insertions[i]);
                   }
               }
@@ -77,7 +79,13 @@
               this.$store.dispatch('suggest_insertions');
           },
           do_export: function () {
-          }
+          },
+          insert_resource: function (item) {
+              if (! item.is_suggested) {
+                  return;
+              }
+              this.$store.dispatch('validate_insertion', item.insert_after);
+          },
       },
       mounted: function () {
           if (this.$route.query.q) {

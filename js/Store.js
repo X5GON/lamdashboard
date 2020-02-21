@@ -111,6 +111,17 @@ const store = new Vuex.Store({
             // insertions.forEach(r => state.resources[r.id] = r);
         },
 
+        validate_insertion(state, index) {
+            // Insert an item *after* the given index
+            // Validate an insertion: put into sequence, replace by 2 nulls in insertions
+            let item = state.insertions[index];
+
+            state.sequence.splice(index + 1, 0, item);
+            state.insertions.splice(index, 1, null, null);
+            item.is_suggested = false;
+            console.log("validat_insertion", state.sequence, state.insertions);
+        },
+
     },
 
     // Actions are asynchronous. They are called with the dispatch method (or through mapActions in components)
@@ -320,6 +331,12 @@ const store = new Vuex.Store({
         async stop_loading({ commit }) {
             commit("set_loading_message", "");
         },
+
+        async validate_insertion({ commit }, index) {
+            let item = this.state.insertions[index];
+            commit("validate_insertion", index);
+            commit("add_to_basket", item);
+        }
     }
 });
 
