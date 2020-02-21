@@ -162,7 +162,7 @@
             difficulty_scale: function () {
                 // Map difficulty (in w/s) to bar length (in px)
                 return d3.scaleLinear()
-                    .domain([ 1, this.max_difficulty ])
+                    .domain([ 0, this.max_difficulty ])
                     .range([ 30, this.max_height - this.max_width / 2 ]);
             },
             duration_label: function () {
