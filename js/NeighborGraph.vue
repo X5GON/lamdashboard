@@ -65,7 +65,7 @@
             },
             is_concept_related: function (item) {
                 // highlight_concept is the concept url
-                return (this.highlight_concept && item.wikifier.map(t => t[1]).indexOf(this.highlight_concept) != -1)
+                return (this.highlight_concept && item.wikifier.map(t => t.url).indexOf(this.highlight_concept) != -1)
             },
             x_position: function (item) {
                 return this.x_scale(item.projection[0]);
