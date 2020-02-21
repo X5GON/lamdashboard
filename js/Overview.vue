@@ -96,7 +96,11 @@
                 this.$router.push({ path: '/search', query: { q: this.$route.query.q }});
             }
             if (this.$route.params.id) {
+                if (! this.overview_reference
+                    ||
+                    this.overview_reference.id != Number(this.$route.params.id)) {
                 this.$store.dispatch('activate_overview_reference', this.$route.params.id);
+                }
             }
         }
     }
