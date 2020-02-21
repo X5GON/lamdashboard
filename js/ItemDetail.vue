@@ -1,5 +1,5 @@
 <template>
-  <div v-if="item" class="view-itemdetail" :class="{ miniature: miniature }">
+  <div v-if="item" @mouseover="on_mouseover" class="view-itemdetail" :class="{ miniature: miniature }">
     <div class="itemdetail-title">{{ item ? item.title : "" }}</div>
     <div class="itemdetail-representation">
       <svg-container :viewbox="viewbox">
@@ -30,7 +30,12 @@
             viewbox: function () {
                 return this.legend ? "0 0 110 200" : "0 50 110 200";
             },
-        }
+        },
+        methods: {
+            on_mouseover: function () {
+                this.$emit("mouseover", this.item);
+            }
+        },
     };
 </script>
 
