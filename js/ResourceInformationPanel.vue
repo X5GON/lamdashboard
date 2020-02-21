@@ -1,5 +1,5 @@
 <template>
-  <div class="resource-information">
+  <div class="resource-information" :class="{ fullscreen: is_fullscreen }">
     <div class="toolbar-fullscreen">
       <img class="toolbar-icon toolbar-icon-fullscreen"
            title="Toggle fullscreen"
@@ -65,11 +65,12 @@
             concept_palette: { type: Function,
                                default: (u) => "#f00"
                              },
+            is_fullscreen: { type: Boolean,
+                             default: false },
         },
         data: function () {
             return {
                 highlighted_concept: null,
-                is_fullscreen: false,
             }
         },
         methods: {
@@ -80,8 +81,7 @@
                 this.highlighted_concept = null;
             },
             toggle_fullscreen: function () {
-                console.log("Toggle fullscreen", this.is_fullscreen);
-                this.is_fullscreen = ! this.is_fullscreen;
+                this.$emit("toggle_fullscreen");
             },
             colorized_concepts: function (concepts) {
                 return concepts.map(concept => ({
@@ -188,7 +188,7 @@
       font-size: 28px;
       line-height: 34px;
   }
-  .fullscreen .resource-information {
+  .fullscreen.resource-information {
       color: white;
       background-color: #343637;
   }

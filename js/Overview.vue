@@ -17,7 +17,9 @@
     </x5gon-toolbar>
     <resource-information-panel v-if="active_resource"
                                 :resource="active_resource"
-                                :concept_palette="concept_palette">
+                                :concept_palette="concept_palette"
+                                :is_fullscreen="is_fullscreen"
+                                @toggle_fullscreen="toggle_fullscreen">
     </resource-information-panel>
   </div>
 </template>
@@ -58,6 +60,9 @@
                 }
                 this.selection_lock = setTimeout(() => { this.selection_lock = null },
                                                  this.$constant.selection_lock_timeout);
+            },
+            toggle_fullscreen: function () {
+                this.is_fullscreen = ! this.is_fullscreen;
             },
             add_to_basket: function () {
                 if (this.active_resource) {
