@@ -68,17 +68,12 @@
             is_fullscreen: { type: Boolean,
                              default: false },
         },
-        data: function () {
-            return {
-                highlighted_concept: null,
-            }
-        },
         methods: {
             on_bar_mouseover: function (concept) {
-                this.highlighted_concept = concept.url;
+                this.$emit("concept_mouseover", concept.url);
             },
             on_bar_mouseout: function (concept) {
-                this.highlighted_concept = null;
+                this.$emit("concept_mouseout", concept.url);
             },
             toggle_fullscreen: function () {
                 this.$emit("toggle_fullscreen");

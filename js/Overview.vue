@@ -19,6 +19,8 @@
                                 :resource="active_resource"
                                 :concept_palette="concept_palette"
                                 :is_fullscreen="is_fullscreen"
+                                @concept_mouseover="on_concept_mouseover"
+                                @concept_mouseout="on_concept_mouseout"
                                 @toggle_fullscreen="toggle_fullscreen">
     </resource-information-panel>
   </div>
@@ -72,6 +74,12 @@
             populate: function () {
               // Debug function
               this.$store.dispatch('populate_basket', 5);
+            },
+            on_concept_mouseover: function (url) {
+                this.highlighted_concept = url;
+            },
+            on_concept_mouseout: function (url) {
+                this.highlighted_concept = null;
             },
         },
         computed: {
