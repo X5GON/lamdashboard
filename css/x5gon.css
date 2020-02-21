@@ -31,3 +31,11 @@ time, mark, audio, video {
     bottom: 0;
     right: 0;
 }
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('IBM Plex Sans'), local('IBMPlexSans'), url(zYXgKVElMYYaJe8bpLHnCwDKhdHeEA.ttf) format('truetype');
+}
