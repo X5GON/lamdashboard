@@ -7,6 +7,7 @@
         <resource-representation v-for="item in positioned_items"
                                  :x="item.x_position"
                                  :y="70"
+                                 detailed_concepts
                                  :key="item.url"
                                  :title="item.title"
                                  :item="item"></resource-representation>
@@ -36,9 +37,9 @@
               // This should be factorized somehow with the code in ResourceRepresentation
               let scale =  d3.scaleLinear()
                   .domain([ 60, this.$constant.max_duration ])
-                  .range([ 20, 2 * this.$constant.max_width ]);
+                  .range([ 10, 2 * this.$constant.max_width ]);
               return this.items.map(item => {
-                  x = x + scale(item.length) + 10;
+                  x = x + scale(item.duration) + 10;
                   item.x_position = x;
                   return item;
               });
