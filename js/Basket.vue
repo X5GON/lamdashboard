@@ -4,9 +4,9 @@
     <h1>Basket</h1>
     <div class="basket-list">
       <item-detail v-for="item in items"
+                   :item="item"
                    :key="item.url"
-                   class="miniature"
-                   :item="item"></item-detail>
+                   miniature></item-detail>
     </div>
     <x5gon-toolbar></x5gon-toolbar>
   </div>

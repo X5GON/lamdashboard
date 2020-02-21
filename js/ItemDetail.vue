@@ -1,5 +1,5 @@
 <template>
-  <div v-if="item" class="view-itemdetail">
+  <div v-if="item" class="view-itemdetail" :class="{ miniature: miniature }">
     <div class="itemdetail-title">{{ item ? item.title : "" }}</div>
     <div class="itemdetail-representation">
       <svg-container :viewbox="viewbox">
@@ -21,10 +21,10 @@
         name: "ItemDetail",
         props: {
             item: Object,
-            legend: {
-                type: Boolean,
-                default: false
-            }
+            legend: { type: Boolean,
+                      default: false },
+            miniature: { type: Boolean,
+                         default: false },
         },
         computed: {
             viewbox: function () {
@@ -58,6 +58,6 @@
       margin-top: 20%;
   }
   .miniature .itemdetail-title {
-      font-style: 12px;
+      font-size: 13px;
   }
 </style>
