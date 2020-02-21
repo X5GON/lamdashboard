@@ -15,7 +15,6 @@
                                @resource_dblclick="on_dblclick(item)"
                                @concept_mouseover="on_concept_mouseover"
                                @concept_palette="concept_palette"
-                               :title="item.title"
                                :item="item">
       </resource-representation>
       <resource-representation v-if="reference"
@@ -31,7 +30,6 @@
                                @resource_dblclick="on_dblclick(reference)"
                                @concept_mouseover="on_concept_mouseover"
                                @concept_palette="concept_palette"
-                               :title="reference.title"
                                :item="reference"></resource-representation>
       <path v-if="active_resource" :d="resource_link_path" stroke="#fff" stroke-width="1"></path>
     </svg-container>
