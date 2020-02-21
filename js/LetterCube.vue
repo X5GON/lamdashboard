@@ -57,7 +57,7 @@ module.exports = {
     transform-style: preserve-3d;
     transition: transform 0.5s 0.1s;
     perspective: 9999px;
-    color: #09122f;
+    color: #fff;
     opacity: 1;
     position: relative;
   }
@@ -69,14 +69,15 @@ module.exports = {
   .cube-face {
       font-family: "Open Sans",sans-serif;
       font-size: 50px;
-      color: #09122f;
+      color: #fff;
       box-shadow: inset 0 0 0 1px #41b883, 0 0 1px 1px #41b883;
   }
   .cube-face {
       width: inherit;
       height: inherit;
       position: absolute;
-      background: white;
+      background: #09122f;
+      border: 1px solid white;
       box-shadow: inset 0 0 0 1px #333, 0 0 1px 1px #333;
       opacity: 1;
   }
