@@ -15,6 +15,7 @@ export default {
         "ItemDetail",
         "LetterCube",
         "NeighborGraph",
+        "RangeSlider",
         "ResourceRepresentation",
         "ResultDrawer",
         "SvgContainer",

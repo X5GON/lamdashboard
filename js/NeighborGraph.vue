@@ -3,7 +3,7 @@
     <svg-container zoomable id="graph" viewbox="-50 -500 1000 1000">
       <rect x="0" y="0" width="1" height="100" stroke="#ff0" stroke-opacity="1" stroke-width=".1" fill="none"></rect>
       <rect x="0" y="0" width="100" height="1" stroke="#fff" stroke-opacity="1" stroke-width=".1" fill="none"></rect>
-      <resource-representation v-for="item in neighbors"
+      <resource-representation v-for="item in filtered_neighbors"
                                :class="{ concept_related: is_concept_related(item) }"
                                class="highlightable"
                                :key="item.id"
@@ -35,6 +35,9 @@
                                :item="reference"></resource-representation>
       <path v-if="active_resource" :d="resource_link_path" stroke="#fff" stroke-width="1"></path>
     </svg-container>
+    <div id="slider">
+      <range-slider :min="5" v-model="max_neighbors"></range-slider>
+    </div>
   </div>
 </template>
 
@@ -43,7 +46,8 @@
         name: 'NeighborGraph',
         data: function () {
             return {
-                active_resource: null
+                active_resource: null,
+                max_neighbors: 20,
             }
         },
         props: [ "reference", "neighbors", "highlight_concept", "concept_palette" ],
@@ -73,6 +77,9 @@
             },
         },
         computed: {
+            filtered_neighbors: function () {
+                return this.neighbors.slice(0, this.max_neighbors);
+            },
             resource_link_path: function () {
                 return `M ${this.x_position(this.reference)} ${this.y_position(this.reference)} L ${this.x_position(this.active_resource)} ${this.y_position(this.active_resource)}`;
             },
@@ -108,5 +115,10 @@
   }
   .concept_related {
       opacity: 1;
+  }
+  #slider {
+      position: fixed;
+      top: 10px;
+      left: 10px;
   }
 </style>
