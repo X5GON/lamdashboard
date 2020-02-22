@@ -220,7 +220,7 @@
                 }
             },
             circle_fill_color: function () {
-                if (this.fill)
+                if (this.fill != "none")
                     return this.fill;
                 if (this.is_reference) {
                     return "url(#paint0_radial)";
