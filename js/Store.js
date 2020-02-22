@@ -59,12 +59,12 @@ const store = new Vuex.Store({
         set_query(state, query) {
             state.query = query;
         },
-        add_notification(state, message, type="info") {
+        add_notification(state, message) {
             let timestamp = new Date();
             console.log(timestamp, message);
             state.notification_messages.push( {
                 message: message,
-                type: type,
+                type: message.type || "info",
                 date: timestamp
             } );
         },
@@ -204,7 +204,7 @@ const store = new Vuex.Store({
                             message: `Searching for ${query}`
                           }).then(data => {
                              if (!data) {
-                                 this.dispatch("show_notification", `No data for ${query}`, "error");
+                                 this.dispatch("show_error_notification", `No data for ${query}`);
                                  return;
                              }
                              console.log("query result", data, data.result);
@@ -212,8 +212,7 @@ const store = new Vuex.Store({
                              commit('set_query', query);
                              commit('update_search_results', result);
                          }).catch(error => {
-                             console.log("error", error);
-                             this.dispatch("show_notification", `Error when searching: ${error}`, "error");
+                             this.dispatch("show_error_notification", `Error when searching: ${error}`);
                          });
         },
 
@@ -233,24 +232,8 @@ const store = new Vuex.Store({
                               commit("set_overview_reference", data.reference);
                               commit('set_overview_neighbors', data.neighbors);
                           }).catch(error => {
-                              this.dispatch("show_notification", `Error when fetching neighbors: ${error}`, "error");
+                              this.dispatch("show_error_notification", `Error when fetching neighbors: ${error}`);
                           });
-        },
-
-        async show_notification({ commit }, message, type, duration=5000) {
-            commit("add_notification", message, type);
-            var timeOut = setTimeout(function () {
-                // On timeout mutate state to dismiss notification
-                commit("remove_notification", message);
-            }, duration);
-        },
-
-        async add_to_basket({ commit }, item) {
-            commit("add_to_basket", item);
-        },
-
-        async populate_basket({ commit }, count) {
-            commit("populate_basket", count);
         },
 
         async sort_basket({ commit }) {
@@ -268,7 +251,7 @@ const store = new Vuex.Store({
                           }).then(data => {
                               commit('set_sequence', data.output.sequence);
                           }).catch(error => {
-                              this.dispatch("show_notification", `Error when sorting basket: ${error}`, "error");
+                              this.dispatch("show_error_notification", `Error when sorting basket: ${error}`);
                           });
         },
 
@@ -290,8 +273,29 @@ const store = new Vuex.Store({
                               commit('set_sequence', data.output.sequence);
                               commit('set_insertions', data.output.insertions);
                           }).catch(error => {
-                              this.dispatch("show_notification", `Error when getting insert suggestions: ${error}`, "error");
+                              this.dispatch("show_error_notification", `Error when getting insert suggestions: ${error}`);
                           });
+        },
+
+        async show_error_notification({ commit }, message) {
+            message.type = 'error';
+            return this.dispatch('show_notification', message);
+        },
+
+        async show_notification({ commit }, message) {
+            commit("add_notification", message, type);
+            var timeOut = setTimeout(function () {
+                // On timeout mutate state to dismiss notification
+                commit("remove_notification", message);
+            }, duration);
+        },
+
+        async add_to_basket({ commit }, item) {
+            commit("add_to_basket", item);
+        },
+
+        async populate_basket({ commit }, count) {
+            commit("populate_basket", count);
         },
 
         async start_loading({ commit }, message = "Loading...") {
