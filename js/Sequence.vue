@@ -3,7 +3,7 @@
     <x5gon-header class="overlay"></x5gon-header>
     <div class="sequence-content">
       <h1>Sequence</h1>
-      <svg-container class="svg-content" v-if="items.length > 0" :key="items.length" :viewbox="`0 0 ${x_max} 200`">
+      <svg-container class="svg-content" v-if="items.length > 0" :key="items.length" :viewbox="`0 0 ${Math.max(x_max,500)} 200`">
 
         <g transform="translate(0 100)">
           <g>
@@ -103,7 +103,7 @@
               }));
           },
           x_max: function () {
-              return this.items.length > 0 ? this.positioned_items[this.items.length - 1].x_position + this.$constant.max_width : 0;
+              return this.items.length > 0 ? this.positioned_items[this.items.length - 1].x_position + this.$constant.max_width : 500;
           },
 
       },
