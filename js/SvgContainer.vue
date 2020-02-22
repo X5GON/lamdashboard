@@ -10,7 +10,7 @@
                   refX="10" refY="10"
                   markerWidth="20" markerHeight="20"
                   orient="auto-start-reverse">
-        <path d="M 0 0 l 10 10 l -10 10" stroke="#505973" fill="none" />
+            <path d="M 0 0 l 10 10 l -10 10" stroke="#505973" fill="none" />
           </marker>
         </defs>
         <g class="zoomable">

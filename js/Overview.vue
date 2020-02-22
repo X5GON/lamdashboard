@@ -71,11 +71,6 @@
             toggle_fullscreen: function () {
                 this.is_fullscreen = ! this.is_fullscreen;
             },
-            add_to_basket: function () {
-                if (this.active_resource) {
-                    this.$store.dispatch('add_to_basket', this.active_resource);
-                }
-            },
             populate: function () {
               // Debug function
               this.$store.dispatch('populate_basket', 5);

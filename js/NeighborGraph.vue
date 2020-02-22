@@ -16,6 +16,10 @@
                                @concept_mouseover="on_concept_mouseover"
                                @concept_palette="concept_palette"
                                :item="item">
+        <g v-if="active_resource == item">
+          <use x="0" y="0" width="16" height="16" xlink:href="img/new_reference.svg#icon" title="Use as new reference" @click="use_new_reference(item)"></use>
+          <use x="0" y="24" width="16" height="16" xlink:href="img/add_to_basket.svg#icon" title="Add to basket" @click="add_to_basket(item)"></use>
+        </g>
       </resource-representation>
       <resource-representation v-if="reference"
                                class="highlightable"
@@ -30,7 +34,13 @@
                                @resource_dblclick="on_dblclick(reference)"
                                @concept_mouseover="on_concept_mouseover"
                                @concept_palette="concept_palette"
-                               :item="reference"></resource-representation>
+                               :item="reference">
+        <g v-if="active_resource == reference">
+          <use x="0" y="24" width="16" height="16" xlink:href="img/add_to_basket.svg#icon" title="Add to basket" @click="add_to_basket(reference)"></use>
+        </g>
+
+        </g>
+      </resource-representation>
       <path v-if="active_resource" :d="resource_link_path" stroke="#fff" stroke-width="1"></path>
     </svg-container>
     <div id="slider">
@@ -72,6 +82,12 @@
             },
             y_position: function (item) {
                 return this.y_scale(item.projection[1]);
+            },
+            use_new_reference: function (item) {
+                this.$store.dispatch('activate_overview_reference', item.id);
+            },
+            add_to_basket: function (item) {
+                this.$store.dispatch('add_to_basket', item);
             },
         },
         computed: {

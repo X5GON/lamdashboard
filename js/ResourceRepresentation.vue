@@ -70,6 +70,10 @@
         <path d="M -10 0 L 10 0 M 0 -10 L 0 10" stroke="#000D32" stroke-width="2" stroke-linecap="round"/>
       </g>
 
+      <g id="resource-menu" :transform="`scale(1 -1) translate(${radius+5} -24)`">
+        <slot></slot>
+      </g>
+
   </g>
 </template>
 
