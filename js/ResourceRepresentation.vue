@@ -8,7 +8,7 @@
     <circle v-if="legend" id="circle_legend_demiheure" fill="none" stroke="#fff" stroke-width=".1" stroke-dasharray=".2 1" cx="0" cy="0" :r="duration_scale(30*60)"></circle>
     <circle v-if="legend" id="circle_legend_heure" fill="none" stroke="#fff" stroke-width=".1" stroke-dasharray=".2 1" cx="0" cy="0" :r="duration_scale(60*60)"></circle>
 
-    <circle id="circle" fill="url(#paint0_radial)" :fill-opacity="is_reference ? 1 : 0" fill-rule="nonzero" :stroke="resource_stroke" stroke-width="2" cx="0" cy="0" :r="radius"></circle>
+    <circle id="circle" :fill="circle_fill_color" fill-rule="nonzero" :stroke="resource_stroke" stroke-width="2" cx="0" cy="0" :r="radius"></circle>
 
       <g v-if="detailed_concepts">
         <path v-for="(item, index) in concepts"
@@ -133,7 +133,11 @@
             concept_palette: {
                 type: Function,
                 default: null
-            }
+            },
+            fill: {
+                type: String,
+                default: "none"
+            },
         },
         methods: {
             color_palette: function (concept, index) {
@@ -215,6 +219,14 @@
                     return '#ff7070';
                 }
             },
+            circle_fill_color: function () {
+                if (this.fill)
+                    return this.fill;
+                if (this.is_reference) {
+                    return "url(#paint0_radial)";
+                }
+                return "none";
+            }
         }
     };
 </script>

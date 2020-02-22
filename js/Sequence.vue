@@ -4,17 +4,29 @@
     <div class="sequence-content">
       <h1>Sequence</h1>
       <svg-container class="svg-content" v-if="items.length > 0" :key="items.length" :viewbox="`0 0 ${x_max} 200`">
-        <g>
-          <resource-representation v-for="(item, index) in positioned_items"
-                                   @resource_click="insert_resource(item)"
-                                   @resource_mouseover="on_resource_mouseover"
-                                   :x="item.x_position"
-                                   :y="100"
-                                   :is_suggested="item.is_suggested"
-                                   detailed_concepts
-                                   :key="`${index}-${item.url}`"
-                                   :title="item.title"
-                                   :item="item"></resource-representation>
+
+        <g transform="translate(0 100)">
+          <g>
+            <path v-for="(area, index) in distance_info"
+                :key="`area${index}`"
+                  stroke="none"
+                  fill="#fff"
+                  :fill-opacity="area.intensity"
+                  :d="`M ${area.left.x} ${area.left.y} L ${area.left.x} ${-area.left.y} L ${area.right.x} ${-area.right.y} L ${area.right.x} ${area.right.y} Z`"></path>
+          </g>
+          <g>
+            <resource-representation v-for="(item, index) in positioned_items"
+                                     @resource_click="insert_resource(item)"
+                                     @resource_mouseover="on_resource_mouseover"
+                                     :x="item.x_position"
+                                     :y="0"
+                                     fill="#000D32"
+                                     :is_suggested="item.is_suggested"
+                                     detailed_concepts
+                                     :key="`${index}-${item.url}`"
+                                     :title="item.title"
+                                     :item="item"></resource-representation>
+          </g>
         </g>
       </svg-container>
     </div>
@@ -46,8 +58,11 @@
           }
       },
       computed: {
-          ...Vuex.mapState([ "sequence", "insertions" ]),
+          ...Vuex.mapState([ "sequence", "insertions", "sequence_distances" ]),
           items: function () {
+              // FIXME: refactor to introduce an indirection level and
+              // not pollute resources themselves with display info
+
               // Merge sequence and insertions
               if (this.insertions.length == 0) {
                   return this.sequence;
@@ -74,9 +89,18 @@
                   let width = scale(item.duration);
                   x = x + scale(item.duration);
                   item.x_position = x;
+                  item.radius = width;
                   x = x + scale(item.duration) + 10;
                   return item;
               });
+          },
+          distance_info: function () {
+              // Return a list of { left: {x, y}, right: {x, y}, distance } representing the distance zones to display
+              return this.sequence_distances.map((distance, index) => ({
+                  left: { x: this.positioned_items[index].x_position, y: this.positioned_items[index].radius },
+                  right: { x: this.positioned_items[index+1].x_position, y: this.positioned_items[index+1].radius },
+                  intensity: distance,
+              }));
           },
           x_max: function () {
               return this.items.length > 0 ? this.positioned_items[this.items.length - 1].x_position + this.$constant.max_width : 0;
