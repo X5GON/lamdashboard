@@ -57,6 +57,8 @@
         props: {
             resource: { type: Object,
                         default: null },
+            reference_resource: { type: Object,
+                                  default: null },
             concept_palette: { type: Function,
                                default: (u) => "#f00"
                              },
@@ -78,7 +80,6 @@
             },
         },
         computed: {
-            ...Vuex.mapState([ "overview_reference" ]),
             resource_metadata: function () {
                 if (this.resource) {
                     return [ [ 'id', 'Identifier' ],
@@ -108,10 +109,10 @@
                                       }));
             },
             resource_concepts: function () {
-                return this.resource ? this.colorized_concepts(this.resource.common_wikifier) : [];
+                return this.resource ? this.colorized_concepts(this.resource.common_wikifier || this.resource.wikifier) : [];
             },
             reference_resource_concepts: function () {
-                return this.overview_reference ? this.colorized_concepts(this.overview_reference.common_wikifier) : [];
+                return this.reference_resource ? this.colorized_concepts(this.reference_resource.common_wikifier || this.reference_resource.wikifier) : [];
             },
         },
     }

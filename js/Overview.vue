@@ -23,6 +23,7 @@
     </x5gon-toolbar>
     <resource-information-panel v-if="active_resource"
                                 :resource="active_resource"
+                                :reference_resource="overview_reference"
                                 :concept_palette="concept_palette"
                                 :is_fullscreen="is_fullscreen"
                                 @concept_mouseover="on_concept_mouseover"
