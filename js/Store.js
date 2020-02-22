@@ -42,6 +42,7 @@ const store = new Vuex.Store({
         basket: [],
         // Assume we only deal with 1 sequence in the app
         sequence: [],
+        sequence_distances: [],
         // Insert suggestions
         insertions: [],
         // List of notification messages
@@ -103,6 +104,10 @@ const store = new Vuex.Store({
             state.sequence = sequence.map(id => state.resources[id]);
             state.insertions = [];
             console.log("sequence", state.sequence);
+        },
+
+        set_sequence_distances(state, distances) {
+            state.sequence_distances = distances;
         },
 
         set_insertions(state, insertions) {
@@ -250,6 +255,7 @@ const store = new Vuex.Store({
                             message: "Sorting basket..."
                           }).then(data => {
                               commit('set_sequence', data.output.sequence);
+                              commit('set_sequence_distances', data.output.distances);
                           }).catch(error => {
                               this.dispatch("show_error_notification", `Error when sorting basket: ${error}`);
                           });
@@ -271,6 +277,8 @@ const store = new Vuex.Store({
                             message: "Fetching resource suggestions..."
                           }).then(data => {
                               commit('set_sequence', data.output.sequence);
+                              // This information is no longer valid
+                              commit('set_sequence_distances', []);
                               commit('set_insertions', data.output.insertions);
                           }).catch(error => {
                               this.dispatch("show_error_notification", `Error when getting insert suggestions: ${error}`);
