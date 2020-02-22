@@ -115,9 +115,6 @@
           },
       },
       mounted: function () {
-          if (this.$route.query.q) {
-              this.$store.dispatch('submit_query', this.$route.query.q);
-          }
       }
     }
 </script>

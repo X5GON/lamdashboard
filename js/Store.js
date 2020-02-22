@@ -135,6 +135,10 @@ const store = new Vuex.Store({
     // Actions are asynchronous. They are called with the dispatch method (or through mapActions in components)
     actions: {
 
+        // Generic API query method. It returns a Promise that wraps
+        // all errors/exceptions into a single reject clause, and
+        // handle start_loading/stop_loading notifications
+        // appropriately.
         async query_api({ commit }, query) {
             let { url, params, message } = query;
             let _store = this;
@@ -183,7 +187,7 @@ const store = new Vuex.Store({
             });
         },
 
-        async submit_query({ commit }, query) {
+        async submit_search_query({ commit }, query) {
             let url = constant.api.search;
             if (query && query.startsWith('d:')) {
                 // Debug mode - use local resources

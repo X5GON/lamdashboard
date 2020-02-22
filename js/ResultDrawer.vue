@@ -54,7 +54,7 @@
           },
           search: function () {
               this.$router.push({ path: '/search', query: { q: this.query } });
-              this.$store.dispatch('submit_query', this.query);
+              this.$store.dispatch('submit_search_query', this.query);
           }
       },
       computed: {
