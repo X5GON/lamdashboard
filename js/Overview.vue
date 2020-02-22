@@ -1,14 +1,20 @@
 <template>
   <div class="view-overview"
        :class="{ fullscreen: is_fullscreen }">
-    <neighbor-graph class="neighbor-graph"
-                    @resource_mouseover="on_mouseover"
-                    @resource_click="on_resource_click"
-                    :highlight_concept="highlighted_concept"
-                    :concept_palette="concept_palette"
-                    :reference="overview_reference"
-                    :neighbors="overview_neighbors"></neighbor-graph>
-
+    <div class="main-content">
+      <neighbor-graph class="neighbor-graph"
+                      @resource_mouseover="on_mouseover"
+                      @resource_click="on_resource_click"
+                      :highlight_concept="highlighted_concept"
+                      :concept_palette="concept_palette"
+                      :reference="overview_reference"
+                      :neighbors="overview_neighbors"></neighbor-graph>
+      <img class="toolbar-icon-fullscreen"
+           title="Toggle fullscreen"
+           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+           alt=" "
+           @click="toggle_fullscreen"></img>
+    </div>
     <x5gon-toolbar>
       <img class="toolbar-icon-debug toolbar-icon"
            title="Populate"
@@ -20,8 +26,7 @@
                                 :concept_palette="concept_palette"
                                 :is_fullscreen="is_fullscreen"
                                 @concept_mouseover="on_concept_mouseover"
-                                @concept_mouseout="on_concept_mouseout"
-                                @toggle_fullscreen="toggle_fullscreen">
+                                @concept_mouseout="on_concept_mouseout">
     </resource-information-panel>
   </div>
 </template>
@@ -116,11 +121,32 @@
     display: flex;
     flex-direction: column;
   }
+  .main-content {
+      position: relative;
+  }
   .neighbor-graph svg {
       width: 99.9vw;
       height: 50vh;
   }
   .fullscreen .neighbor-graph svg {
       height: calc(100vh - 120px);
+  }
+  .toolbar-icon {
+      position: relative;
+      width: 32px;
+      height: 32px;
+  }
+  .toolbar-icon-fullscreen {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      left: 16px;
+      bottom: 8px;
+      pointer-events: all;
+      box-sizing: border-box;
+      background: url(../img/overview_fullscreen.svg) center center no-repeat;
+  }
+  .fullscreen .toolbar-icon-fullscreen {
+      background: url(../img/overview_halfscreen.svg) center center no-repeat;
   }
 </style>

@@ -1,12 +1,5 @@
 <template>
   <div class="resource-information" :class="{ fullscreen: is_fullscreen }">
-    <div class="toolbar-fullscreen">
-      <img class="toolbar-icon toolbar-icon-fullscreen"
-           title="Toggle fullscreen"
-           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-           alt=" "
-           @click="toggle_fullscreen"></img>
-    </div>
     <div class="resource-metadata">
       <svg-container class="resource-representation">
         <resource-representation
@@ -77,9 +70,6 @@
             on_bar_mouseout: function (concept) {
                 this.$emit("concept_mouseout", concept.url);
             },
-            toggle_fullscreen: function () {
-                this.$emit("toggle_fullscreen");
-            },
             colorized_concepts: function (concepts) {
                 return concepts.map(concept => ({
                     ...concept,
@@ -142,24 +132,6 @@
       font-size: 18px;
       font-weight: 600;
       margin-top: 18px;
-  }
-  .toolbar-fullscreen {
-      position: absolute;
-      top: 13px;
-      left: 13px;
-  }
-  .toolbar-icon {
-      position: relative;
-      width: 32px;
-      height: 32px;
-  }
-  .toolbar-icon-fullscreen {
-      pointer-events: all;
-      box-sizing: border-box;
-      background: url(../img/overview_fullscreen.svg) center center no-repeat;
-  }
-  .fullscreen .toolbar-icon-fullscreen {
-      background: url(../img/overview_halfscreen.svg) center center no-repeat;
   }
   .resource-metadata {
       background: #40CB76;
