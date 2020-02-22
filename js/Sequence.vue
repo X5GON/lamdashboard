@@ -16,16 +16,16 @@
           </g>
           <g>
             <resource-representation v-for="(item, index) in positioned_items"
-                                     @resource_click="insert_resource(item)"
+                                     @resource_click="insert_item(item)"
                                      @resource_mouseover="on_resource_mouseover"
                                      :x="item.x_position"
                                      :y="0"
                                      fill="#000D32"
                                      :is_suggested="item.is_suggested"
                                      detailed_concepts
-                                     :key="`${index}-${item.url}`"
-                                     :title="item.title"
-                                     :item="item"></resource-representation>
+                                     :key="`${index}-${item.resource.url}`"
+                                     :title="item.resource.title"
+                                     :item="item.resource"></resource-representation>
           </g>
         </g>
       </svg-container>
@@ -60,20 +60,20 @@
       computed: {
           ...Vuex.mapState([ "sequence", "insertions", "sequence_distances" ]),
           items: function () {
-              // FIXME: refactor to introduce an indirection level and
-              // not pollute resources themselves with display info
-
-              // Merge sequence and insertions
               if (this.insertions.length == 0) {
-                  return this.sequence;
+                  return this.sequence.map(r => ({
+                      resource: r,
+                  }));
               };
+              // Merge sequence and insertions
               let res = [];
               for (let i = 0 ; i < this.sequence.length ; i++) {
-                  res.push(this.sequence[i]);
+                  res.push({ resource: this.sequence[i],
+                             is_suggested: false });
                   if (this.insertions[i] !== null && typeof this.insertions[i] == 'object') {
-                      this.insertions[i].is_suggested = true;
-                      this.insertions[i].insert_after = i;
-                      res.push(this.insertions[i]);
+                      res.push({ resource: this.insertions[i],
+                                 insert_after: i,
+                                 is_suggested: true });
                   }
               }
               return res;
@@ -86,11 +86,11 @@
                   .domain([ 60, this.$constant.max_duration ])
                   .range([ 10, this.$constant.max_width ]);
               return this.items.map(item => {
-                  let width = scale(item.duration);
-                  x = x + scale(item.duration);
+                  let width = scale(item.resource.duration);
+                  x = x + scale(item.resource.duration);
                   item.x_position = x;
                   item.radius = width;
-                  x = x + scale(item.duration) + 10;
+                  x = x + scale(item.resource.duration) + 10;
                   return item;
               });
           },
@@ -103,6 +103,7 @@
               }));
           },
           x_max: function () {
+              console.log("x_max items", this.items);
               return this.items.length > 0 ? this.positioned_items[this.items.length - 1].x_position + this.$constant.max_width : 500;
           },
 
@@ -131,7 +132,7 @@
           },
           do_export: function () {
           },
-          insert_resource: function (item) {
+          insert_item: function (item) {
               if (! item.is_suggested) {
                   return;
               }
