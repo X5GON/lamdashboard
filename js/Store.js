@@ -60,12 +60,14 @@ const store = new Vuex.Store({
         set_query(state, query) {
             state.query = query;
         },
-        add_notification(state, message) {
+        // Add a notification message. Since mutations can only take 1
+        // parameter, the parameter is an object { message, type }
+        add_notification(state, info) {
             let timestamp = new Date();
-            console.log(timestamp, message);
+            console.log(timestamp, info.message);
             state.notification_messages.push( {
-                message: message,
-                type: message.type || "info",
+                message: info.message,
+                type: info.type || "info",
                 date: timestamp
             } );
         },
@@ -287,12 +289,16 @@ const store = new Vuex.Store({
         },
 
         async show_error_notification({ commit }, message) {
-            message.type = 'error';
-            return this.dispatch('show_notification', message);
+            return this.dispatch('show_notification', { message: message,
+                                                        type: 'error' });
         },
 
         async show_notification({ commit }, message) {
-            commit("add_notification", message, type);
+            if (typeof message == 'string') {
+                message = { message: message,
+                            type: 'info' };
+            }
+            commit("add_notification", message);
             var timeOut = setTimeout(function () {
                 // On timeout mutate state to dismiss notification
                 commit("remove_notification", message);
