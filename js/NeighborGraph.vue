@@ -9,6 +9,7 @@
                                :key="item.id"
                                :x="x_position(item)"
                                :y="y_position(item)"
+                               :is_added="item == added_resource"
                                :detailed_concepts="active_resource == item"
                                @resource_mouseover="on_mouseover(item)"
                                @resource_click="on_click(item)"
@@ -26,6 +27,7 @@
                                id="reference"
                                is_reference
                                detailed_concepts
+                               :is_added="reference == added_resource"
                                :class="{ concept_related: is_concept_related(reference) }"
                                :x="x_position(reference)"
                                :y="y_position(reference)"
@@ -56,6 +58,7 @@
             return {
                 active_resource: null,
                 max_neighbors: 20,
+                added_resource: null,
             }
         },
         props: [ "reference", "neighbors", "highlight_concept", "concept_palette" ],
@@ -84,9 +87,12 @@
                 return this.y_scale(item.projection[1]);
             },
             use_new_reference: function (item) {
+                this.active_resource = null;
                 this.$store.dispatch('activate_overview_reference', item.id);
             },
             add_to_basket: function (item) {
+                this.added_resource = item;
+                setTimeout(() => { this.added_resource = null }, 500);
                 this.$store.dispatch('add_to_basket', item);
             },
         },

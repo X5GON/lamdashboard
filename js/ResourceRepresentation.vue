@@ -70,6 +70,15 @@
       <path d="M -10 0 L 10 0 M 0 -10 L 0 10" stroke="#000D32" stroke-width="2" stroke-linecap="round"/>
     </g>
 
+    <transition appear
+                enter-active-class="flash"
+                leave-active-class="flash"
+                :duration="500">
+      <g v-if="is_added">
+        <circle id="circle" fill="#fff" fill-rule="nonzero" cx="0" cy="0" :r="radius"></circle>
+      </g>
+    </transition>
+
     <g id="resource-menu" :transform="`scale(1 -1) translate(${radius+5} -24)`">
       <slot></slot>
     </g>
@@ -95,6 +104,10 @@
                 default: false
             },
             is_suggested: {
+                type: Boolean,
+                default: false
+            },
+            is_added: {
                 type: Boolean,
                 default: false
             },
@@ -236,4 +249,8 @@
 </script>
 
 <style scoped>
+@-webkit-keyframes flash {
+	0%, 50%, 100% {opacity: 0;}
+	25%, 75% {opacity: .8;}
+}
 </style>
