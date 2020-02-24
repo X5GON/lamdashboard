@@ -160,7 +160,7 @@
   }
   .fullscreen.resource-information {
       color: white;
-      background-color: #343637;
+      background-color: #000d32;
   }
   .fullscreen .resource-content-titlebar {
       height: 120px;
