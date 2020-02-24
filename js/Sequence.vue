@@ -99,7 +99,7 @@
               return this.sequence_distances.map((distance, index) => ({
                   left: { x: this.positioned_items[index].x_position, y: this.positioned_items[index].radius },
                   right: { x: this.positioned_items[index+1].x_position, y: this.positioned_items[index+1].radius },
-                  intensity: distance,
+                  intensity: 1 - distance,
               }));
           },
           x_max: function () {
