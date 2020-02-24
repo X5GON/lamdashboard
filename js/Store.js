@@ -269,6 +269,7 @@ const store = new Vuex.Store({
                           { url: constant.api.sequence_insert,
                             params: {
                                 sequence: this.state.sequence.map(item => item.id),
+                                max_concepts: constant.max_concepts,
                                 concept_weights: this.state.sequence[0].wikifier.map(w => ({
                                     concept: w.url,
                                     weight: w.value,
