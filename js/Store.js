@@ -120,9 +120,8 @@ const store = new Vuex.Store({
             insertions
                 .filter(i => i !== null)
                 .forEach(r => {
+                    // Put the resource into the cache
                     state.resources[r.id] = r
-                    // Limit number of concepts
-                    r.wikifier = r.wikifier.slice(0, constant.max_concepts);
                 });
         },
 
