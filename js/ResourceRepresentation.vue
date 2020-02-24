@@ -10,69 +10,69 @@
 
     <circle id="circle" :fill="circle_fill_color" fill-rule="nonzero" :stroke="resource_stroke" stroke-width="2" cx="0" cy="0" :r="radius"></circle>
 
-      <g v-if="detailed_concepts">
-        <path v-for="(item, index) in concepts"
-              :id="`concept${index}`"
-              @mouseover="on_concept_mouseover(item)"
-              fill="none"
-              stroke-opacity="1" stroke-width="6"
-              :stroke="color_palette(item, index)"
-              :d="`M 0 ${y_concept[index-1] || bar_height} L 0 ${y_concept[index]}`"></path>
-      </g>
-      <g v-else>
-        <path stroke-opacity="1" stroke-width="4"
-              stroke="#ff7070"
-              :d="`M 0 0 l 0 ${bar_height}`"></path>
+    <g v-if="detailed_concepts">
+      <path v-for="(item, index) in concepts"
+            :id="`concept${index}`"
+            @mouseover="on_concept_mouseover(item)"
+            fill="none"
+            stroke-opacity="1" stroke-width="6"
+            :stroke="color_palette(item, index)"
+            :d="`M 0 ${y_concept[index-1] || bar_height} L 0 ${y_concept[index]}`"></path>
+    </g>
+    <g v-else>
+      <path stroke-opacity="1" stroke-width="4"
+            stroke="#ff7070"
+            :d="`M 0 0 l 0 ${bar_height}`"></path>
 
-      </g>
+    </g>
 
-      <text v-if="title"
-            transform="translate(-4, 0) rotate(90) scale(1,-1)"
-            fill="#fff"
-            font-family="Open Sans"
-            font-size="4">
-        {{ title }}
-      </text>
-      <g v-if="legend" id="legend">
-        <g id="difficulty_legend">
-          <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
-                :d="`M 0 ${bar_height} l -${difficulty_legend_offset} 0`"></path>
-          <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
-                :d="`M 0 0 l -${difficulty_legend_offset} 0`"></path>
-          <path fill="none" stroke="#505973" stroke-width=".15"
-                :d="`M -${difficulty_legend_offset} 0 l 0 ${bar_height}`"
-                marker-start="url(#triangle)"
-                marker-end="url(#triangle)"></path>
-          <text :transform="`translate(-${difficulty_legend_offset + 1}, ${bar_height/2-10}) rotate(90) scale(1,-1)`"
-                fill="#505973"
-                font-family="Open Sans"
-                font-size="3">DIFFICULTY</text>
+    <text v-if="title"
+          transform="translate(-4, 0) rotate(90) scale(1,-1)"
+          fill="#fff"
+          font-family="Open Sans"
+          font-size="4">
+      {{ title }}
+    </text>
+    <g v-if="legend" id="legend">
+      <g id="difficulty_legend">
+        <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
+              :d="`M 0 ${bar_height} l -${difficulty_legend_offset} 0`"></path>
+        <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
+              :d="`M 0 0 l -${difficulty_legend_offset} 0`"></path>
+        <path fill="none" stroke="#505973" stroke-width=".15"
+              :d="`M -${difficulty_legend_offset} 0 l 0 ${bar_height}`"
+              marker-start="url(#triangle)"
+              marker-end="url(#triangle)"></path>
+        <text :transform="`translate(-${difficulty_legend_offset + 1}, ${bar_height/2-10}) rotate(90) scale(1,-1)`"
+              fill="#505973"
+              font-family="Open Sans"
+              font-size="3">DIFFICULTY</text>
       </g>
-        <g id="duration_legend">
-          <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
-                :d="`M -${radius} -2 l 0 -${radius+5}`"></path>
-          <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
-                :d="`M ${radius} -2 l 0 -${radius+5}`"></path>
-          <path fill="none" stroke="#505973" stroke-width=".15"
-                :d="`M -${radius} -${radius+5} l ${2*radius} 0`"
-                marker-start="url(#triangle)"
-                marker-end="url(#triangle)"></path>
-          <text :transform="`translate(0, -${radius+9}) scale(1,-1)`"
-                text-anchor="middle"
-                fill="#505973"
-                font-family="Open Sans"
-                font-size="3">{{ duration_label }}</text>
-        </g>
+      <g id="duration_legend">
+        <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
+              :d="`M -${radius} -2 l 0 -${radius+5}`"></path>
+        <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
+              :d="`M ${radius} -2 l 0 -${radius+5}`"></path>
+        <path fill="none" stroke="#505973" stroke-width=".15"
+              :d="`M -${radius} -${radius+5} l ${2*radius} 0`"
+              marker-start="url(#triangle)"
+              marker-end="url(#triangle)"></path>
+        <text :transform="`translate(0, -${radius+9}) scale(1,-1)`"
+              text-anchor="middle"
+              fill="#505973"
+              font-family="Open Sans"
+              font-size="3">{{ duration_label }}</text>
       </g>
+    </g>
 
-      <g v-if="is_suggested">
-        <circle id="circle" fill="#fff" fill-rule="nonzero" cx="0" cy="0" :r="radius"></circle>
-        <path d="M -10 0 L 10 0 M 0 -10 L 0 10" stroke="#000D32" stroke-width="2" stroke-linecap="round"/>
-      </g>
+    <g v-if="is_suggested">
+      <circle id="circle" fill="#fff" fill-rule="nonzero" cx="0" cy="0" :r="radius"></circle>
+      <path d="M -10 0 L 10 0 M 0 -10 L 0 10" stroke="#000D32" stroke-width="2" stroke-linecap="round"/>
+    </g>
 
-      <g id="resource-menu" :transform="`scale(1 -1) translate(${radius+5} -24)`">
-        <slot></slot>
-      </g>
+    <g id="resource-menu" :transform="`scale(1 -1) translate(${radius+5} -24)`">
+      <slot></slot>
+    </g>
 
   </g>
 </template>
