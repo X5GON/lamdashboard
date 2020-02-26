@@ -88,7 +88,7 @@
             },
             use_new_reference: function (item) {
                 this.active_resource = null;
-                this.$store.dispatch('activate_overview_reference', item.id);
+                this.$router.push(`/overview/${item.id}`);
             },
             add_to_basket: function (item) {
                 this.added_resource = item;
