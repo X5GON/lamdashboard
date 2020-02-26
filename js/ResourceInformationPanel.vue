@@ -83,11 +83,11 @@
             resource_metadata: function () {
                 if (this.resource) {
                     return [ [ 'id', 'Identifier' ],
+                             [ 'duration', 'Duration' ],
+                             [ 'type', 'Modality' ],
                              [ 'url', 'URL' ],
                              [ 'license', 'License' ],
-                             [ 'length', 'Length' ],
                              [ 'orig_lang', 'Language' ],
-                             [ 'type', 'Modality' ],
                              [ 'difficulty', 'Difficulty' ] ].map( ([id, label]) => ({
                                  id: id,
                                  label: label,
