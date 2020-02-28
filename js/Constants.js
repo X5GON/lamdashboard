@@ -23,5 +23,13 @@ export default {
     palette: {
         concepts: [ "#ff7070", "#18ffc3", "#d7d680", "#5db2fa", "#8888e2", "#505973", "#e95c44", "#be4b4d", "#933b50", "#3e1966" ],
         blue_concepts: [ "#4279FF", "#719AFF", "#A0BCFF", "#D0DDFF", "#FFFFFF" ],
+    },
+    format_duration: (d) => {
+        let minutes = Math.floor(d / 60);
+        if (minutes >= 60) {
+            return `${Math.floor(minutes / 60)} h ${minutes % 60} min.`;
+        } else {
+            return `${minutes} min.`;
+        }
     }
 }

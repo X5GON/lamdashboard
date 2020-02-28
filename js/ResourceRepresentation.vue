@@ -189,12 +189,7 @@
             duration_label: function () {
                 if (!this.item)
                     return "";
-                let minutes = Math.floor(this.item.duration / 60);
-                if (minutes >= 60) {
-                    return `DURATION: ${Math.floor(minutes / 60)} h ${minutes % 60} min.`;
-                } else {
-                    return `DURATION: ${minutes} min.`;
-                }
+                return `DURATION: ${$constant.format_duration(this.item.duration)}`;
             },
             radius: function () {
                 return this.duration_scale(this.item ? this.item.duration : 0);
