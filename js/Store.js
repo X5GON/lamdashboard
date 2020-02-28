@@ -297,7 +297,7 @@ const store = new Vuex.Store({
             var timeOut = setTimeout(function () {
                 // On timeout mutate state to dismiss notification
                 commit("remove_notification", message);
-            }, duration);
+            }, message.duration || 5000);
         },
 
         async add_to_basket({ commit }, item) {
