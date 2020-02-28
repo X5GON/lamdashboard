@@ -27,7 +27,29 @@
                                      :title="item.resource.title"
                                      :item="item.resource"></resource-representation>
           </g>
-        </g>
+          <g :transform="`translate(0 ${radius_max+20})`">
+            <path stroke="#fff"
+                  stroke-width=".2"
+                  marker-end="url(#triangle)"
+                  :d="`M 0 0 l ${x_max} 0`"></path>
+            <text :transform="`translate(${x_max} 5)`"
+                  text-anchor="end"
+                  fill="#505973"
+                  font-family="Open Sans"
+                  font-size="3">Total: {{ $constant.format_duration(total_duration) }}</text>
+            <g v-for="(item, index) in positioned_items"
+               :transform="`translate(${item.x_position} 0)`">
+              <path stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
+                    :d="`M -${item.radius} 0 l 0 -${radius_max+20}`"></path>
+              <path stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
+                    :d="`M ${item.radius} 0 l 0 -${radius_max+20}`"></path>
+              <text transform="translate(0 -3)"
+                    text-anchor="middle"
+                    fill="#505973"
+                    font-family="Open Sans"
+                    font-size="3">{{ item.duration_label }}</text>
+            </g>
+          </g>
       </svg-container>
     </div>
 
@@ -90,6 +112,7 @@
                   x = x + scale(item.resource.duration);
                   item.x_position = x;
                   item.radius = width;
+                  item.duration_label = this.$constant.format_duration(item.resource.duration);
                   x = x + scale(item.resource.duration) + 10;
                   return item;
               });
@@ -103,8 +126,13 @@
               }));
           },
           x_max: function () {
-              console.log("x_max items", this.items);
               return this.items.length > 0 ? this.positioned_items[this.items.length - 1].x_position + this.$constant.max_width : 500;
+          },
+          radius_max: function () {
+              return Math.max(...this.items.map(i => i.radius));
+          },
+          total_duration: function () {
+              return this.items.map(i => i.resource.duration).reduce( (a, b) => a + b, 0 );
           },
 
       },
