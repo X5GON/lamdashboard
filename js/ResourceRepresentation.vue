@@ -172,6 +172,7 @@
             on_concept_mouseover: function (concept) {
                 this.$emit("concept_mouseover", concept);
             },
+            format_duration: (d) => Vue.prototype.$constant.format_duration(d),
         },
         computed: {
             duration_scale: function () {
@@ -189,7 +190,7 @@
             duration_label: function () {
                 if (!this.item)
                     return "";
-                return `DURATION: ${$constant.format_duration(this.item.duration)}`;
+                return `DURATION: ${this.format_duration(this.item.duration)}`;
             },
             radius: function () {
                 return this.duration_scale(this.item ? this.item.duration : 0);
