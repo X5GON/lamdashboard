@@ -36,7 +36,7 @@
                   text-anchor="end"
                   fill="#505973"
                   font-family="Open Sans"
-                  font-size="3">Total: {{ $constant.format_duration(total_duration) }}</text>
+                  font-size="4">Total: {{ $constant.format_duration(total_duration) }}</text>
             <g v-for="(item, index) in positioned_items"
                :transform="`translate(${item.x_position} 0)`">
               <path stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
@@ -47,7 +47,7 @@
                     text-anchor="middle"
                     fill="#505973"
                     font-family="Open Sans"
-                    font-size="3">{{ item.duration_label }}</text>
+                    font-size="4">{{ item.duration_label }}</text>
             </g>
           </g>
       </svg-container>
