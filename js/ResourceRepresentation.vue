@@ -46,7 +46,7 @@
         <text :transform="`translate(-${difficulty_legend_offset + 1}, ${bar_height/2-10}) rotate(90) scale(1,-1)`"
               fill="#505973"
               font-family="Open Sans"
-              font-size="3">DIFFICULTY</text>
+              font-size="3">{{ difficulty_label }}</text>
       </g>
       <g id="duration_legend">
         <path fill="none" stroke="#505973" stroke-width=".15" stroke-dasharray=".5 1"
@@ -191,6 +191,11 @@
                 if (!this.item)
                     return "";
                 return `DURATION: ${this.format_duration(this.item.duration)}`;
+            },
+            difficulty_label: function () {
+                if (!this.item)
+                    return "";
+                return `DIFFICULTY ${Math.floor(this.item.difficulty * 10)}/10`;
             },
             radius: function () {
                 return this.duration_scale(this.item ? this.item.duration : 0);
