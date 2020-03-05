@@ -60,7 +60,6 @@
     </resource-information-panel>
     <div class="sequence-menu right-drawer-menu">
       <ul class="sequence-menu-list">
-        <li @click="do_organize"><img alt="" src="img/icon_organize.svg">Organize</li>
         <li @click="do_addition"><img alt="" src="img/icon_addition.svg">Automatic addition of resources</li>
         <li @click="do_export"><img alt="" src="img/icon_export.svg">Export</li>
       </ul>
