@@ -212,7 +212,7 @@
   .svg-content {
       margin-top: 50px;
       margin-left: 10px;
-      width: calc(100% - 78px);
+      width: calc(100% - 100px);
       max-height: 60vh;
   }
   .right-drawer-menu {
@@ -221,7 +221,7 @@
       bottom: 0;
       right: 0;
       width: 78px;
-      padding-top: 180px;
+      padding-top: 220px;
       background-color: #505973;
       color: #fff;
   }
