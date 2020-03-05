@@ -70,10 +70,11 @@
       flex-wrap: wrap;
   }
   .view-itemdetail {
-      width: 5vw;
-      height: 8vw;
+      width: 8vw;
+      height: 40vh;
       max-height: 300px;
       margin: 1vw;
+      overflow: hidden;
   }
   .toolbar-icon {
       width: 32px;
