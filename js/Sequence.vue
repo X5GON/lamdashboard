@@ -161,6 +161,22 @@
               this.$store.dispatch('suggest_insertions');
           },
           do_export: function () {
+              let resource_repr = (r) => `<li><a href="${r.url}">${r.title}</a></li>`;
+              const data = `<html><head><title>X5Gon document sequence</title></head><body>
+  <ol>
+  ${this.sequence.map(resource_repr).join("\n")}
+  </ol>
+  </body></html>`;
+              const a = document.createElement('a');
+              document.body.appendChild(a);
+              const url = URL.createObjectURL(new Blob([data], {type: "octet/stream"}));
+              a.href = url;
+              a.download = `${new Date().toISOString().substr(0, 19).replace(/[-:]/g, '').replace('T', '-')}-sequence.html`;
+              a.click();
+              setTimeout(() => {
+                  window.URL.revokeObjectURL(url);
+                  document.body.removeChild(a);
+              }, 0);
           },
           insert_item: function (item) {
               if (! item.is_suggested) {
