@@ -47,7 +47,7 @@
                     text-anchor="middle"
                     fill="#505973"
                     font-family="Open Sans"
-                    font-size="4">{{ item.duration_label }}</text>
+                    font-size="4">{{ item.is_suggested ? `(+${item.duration_label})` : item.duration_label }}</text>
             </g>
           </g>
       </svg-container>
@@ -131,7 +131,10 @@
               return Math.max(...this.items.map(i => i.radius));
           },
           total_duration: function () {
-              return this.items.map(i => i.resource.duration).reduce( (a, b) => a + b, 0 );
+              return this.items
+                  .filter(i => ! i.is_suggested)
+                  .map(i => i.resource.duration)
+                  .reduce( (a, b) => a + b, 0 );
           },
 
       },
