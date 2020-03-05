@@ -1,12 +1,17 @@
 <template>
   <header class="x5gon-header">
-    <img src="img/x5gon.svg" alt="X5GON" />
+    <img @click="go_home" src="img/x5gon.svg" alt="X5GON" />
   </header>
 </template>
 
 <script>
     module.exports = {
         name: "Header",
+        methods: {
+            go_home: function () {
+                this.$router.push('/');
+            },
+        },
     };
 </script>
 
