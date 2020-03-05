@@ -82,9 +82,9 @@
         computed: {
             resource_metadata: function () {
                 if (this.resource) {
-                    return [ [ 'id', 'Identifier' ],
+                    return [ [ 'type', 'Modality' ],
+                             [ 'id', 'Identifier' ],
                              [ 'duration', 'Duration' ],
-                             [ 'type', 'Modality' ],
                              [ 'url', 'URL' ],
                              [ 'license', 'License' ],
                              [ 'orig_lang', 'Language' ],
