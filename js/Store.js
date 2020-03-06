@@ -146,20 +146,20 @@ const store = new Vuex.Store({
         // handle start_loading/stop_loading notifications
         // appropriately.
         async query_api({ commit }, query) {
-            let { url, params, message } = query;
+            let { url, params, message, debug } = query;
             let _store = this;
             this.dispatch("start_loading", message);
             return new Promise(function (resolve, reject) {
                 try {
                     fetch(url, {
-                        method: 'POST',
+                        method: !debug ? 'POST' : 'GET',
                         //mode: 'cors',
                         cache: 'no-cache',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
                         },
-                        body: JSON.stringify(params)
+                        body: !debug ? JSON.stringify(params) : undefined
                     }).catch(error => {
                         _store.dispatch("stop_loading", "");
                         reject(error);
@@ -179,7 +179,7 @@ const store = new Vuex.Store({
                             .then(data => {
                                 _store.dispatch("stop_loading", "");
                                 if (!data) {
-                                    reject(error);
+                                    reject("No data");
                                     return;
                                 }
                                 resolve(data);
@@ -202,6 +202,7 @@ const store = new Vuex.Store({
 
             this.dispatch('query_api',
                           { url: url,
+                            debug: query.startsWith('d:'),
                             params: {
                                 q: query,
                                 max_resources: constant.max_search_results,
@@ -225,10 +226,17 @@ const store = new Vuex.Store({
         async activate_overview_reference({ commit }, resource_id) {
             // Query neighbors
             resource_id = Number(resource_id);
-            let url = resource_id == 23345 || resource_id == 23344 ? `data/n${resource_id}.json` : constant.api.neighbors;
+            let url = constant.api.neighbors;
+            let debug = false;
+            // For debugging
+            if (resource_id == 23345 || resource_id == 23344) {
+                url = `data/n${resource_id}.json`;
+                debug = true;
+            }
 
             this.dispatch('query_api',
                           { url: url,
+                            debug: debug,
                             params: { id: resource_id,
                                       max_concepts: constant.max_concepts,
                                       max_resources: constant.max_neighbors
