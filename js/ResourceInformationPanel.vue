@@ -13,7 +13,12 @@
       <ul class="resource-metadata-list">
         <li v-for="info in resource_metadata" :key="info.id">
           <span class="resource-metadata-label">{{ info.label }}</span>
-          <span class="resource-metadata-value">{{ info.value }}</span>
+          <a v-if="info.url"
+             target="_blank"
+             :href="info.url"
+             class="resource-metadata-value">{{ info.value }}</a>
+          <span v-else
+                class="resource-metadata-value">{{ info.value }}</span>
         </li>
       </ul>
     </div>
@@ -91,7 +96,8 @@
                              [ 'difficulty', 'Difficulty' ] ].map( ([id, label]) => ({
                                  id: id,
                                  label: label,
-                                 value: this.resource[id]
+                                 value: id == 'duration' ? this.$constant.format_duration(this.resource[id]) : this.resource[id],
+                                 url: id == 'url' ? this.resource[id] : undefined
                              }))
                 } else {
                     return [];
