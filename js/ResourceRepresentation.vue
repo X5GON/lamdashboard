@@ -79,7 +79,7 @@
       </g>
     </transition>
 
-    <g id="resource-menu" :transform="`scale(1 -1) translate(${radius+5} -24)`">
+    <g id="resource-menu" :transform="`translate(${radius+5} 48) scale(2 -2)`">
       <slot></slot>
     </g>
 
