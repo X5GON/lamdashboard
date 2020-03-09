@@ -13,6 +13,7 @@
     <div class="itemdetail-title">{{ item.title }}</div>
     <div class="itemdetail-provider">{{ item ? item.provider : "" }}</div>
     <div class="itemdetail-author">{{ item.authors ? item.authors.join(", ") : "" }}</div>
+    <slot></slot>
   </div>
 </template>
 

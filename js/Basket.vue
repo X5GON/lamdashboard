@@ -8,7 +8,13 @@
                      :item="item"
                      :key="item.url"
                      @mouseover="on_resource_mouseover"
-                     miniature></item-detail>
+                     miniature>
+          <img v-if="item == active_resource"
+               alt="Remove resource"
+               @click="remove_resource(item)"
+               style="position: absolute; top: 5px; right: 5px;"
+               src="img/basket_remove.svg"></img>
+        </item-detail>
       </div>
     </div>
     <x5gon-toolbar></x5gon-toolbar>
@@ -47,6 +53,9 @@
                   this.palette[url] = color;
               }
               return color;
+          },
+          remove_resource: function (item) {
+              this.$store.dispatch('remove_from_basket', item);
           },
       }
     }

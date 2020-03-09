@@ -96,6 +96,12 @@ const store = new Vuex.Store({
                 state.basket.push(item);
             }
         },
+        remove_from_basket(state, item) {
+            let pos = state.basket.indexOf(item);
+            if (pos != -1) {
+                state.basket.splice(pos, 1);
+            }
+        },
         populate_basket(state, count) {
             // Debug method - populate the basket with count items from overview_neighbors
             let items = shuffle(state.overview_neighbors.slice()).slice(0, count);
@@ -310,6 +316,10 @@ const store = new Vuex.Store({
 
         async add_to_basket({ commit }, item) {
             commit("add_to_basket", item);
+        },
+
+        async remove_from_basket({ commit }, item) {
+            commit("remove_from_basket", item);
         },
 
         async populate_basket({ commit }, count) {
