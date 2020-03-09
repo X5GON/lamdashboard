@@ -62,23 +62,23 @@
   }
   input[type=range]::-webkit-slider-thumb {
       border: none;
-      height: 9px;
-      width: 9px;
-      border-radius: 4px;
+      height: 17px;
+      width: 17px;
+      border-radius: 8px;
       background: #fff;
       cursor: pointer;
       -webkit-appearance: none;
-      margin-top: -4px;
+      margin-top: -8px;
   }
   input[type=range]::-moz-range-thumb {
       border: none;
-      height: 9px;
-      width: 9px;
-      border-radius: 4px;
+      height: 17px;
+      width: 17px;
+      border-radius: 8px;
       background: #fff;
       cursor: pointer;
       -webkit-appearance: none;
-      margin-top: -4px;
+      margin-top: -8px;
   }
 
   input[type=range]:focus::-webkit-slider-runnable-track {
