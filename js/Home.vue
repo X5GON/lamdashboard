@@ -39,6 +39,7 @@
   }
   #q {
       width: 100%;
+      min-width: 40em;
       max-width: 60em;
       height: 40px;
       margin-top: 30%;
