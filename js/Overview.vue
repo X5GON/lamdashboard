@@ -29,6 +29,25 @@
                                 @concept_mouseover="on_concept_mouseover"
                                 @concept_mouseout="on_concept_mouseout">
     </resource-information-panel>
+    <help-panel>
+      <h2>Overview view</h2>
+      <p>This view presents a graph of resources, built from a
+      reference resource (the one with a white disc).</p>
+      <p>The number of displayed neighbors can be modified using the
+      slider in the top-left corner.</p>
+      <p>Below the graph, you can see a description of the currently
+        active (hovered) resource, in order to evaluate its
+        relevance. The horizontal bar presents the relative weights of
+        the top 5 wikifier concepts, that are common among all
+        presented resources.
+      </p>
+      <p>You can add a resource to the basket of selected resources
+      using the <img src="img/add_to_basket.svg" alt="Add to basket"
+      /> icon that is displayed when the mouse cursor is over a
+      resource. You can also use the active resource as new reference
+      resource with the <img src="img/new_reference.svg" alt="New
+      reference" /> icon.</p>
+    </help-panel>
   </div>
 </template>
 

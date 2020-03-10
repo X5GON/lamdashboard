@@ -1,6 +1,6 @@
 <template>
     <div class="toolbar toolbar-right">
-      <img class="toolbar-icon"
+      <img class="toolbar-icon toolbar-icon-help"
            title="Help"
            alt="?"
            @click="show_help"
@@ -55,6 +55,7 @@
               this.$router.push('/sequence');
           },
           show_help: function () {
+              this.$store.dispatch('show_help');
           },
       }
   }

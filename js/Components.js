@@ -12,6 +12,7 @@ export default {
         "BarLegend",
         "ConceptBar",
         "CountOverlay",
+        "HelpPanel",
         "ItemDetail",
         "LetterCube",
         "NeighborGraph",

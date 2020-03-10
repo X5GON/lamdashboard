@@ -49,6 +49,7 @@ const store = new Vuex.Store({
         notification_messages: [],
         // Loading message. If not null, display loading spinner
         loading_message: "",
+        show_help: false,
     },
 
     // Mutation are synchronous. They should normally not be directly called, but instead through actions (see below)
@@ -142,6 +143,9 @@ const store = new Vuex.Store({
             console.log("validat_insertion", state.sequence, state.insertions);
         },
 
+        show_help(state, value) {
+            state.show_help = !!value;
+        },
     },
 
     // Actions are asynchronous. They are called with the dispatch method (or through mapActions in components)
@@ -338,7 +342,14 @@ const store = new Vuex.Store({
             let item = this.state.insertions[index];
             commit("validate_insertion", index);
             commit("add_to_basket", item);
-        }
+        },
+
+        async show_help({ commit }) {
+            commit("show_help", true);
+        },
+        async hide_help({ commit }) {
+            commit("show_help", false);
+        },
     }
 });
 

@@ -46,6 +46,9 @@
             { path: '/debug', component: components.Debug },
         ]
     });
+    router.afterEach((to, from) => {
+        store.dispatch('hide_help');
+    });
 
     var app = new Vue({
         router: router,

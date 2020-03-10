@@ -23,6 +23,10 @@
                                 :concept_palette="concept_palette"
                                 :is_fullscreen="is_fullscreen">
     </resource-information-panel>
+    <help-panel>
+      <h2>Basket view</h2>
+      <p>This view presents your current selection. You can remove items, or ask the LAM to sort them into a Sequence.</p>
+    </help-panel>
   </div>
 </template>
 

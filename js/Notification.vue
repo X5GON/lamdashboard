@@ -23,7 +23,6 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 2em;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -65,6 +65,16 @@
       </ul>
     </div>
     <x5gon-toolbar></x5gon-toolbar>
+    <help-panel>
+      <h2>Sequence view</h2>
+      <p>This view presents an ordered sequence of resources,
+        generated from a basket. The LAM system proposes an order for
+        the elements. It also indicates the respective distances between
+        resources: the more white the area between 2 resources is, the
+        closer they are.</p>
+      <p>Through the right menu, you can ask the LAM system to suggest
+        additional resources to include into this sequence.</p>
+    </help-panel>
   </div>
 </template>
 
