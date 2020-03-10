@@ -4,7 +4,6 @@
     <div class="content">
       <div class="filteredinput">
         <input v-model="query" id="q" placeholder="Recherche" @keydown.enter="search" type="search" />
-        <x5gon-filterbar></x5gon-filterbar>
       </div>
     </div>
   </div>
