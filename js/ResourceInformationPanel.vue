@@ -40,7 +40,7 @@
           :concepts="reference_resource_concepts"></concept-bar>
       </div>
       <p>Provider: {{ resource.provider }}</p>
-        <p>Author: {{ resource.author ? resource.author.join(", ") : "" }}</p>
+        <p>Author: {{ resource.authors ? resource.authors.join(", ") : "" }}</p>
         <div class="resource-content-columns">
           <bar-legend class="resource-content-keywords"
                       title="Keywords"
