@@ -11,7 +11,9 @@
       </svg-container>
       <h2>Resource information</h2>
       <ul class="resource-metadata-list">
-        <li v-for="info in resource_metadata" :key="info.id">
+        <li v-for="info in resource_metadata"
+            class="resource-metadata-item"
+            :key="info.id">
           <span class="resource-metadata-label">{{ info.label }}</span>
           <a v-if="info.url"
              target="_blank"
@@ -150,6 +152,11 @@
   }
   .resource-metadata-list {
       list-style: none;
+  }
+  .resource-metadata-item {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
   }
   .resource-representation {
       width: 90%;
