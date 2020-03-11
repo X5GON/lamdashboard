@@ -97,7 +97,7 @@
                                  id: id,
                                  label: label,
                                  value: id == 'duration' ? this.$constant.format_duration(this.resource[id]) : this.resource[id],
-                                 url: id == 'url' ? this.resource[id] : undefined
+                                 url: (typeof this.resource[id] == 'string' && this.resource[id].match(/^https?:/)) ? this.resource[id] : undefined,
                              }))
                 } else {
                     return [];
