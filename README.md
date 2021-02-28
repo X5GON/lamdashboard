@@ -17,9 +17,9 @@
     <br />
     <a href="https://wp3.x5gon.org">View Demo</a>
     ·
-    <a href="https://gitlab.univ-nantes.fr/x5gon/lamdashboard/issues">Report Bug</a>
+    <a href="https://github.com/X5GON/lamdashboard/issues">Report Bug</a>
     ·
-    <a href="https://gitlab.univ-nantes.fr/x5gon/lamdashboard/issues">Request Feature</a>
+    <a href="https://github.com/X5GON/lamdashboard/issues">Request Feature</a>
   </p>
 </p>
 
@@ -105,7 +105,7 @@ Some functionnalities:
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://gitlab.univ-nantes.fr/x5gon/lamdashboard/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/X5GON/lamdashboard/issues) for a list of proposed features (and known issues).
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -143,18 +143,17 @@ Some miner contributions were done in order to fit with the LAM API specificatio
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/github/contributors/X5GON/lamdashboard.svg?style=for-the-badge
-[contributors-url]: https://gitlab.univ-nantes.fr/x5gon/lamdashboard/graphs/contributors
+[contributors-url]: https://github.com/X5GON/lamdashboard/-/graphs/master
 [forks-shield]: https://img.shields.io/github/forks/X5GON/lamdashboard.svg?style=for-the-badge
-[forks-url]: https://gitlab.univ-nantes.fr/x5gon/lamdashboard/network/members
+[forks-url]: https://github.com/X5GON/lamdashboard/network/members
 [stars-shield]: https://img.shields.io/github/stars/X5GON/lamdashboard.svg?style=for-the-badge
-[stars-url]: https://gitlab.univ-nantes.fr/x5gon/lamdashboard/stargazers
+[stars-url]: https://github.com/X5GON/lamdashboard/-/starrers
 [issues-shield]: https://img.shields.io/github/issues/X5GON/lamdashboard.svg?style=for-the-badge
-[issues-url]: https://gitlab.univ-nantes.fr/x5gon/lamdashboard/issues
+[issues-url]: https://github.com/X5GON/lamdashboard/-/issues
 [license-shield]: https://img.shields.io/github/license/X5GON/lamdashboard.svg?style=for-the-badge
-[license-url]: https://gitlab.univ-nantes.fr/x5gon/lamdashboard/blob/master/LICENSE
-[license]: https://img.shields.io/badge/License-BSD%202--Clause-green.svg
-[license-link]: https://opensource.org/licenses/BSD-2-Clause
-
+[license-url]: https://github.com/X5GON/lamdashboard/blob/master/LICENSE
+[license]: https://img.shields.io/badge/License-MIT-green.svg
+[license-link]: https://opensource.org/licenses/MIT
 
 
 [project-screenshot]: readme/lamdashboard.png
