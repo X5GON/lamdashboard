@@ -143,7 +143,7 @@ Some miner contributions were done in order to fit with the LAM API specificatio
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/github/contributors/X5GON/lamdashboard.svg?style=for-the-badge
-[contributors-url]: https://github.com/X5GON/lamdashboard/graphs/master
+[contributors-url]: https://github.com/X5GON/lamdashboard/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/X5GON/lamdashboard.svg?style=for-the-badge
 [forks-url]: https://github.com/X5GON/lamdashboard/network/members
 [stars-shield]: https://img.shields.io/github/stars/X5GON/lamdashboard.svg?style=for-the-badge
