@@ -62,6 +62,7 @@
       <ul class="sequence-menu-list">
         <li @click="do_addition"><img alt="" src="img/icon_addition.svg">Automatic addition of resources</li>
         <li @click="do_export"><img alt="" src="img/icon_export.svg">Export</li>
+        <li @click="do_export_tombz"><img alt="" src="img/icon_export.svg">Export to MBZ</li>
       </ul>
     </div>
     <x5gon-toolbar></x5gon-toolbar>
@@ -89,7 +90,7 @@
           }
       },
       computed: {
-          ...Vuex.mapState([ "sequence", "insertions", "sequence_distances" ]),
+          ...Vuex.mapState([ "sequence", "insertions", "sequence_distances", "mbzurl", "mbzinfos"]),
           items: function () {
               if (this.insertions.length == 0) {
                   return this.sequence.map(r => ({
@@ -149,6 +150,7 @@
 
       },
       methods: {
+
           on_resource_mouseover: function (item) {
               this.active_resource = item;
           },
@@ -173,10 +175,10 @@
           do_export: function () {
               let resource_repr = (r) => `<li><a href="${r.url}">${r.title}</a></li>`;
               const data = `<html><head><title>X5Gon document sequence</title></head><body>
-  <ol>
-  ${this.sequence.map(resource_repr).join("\n")}
-  </ol>
-  </body></html>`;
+                            <ol>
+                            ${this.sequence.map(resource_repr).join("\n")}
+                            </ol>
+                            </body></html>`;
               const a = document.createElement('a');
               document.body.appendChild(a);
               const url = URL.createObjectURL(new Blob([data], {type: "octet/stream"}));
@@ -188,6 +190,15 @@
                   document.body.removeChild(a);
               }, 0);
           },
+          do_export_tombz: function () {
+              hola = this.$store.dispatch('export_tombz');
+              hola.finally(response => {
+                    mbz_url = this.mbzurl;
+                    document.body.appendChild(mbz_url);
+                    mbz_url.click();
+              });
+
+          },
           insert_item: function (item) {
               if (! item.is_suggested) {
                   return;
@@ -196,6 +207,7 @@
           },
       },
       mounted: function () {
+
       }
     }
 </script>

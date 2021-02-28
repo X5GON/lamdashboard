@@ -5,11 +5,12 @@ export default {
     concept_mapping_from_reference: false,
     max_concepts: 5,
     api: {
-        search: 'http://wp3dev.x5gon.org/others/modelsdsh/search',
-        neighbors: 'http://wp3dev.x5gon.org/others/modelsdsh/neighbors',
+        search: 'https://wp3.x5gon.org/others/modelsdsh/search',
+        neighbors: 'https://wp3.x5gon.org/others/modelsdsh/neighbors',
 
-        sequence_sort: 'http://wp3dev.x5gon.org/sequencing/sort',
-        sequence_insert: 'http://wp3dev.x5gon.org/sequencing/insert',
+        sequence_sort: 'https://wp3.x5gon.org/sequencing/sort',
+        sequence_insert: 'https://wp3.x5gon.org/sequencing/insert',
+        export_tombz: 'https://wp3.x5gon.org/others/moodle/playlist2mbz',
 
     },
     // For resource representation

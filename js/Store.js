@@ -50,6 +50,9 @@ const store = new Vuex.Store({
         // Loading message. If not null, display loading spinner
         loading_message: "",
         show_help: false,
+        // Mbz infos (url and playlistinfos)
+        mbzurl : '',
+        mbzinfos : {},
     },
 
     // Mutation are synchronous. They should normally not be directly called, but instead through actions (see below)
@@ -146,6 +149,14 @@ const store = new Vuex.Store({
         show_help(state, value) {
             state.show_help = !!value;
         },
+
+        mbz_url(state, mbzurl) {
+            state.mbzurl = mbzurl;
+        },
+
+        mbz_pst_infos(state, mbzinfos) {
+            state.mbzinfos = mbzinfos;
+        },
     },
 
     // Actions are asynchronous. They are called with the dispatch method (or through mapActions in components)
@@ -192,6 +203,56 @@ const store = new Vuex.Store({
                                     reject("No data");
                                     return;
                                 }
+                                resolve(data);
+                            })
+                    })
+                } catch (error) {
+                    _store.dispatch("stop_loading", "");
+                    reject(error);
+                    return;
+                }
+            });
+        },
+
+        async query_api_dwdfile({ commit }, query) {
+            let { url, params, message, debug } = query;
+            let _store = this;
+            this.dispatch("start_loading", message);
+            return new Promise(function (resolve, reject) {
+                try {
+                    fetch(url, {
+                        method: !debug ? 'POST' : 'GET',
+                        //mode: 'cors',
+                        cache: 'no-cache',
+                        responseType: 'arraybuffer',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: !debug ? JSON.stringify(params) : undefined
+                    }).catch(error => {
+                        _store.dispatch("stop_loading", "");
+                        reject(error);
+                        return;
+                    }).then(response => {
+                        if (response === undefined) {
+                            _store.dispatch("stop_loading", "");
+                            reject("Undefined result");
+                            return;
+                        }
+                        response.blob()
+                            .catch(error => {
+                                _store.dispatch("stop_loading", "");
+                                reject(error);
+                                return;
+                            })
+                            .then(data => {
+                                _store.dispatch("stop_loading", "");
+                                if (!data) {
+                                    reject("No data");
+                                    return;
+                                }
+                                data.filename = (response.headers.get('content-disposition') || '').split('filename=')[1];
                                 resolve(data);
                             })
                     })
@@ -301,6 +362,42 @@ const store = new Vuex.Store({
                           });
         },
 
+        async export_tombz({ commit }) {
+            if (this.state.sequence.length == 0) {
+                commit('mbz_url', '');
+                commit('mbz_pst_infos', {});
+                return;
+            }
+            return this.dispatch('query_api_dwdfile',
+                          { url: constant.api.export_tombz,
+                            responseType: 'arraybuffer',
+                            headers: {
+                                    Accept: "application/octet-stream",
+                            },
+                            params: {
+                                playlist_general_infos: { pst_name: "Playlist from wp3.x5gon.org",
+                                                          pst_id: Math.floor(Math.random() * 1001)+1,
+                                                          pst_url: "wp3.x5gon.org",
+                                                          pst_author: "Anonymous User",
+                                                          pst_creation_date: (new Date()).toISOString().slice(0, 19).replace("T", " "),
+                                                          pst_thumbnail_url: "",
+                                                          pst_description: "This an auto-generated playlist built on wp3.x5gon.org site.",
+                                                          pst_license: "CC-BY"},
+                                playlist_items: this.state.sequence.map((item , index)=> ({material_id: item.id, x5gon_id: item.id})),
+                            },
+                            message: "Exporting basket to mbz Moodle file..."
+                          }).then(data => {
+                              let blob = new Blob([data], {type: data.type}),
+                              mbzurl = document.createElement('a');
+                              mbzurl.href = window.URL.createObjectURL(blob);
+                              mbzurl.download = data.filename;
+                              commit('mbz_url', mbzurl);
+                              // commit('mbz_pst_infos', params);
+                          }).catch(error => {
+                              this.dispatch("show_error_notification", `Error when Exporting basket to mbz Moodle file: ${error}`);
+                          });
+        },
+
         async show_error_notification({ commit }, message) {
             return this.dispatch('show_notification', { message: message,
                                                         type: 'error' });
@@ -350,6 +447,11 @@ const store = new Vuex.Store({
         async hide_help({ commit }) {
             commit("show_help", false);
         },
+    },
+    getters: {
+        mbzUrl: state => {
+          return state.mbzurl;
+        }
     }
 });
 
