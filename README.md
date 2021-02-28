@@ -143,15 +143,15 @@ Some miner contributions were done in order to fit with the LAM API specificatio
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/github/contributors/X5GON/lamdashboard.svg?style=for-the-badge
-[contributors-url]: https://github.com/X5GON/lamdashboard/-/graphs/master
+[contributors-url]: https://github.com/X5GON/lamdashboard/graphs/master
 [forks-shield]: https://img.shields.io/github/forks/X5GON/lamdashboard.svg?style=for-the-badge
 [forks-url]: https://github.com/X5GON/lamdashboard/network/members
 [stars-shield]: https://img.shields.io/github/stars/X5GON/lamdashboard.svg?style=for-the-badge
-[stars-url]: https://github.com/X5GON/lamdashboard/-/starrers
+[stars-url]: https://github.com/X5GON/lamdashboard/stargazers
 [issues-shield]: https://img.shields.io/github/issues/X5GON/lamdashboard.svg?style=for-the-badge
-[issues-url]: https://github.com/X5GON/lamdashboard/-/issues
+[issues-url]: https://github.com/X5GON/lamdashboard/issues
 [license-shield]: https://img.shields.io/github/license/X5GON/lamdashboard.svg?style=for-the-badge
-[license-url]: https://github.com/X5GON/lamdashboard/blob/master/LICENSE
+[license-url]: https://github.com/X5GON/lamdashboard/blob/master/LICENSE.txt
 [license]: https://img.shields.io/badge/License-MIT-green.svg
 [license-link]: https://opensource.org/licenses/MIT
 
