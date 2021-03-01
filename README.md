@@ -80,7 +80,12 @@ stored in the Store component, especially interactions with the API.
 
 ### Installation
 
-Hacking: it is advised to install vuejs devtools extensions to facilitate debugging.
+Hacking: it is advised to install vuejs devtools extensions to
+facilitate debugging. To avoid local file access restrictions (that
+vary depending on the browser), it is advised to use a local webserver
+like [devd](https://github.com/cortesi/devd) or <pre>python3 -m
+http.server</pre> to serve the local directory, and access it with the
+http protocol.
 
 ### Debugging
 
@@ -129,13 +134,13 @@ Distributed under the [MIT License](https://opensource.org/licenses/MIT) License
 ### Authors
 
 Architecture and implementation:
-* Olivier Aubert - [@oaubert](https://github.com/oaubert) - <contact@olivieraubert.net>
+* [Olivier Aubert](https://www.olivieraubert.net/) - [@oaubert](https://github.com/oaubert) - <contact@olivieraubert.net>
 
 Graphical design:
-* Maxime Zoffoli - <mail@maximezoffoli.com>
+* [Maxime Zoffoli](https://www.maximezoffoli.com/) - [@m_zoffoli](https://twitter.com/m_zoffoli) - <mail@maximezoffoli.com>
 
-### Contributers
-Some miner contributions were done in order to fit with the LAM API specifications:
+### Contributors
+Some minor contributions were done in order to fit with the LAM API specifications:
 * Victor Connes - <victor.connes@gmail.com>
 * Walid Ben Romdhane - [@walidbrw](https://github.com/walidbrw) - <walid_benromdhane@hotmail.fr>
 * Colin de la Higuera - <cdlh@univ-nantes.fr>
